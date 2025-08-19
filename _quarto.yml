@@ -12,8 +12,8 @@ date-modified: last-modified
 
 book:
   # Basic info
-  title: "Practical Python Programming for Life Scientists"
-  description: "Learn essential Python programming skills tailored for life science research. This practical guide helps biology and life science students with no prior coding experience develop fundamental programming and data analysis skills."
+  title: "Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery"
+  description: "A beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research."
   author: "Ryan M. Moore, PhD"
   date: "2025-02-05"
 
@@ -93,7 +93,7 @@ book:
   open-graph: true
 
   # GitHub
-  site-url: https://pythonforlifescientists.com
+  site-url: https://appliedpythonprogramming.com
   repo-url: https://github.com/mooreryan/practical_python
   repo-branch: main
   repo-actions: [issue, source]
