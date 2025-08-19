@@ -94,6 +94,7 @@ book:
 
   # GitHub
   site-url: https://appliedpythonprogramming.com
+  favicon: images/favicon.ico
   repo-url: https://github.com/mooreryan/practical_python
   repo-branch: main
   repo-actions: [issue, source]

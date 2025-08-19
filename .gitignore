@@ -1,6 +1,5 @@
 /_book
 /_ignore
-/.DS_Store
 /.quarto/
 
 /_*
@@ -16,3 +15,5 @@
 
 
 /.zed
+
+.DS_Store
