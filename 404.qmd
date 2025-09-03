@@ -6,4 +6,4 @@ title: Page Not Found
 
 The link you followed may be broken, or the page may have been moved or renamed.
 
-Take me back to [PythonForLifeScientists.com](index.qmd)
+Take me back [home](index.qmd).

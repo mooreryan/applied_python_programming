@@ -5,7 +5,7 @@ date: "2025-02-18"
 jupyter: python3
 ---
 
-# Algorithmic Thinking
+# Algorithmic Thinking {#sec-algorithmic-thinking}
 
 ## Overview
 

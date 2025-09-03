@@ -1,0 +1,43 @@
+# Miniproject 3 -- Put Your Name Here
+
+## Set Up
+
+```{python}
+import gzip
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import statsmodels.api as sm
+from Bio import SeqIO
+from statsmodels.formula.api import ols
+
+# This is our module defined in lib.py
+import lib
+
+pd.set_option("display.max_rows", 6)
+```
+
+If you need to edit your `lib.py` file then you will have to manually reload the module. (Or restart the interactive prompt.)
+
+```{python}
+import importlib
+importlib.reload(lib)
+```
+
+## Part 1: Basic Read Quality Analysis __(Required)__
+
+### Part 1A: Parse FASTQ Files
+
+### Part 1B: Parse Metadata and Merge with Read Data
+
+### Part 1C: Quality Distributions by Variable
+
+### Part 1D: Quality Scores and GC Content for Individual Samples
+
+### Part 1E: Read Counts
+
+## Part 2: Part 2: Per-Base Quality Analysis __(Optional)__
+
+## Part 3: Quality Filtering __(Required)__

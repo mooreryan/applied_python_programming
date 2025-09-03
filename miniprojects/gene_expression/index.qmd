@@ -1,0 +1,591 @@
+---
+author: "Ryan M. Moore, PhD"
+date-modified: last-modified
+date: "2025-03-24"
+jupyter: python3
+---
+
+# Miniproject 2: Gene Expression Analysis {.unnumbered}
+
+_Note: To complete the miniproject, download the [quarto document](https://github.com/mooreryan/applied_python_programming/blob/main/miniprojects/gene_expression/index.qmd) and complete any required sections._
+
+## Overview
+
+In this miniproject, you will analyze gene expression data to find genes that show different activity levels between two conditions (such as treatment vs. control). Gene expression analysis is a technique used in molecular biology that helps scientists understand how cells respond to different conditions by measuring changes in gene activity.
+
+This project gives you a chance to use your Python skills on a real biological problem while practicing the concepts you've learned in the course so far.
+
+## Learning Objectives
+
+By completing this miniproject, you will:
+
+- Practice working with functions and classes
+- Improve your ability to read example code and use it to build out longer solutions
+- Gain hands-on experience working with CSV data
+- Apply simple calculations to biological datasets
+- Learn to interpret biological results that come from computational analysis
+
+## Data Info
+
+### Input Data
+
+You will work with a simplified gene expression dataset that shows expression values for six genes across two conditions (control and treatment). Each condition has three samples: C1, C2, C3 for control and T1, T2, T3 for treatment. Here's what the data looks like in table format:
+
+| GeneId | C1 | C2 | C3 | T1 | T2 | T3 |
+|--------|----|----|----|----|----|----|
+| gene_1 | 37 | 42 | 39 | 24 | 27 | 22 |
+| gene_2 | 39 | na | 40 | 18 | 16 | 20 |
+| gene_3 | 42 | 40 | 39 | 55 | 62 | 60 |
+| gene_4 | 38 | 40 | 39 | 96 | 85 | 89 |
+| gene_5 | 39 | 37 | 39 | 38 | na | 41 |
+| gene_6 | 39 | 40 | 41 | 38 | 35 | 42 |
+
+Each row represents a single gene. Each column contains the expression value for that gene in a specific sample.
+
+To make this data easier to work with in Python, we'll store it as a string in CSV format:
+
+```{python}
+expression_data_text = """
+GeneId,C1,C2,C3,T1,T2,T3
+gene_1,37,42,39,24,27,22
+gene_2,39,na,40,18,16,20
+gene_3,42,40,39,55,62,60
+gene_4,38,40,39,96,85,89
+gene_5,39,37,39,38,na,41
+gene_6,39,40,41,38,35,42
+""".strip()
+```
+
+We use `.strip()` at the end to remove any extra blank lines (whitespace) at the beginning or end of our text.
+
+### Output Data
+
+For this problem, for each gene, you need to calculate and print out:
+
+1. The mean expression value in control samples
+2. The mean expression value in treatment samples
+3. The log2 fold change in expression (calculated as `log2(mean_treatment / mean_control)`)
+4. The gene's expression status
+
+Your output should be in tab-separated value (TSV) format. When complete, it should look something like this:
+
+```
+GeneId	Control	Treatment	FC	Status
+gene_1	39.3	24.3	-0.69	⇣
+gene_2	39.5	18.0	-1.13	⇊
+gene_3	40.3	59.0	0.55	⇡
+gene_4	39.0	90.0	1.21	⇈
+gene_5	38.3	39.5	0.04	⇄
+gene_6	40.0	38.3	-0.06	⇄
+```
+
+For easier reading, here is what that data looks like as a table.
+
+| GeneId | Control | Treatment | FC    | Status |
+|--------|---------|-----------|-------|--------|
+| gene_1 |    39.3 |      24.3 | -0.69 | ⇣      |
+| gene_2 |    39.5 |      18.0 | -1.13 | ⇊      |
+| gene_3 |    40.3 |      59.0 |  0.55 | ⇡      |
+| gene_4 |    39.0 |      90.0 |  1.21 | ⇈      |
+| gene_5 |    38.3 |      39.5 |  0.04 | ⇄      |
+| gene_6 |    40.0 |      38.3 | -0.06 | ⇄      |
+
+More detailed instructions are given in the following sections.
+
+## Your Tasks
+
+Please submit a Quarto notebook containing:
+
+- Code that transforms the gene expression data into the format described above
+- A brief analysis (1-2 paragraphs) interpreting your findings, explaining your implementation choices, and any challenges you faced
+
+For this miniproject, I'm providing more structured guidelines to help you practice breaking down problems and to give you specific practice with functions and classes. Your solution should include these components:
+
+- A function called `mean` that calculates the average of a list of numbers, skipping any `None` values
+- A `Gene` class
+  - Required instance attributes:
+    - `gene_id`
+    - `control_values`
+    - `treatment_values`
+  - Required instance methods:
+    - `__init__`
+    - `mean_control_value`
+    - `mean_treatment_value`
+    - `fold_change`
+    - `log2_fold_change`
+    - `status`
+    - `print_expression_info`
+- Functions for parsing input data:
+  - `is_header`
+  - `parse_float`
+  - `parse_data_row`
+  - `parse_expression_data`
+- A variable called `expression_data_text` to hold the raw data
+  - Code to run the whole process:
+    - Parse `expression_data_text` into `gene_expression_data`
+    - Print a header line
+    - Loop through each `Gene` object and display its expression information
+
+This might seem like a lot, but don't worry! In the next section, we'll break down each component, explain what they should do, and provide helpful examples to guide your solution.
+
+## Suggestions and Code Samples
+
+In this section, we will go over suggestions on how to structure your code and some code samples that will be helpful when writing your solution. Think of these as building blocks that you can adapt to your solution!
+
+_Note: In the following code samples, you will see `pass` and `...`. These are Python's "placeholders" that mark where code needs to be added later. When you see these placeholders in the examples, it's a signal that you should replace them with your own code. Think of them as temporary markers saying "your code goes here."_
+
+### General Tips
+
+- Use clear variable names and add comments to explain your logic.
+- Use docstrings to add context to functions and classes. This helps you remember what each function does.
+- Keep your functions short and focused on one task. Use the examples to guide you!
+- Don't forget to handle potential errors in the data, such as missing values or mathematical errors.
+- When you're stuck, review similar examples from class materials. The solutions to many problems use similar techniques to those we've already covered.
+
+### Parsing Numbers
+
+The data for this assignment comes to you as a string. You'll need to convert some of these strings into numbers (or expression values). Converting strings to numbers (also called "parsing") can be done using the `int` and `float` functions:
+
+```{python}
+print(int("32"))
+print(float("4.7"))
+```
+
+This works perfectly when the string actually represents a number. But what happens when the string you're trying to convert isn't a valid number?
+
+```python
+float("na")
+```
+
+If you run this code, you'll get an error:
+
+```
+ValueError                Traceback (most recent call last)
+Cell In[1], line 1
+----> 1 float("na")
+
+ValueError: could not convert string to float: 'na'
+```
+
+We discussed this exact situation of trying to convert a non-number to a float in [Tutorial 6](https://mooreryan.github.io/practical_python/chapters/06_errors.html#reading-error-messages).
+
+When facing this problem, we need to decide: should our program crash, or should we handle the error gracefully? For this gene expression miniproject, we need to parse many expression values. If a few are "bad," we probably don't want the entire analysis to fail. We could either assign a default value or skip the problematic entries.
+
+These types of decisions should be based on your biological knowledge of the data and understanding of why these issues might occur.
+
+Let's consider the presence of `na` values (meaning "data not available"). You should ask yourself: "What do these `na` values actually mean in my dataset?" For example:
+
+- Was there a problem with the sample during sequencing?
+- Was there contamination?
+- Were there no reads mapping to that gene in that sample?
+- Was there a data entry error?
+
+Your answer guides your strategy. If `na` indicates unreliable data due to transcription errors (perhaps values copied incorrectly from a lab notebook), we might want to ignore these values by converting them to Python's `None` value. Alternatively, if `na` represents zero reads mapping to a gene, we should convert it to `0`.
+
+This is where your biology expertise becomes valuable:  understanding what your data actually represents.
+
+For this project, let's assume that `na` indicates an unknown problem, and we should convert these values to `None`. We can use `try/except` like this:
+
+```{python}
+try:
+    result = float("na")
+except ValueError:
+    print("could not convert 'na' to a float")
+
+result = None
+```
+
+This approach works well! Note that catching a `ValueError` will also handle other issues like `float("47b")` or `float("apple pie")` -- any invalid number format. For this miniproject, we'll treat all number conversion problems as errors to be skipped.
+
+Here's how we can write this as a reusable function:
+
+```{python}
+def parse_float(string):
+    try:
+        return float(string)
+    except ValueError:
+        print(f"could not convert '{string}' to a float")
+        return None
+```
+
+Let's test our function:
+
+```{python}
+print(parse_float("3"))
+print(parse_float("3.14"))
+print(parse_float("4.3e-2"))
+print(parse_float("na"))
+print(parse_float("apple pie"))
+```
+
+It's best to use this more robust error handling approach to parse floating-point numbers in your miniproject code instead of using the `float` function directly. This method helps your program handle unexpected inputs gracefully rather than crashing.
+
+### Arithmetic Mean & Removing `None` Values
+
+Let's remember how to calculate the arithmetic mean (average) of a list of numbers: add all the numbers together, then divide by how many numbers you have.
+
+- To add up all numbers in a list, use the `sum` function
+- To count how many items are in a list, use the `len` function
+
+When working with biological data, you might use functions like `parse_float` that we discussed earlier. These functions can sometimes return `None` values when they encounter data they can't convert. Before calculating the mean, you need to remove these `None` values because:
+
+1. You can't add `None` to a number (it will cause an error)
+2. `None` values shouldn't be counted when determining the list length
+
+Here are two simple ways to create a new list that contains only the non-`None` values:
+
+```{python}
+numbers = [1, None, 2, None, 3]
+filtered_numbers = []
+
+for number in numbers:
+    if number is not None:
+        filtered_numbers.append(number)
+
+print(filtered_numbers)
+```
+
+Or, using a shorter approach called a list comprehension:
+
+```{python}
+numbers = [1, None, 2, None, 3]
+filtered_numbers = [number for number in numbers if number is not None]
+print(filtered_numbers)
+```
+
+You should run filtering code like this _before_ calculating the mean. This ensures your program works correctly and doesn't crash. Your mean function might look something like this:
+
+```python
+def mean(numbers):
+    # Filter out all the None values from `numbers`
+    filtered_numbers = ...
+
+    # Calculate the mean:
+    # ... sum up the numbers ...
+    # ... divide the sum by the total non-None elements in the list ...
+    pass
+```
+
+### The `Gene` Class
+
+One of the requirements is that you need to create a `Gene` class to organize the expression data for each gene. [Tutorial 5](https://mooreryan.github.io/practical_python/chapters/05_classes.html#methods) contains all the information you need about building classes for this miniproject. To help you get started, I've provided a skeleton of the class you'll need to create. Each method includes comments to guide you through the implementation process.
+
+```python
+class Gene:
+    def __init__(self, id, control_expression_values, treatment_expression_values):
+        # ... assign your instance attributes here ...
+        pass
+
+    def mean_control_value(self):
+        # ... calculate the mean value of expression in control samples
+        pass
+
+    def mean_treatment_value(self):
+        # ... calculate the mean value of expression in treatment samples
+        pass
+
+    def fold_change(self):
+        # ... calculate the fold change ...
+        pass
+
+    def log2_fold_change(self):
+        fold_change = self.fold_change()
+
+        # ... calculate log2 of the fold change ...
+        pass
+
+    def status(self):
+        log2_fold_change = self.log2_fold_change()
+
+        # Run the logic to test status of fold change
+        pass
+
+    def print_expression_info(self):
+        # get rounded mean control expression value
+
+        # get rounded mean treatment expression value
+
+        # get rounded log2 fold change
+
+        # get gene status
+
+        # print gene_id, mean_control_value, mean_treatment_value,
+        # log2_fold_change, and status separated by tabs
+        pass
+```
+
+Now, let's go over some of the individual methods.
+
+#### Mean Expression
+
+Let's see an example of how to calculate mean expression.  You should use the `mean` function that you have already written.
+
+```python
+# This is a placeholder for the mean function you will have defined.
+def mean(numbers):
+    pass
+
+gene_1_control_expression_values = [10, None, 20]
+gene_1_treatment_expression_values = [None, 40, 30]
+
+gene_1_control_expression_mean = mean(gene_1_control_expression_values)
+gene_2_treatment_expression_mean = mean(gene_2_treatment_expression_values)
+```
+
+This shows the basic approach if you weren't using a class structure. For your assignment, you'll need to adapt this concept to create the instance methods `mean_control_value` and `mean_treatment_value`.
+
+Remember that in a class, expression values are stored as instance attributes. You'll need to access them using `self.my_instance_attribute` syntax. This allows each gene object to calculate its own mean expression values based on the data stored within it.
+
+#### Fold Change
+
+We are interested in finding the fold change, which is the ratio between the mean expression in the treatment group and the mean expression in the control group. Simply put:
+
+```
+gene_1_fold_change = gene_1_treatment_expression_mean / gene_1_control_expression_mean
+```
+
+Can you think of any potential errors that might occur when running this code? (For example, what happens if the control value is zero? Check [this section](https://mooreryan.github.io/practical_python/chapters/06_errors.html#exception-hierarchies) of Tutorial 6 for a hint about handling this type of error.)
+
+Scientists often use the log base 2 of the fold change instead of the raw fold change. This makes the numbers easier to interpret:
+
+- A gene expressed twice as much in treatment vs control has a log2 fold change of 1
+- A gene expressed half as much in treatment vs control has a log2 fold change of -1
+- Genes with similar expression in both conditions have values close to 0
+
+Here's how to calculate the log2 fold change:
+
+```{python}
+import math
+
+mean_treatment_expression = 20.5
+mean_control_expression = 13.2
+
+fold_change = mean_treatment_expression / mean_control_expression
+log2_fold_change = math.log2(fold_change)
+print(log2_fold_change)
+```
+
+Like the regular fold change calculation, this code might also produce errors depending on your input values. Can you identify potential issues and how to handle them?
+
+You'll need to implement this code as part of your `Gene` class by creating `fold_change` and `log2_fold_change` methods. Remember that since these are instance methods, you'll need to access the data using `self`.
+
+#### Gene Status
+
+For each gene, you'll need to assign a "status" based on its log2 fold change value. The status shows whether a gene is upregulated (more active) or downregulated (less active) between experimental conditions. Here's how to categorize them:
+
+- Less than -1.0 -> strong downregulation (shown as `"⇊"`)
+- Between -1.0 and -0.5 -> slight downregulation (shown as `"⇣"`)
+- Between -0.5 and 0.5 -> neither up- nor downregulated (shown as `"⇄"`)
+- Between 0.5 and 1.0 -> slight upregulation (shown as `"⇡"`)
+- Greater than 1.0 -> strong upregulation (shown as `"⇈"`)
+
+You should structure your code using if-elif-else statements like this:
+
+```
+if ...conditional statement...:
+    # Strong upregulation
+    return "⇈"
+elif ...conditional statement...:
+    # Slight upregulation
+    return "⇡"
+elif ...conditional statement...:
+    # Strong downregulation
+    return "⇊"
+elif ...conditional statement...:
+    # Slight downregulation
+    return "⇣"
+else:
+    # Neither up- or downregulated
+    return "⇄"
+```
+
+Replace each `...conditional statement...` with the appropriate condition based on the log2 fold change values.
+
+This code needs to be integrated into your `Gene` class. Here's how you might do it:
+
+```python
+class Gene:
+    # ... other methods ...
+
+    def status(self):
+        log2_fold_change = self.log2_fold_change()
+
+        if ...conditional statement...:
+            # Strong upregulation
+            return "⇈"
+        elif ...conditional statement...:
+            # Slight upregulation
+            return "⇡"
+        elif ...conditional statement...:
+            # Strong downregulation
+            return "⇊"
+        elif ...conditional statement...:
+            # Slight downregulation
+            return "⇣"
+        else:
+            # Neither up- or downregulated
+            return "⇄"
+```
+
+#### Printing Expression Info
+
+The `print_expression_info` method displays the gene's expression data in an organized format. This method should:
+
+1. Gets the mean control expression value (rounded to 1 decimal place)
+2. Gets the mean treatment expression value (rounded to 1 decimal place)
+3. Gets the log2 fold change (rounded to 2 decimal places)
+4. Gets the gene's expression status (shown as an arrow symbol)
+5. Prints all these values separated by tabs
+
+This should be an instance method in your `Gene` class. To get these values, use the other methods you've defined in the class by calling them with the `self.my_method` syntax. For example, you can get the rounded mean control value with `round(self.mean_control_value(), 1)`, and the expression status with `self.status()`.
+
+That's it for the `Gene` class! Let's move on to parsing the expression data.
+
+### Parsing Gene Expression Data
+
+Parsing this data will involve:
+
+- Looping through lines in a text file: `for line in text.splitlines()`
+- Splitting a line at commas: `line.strip().split(",")`
+- Checking if a line is the header row: `line.startswith("... some string ...")`
+
+Let's walk through the three functions you need to complete this task: `is_header`, `parse_data_row`, and `parse_expression_data`.
+
+#### `is_header`
+
+```python
+def is_header(line):
+    # Do some check to see if line is a header or not
+    pass
+```
+
+To identify the header line, use a function that checks if a line begins with a specific string. Look at the first line of your data file and identify what makes it different from the data rows. Use this characteristic to identify the header.
+
+#### `parse_data_row`
+
+```python
+# Each line represents a "row" or "record" of expression data for a
+# particular gene.
+def parse_data_row(line):
+    fields = line.strip().split(",")
+
+    # Get the gene_id
+    gene_id = ...
+
+    # Parse the control values
+    control_values = ...
+
+    # Parse the treatment values
+    treatment_values = ...
+
+    # Create the Gene object
+    gene = Gene(gene_id, control_values, treatment_values)
+
+    return gene
+```
+
+When you use `line.strip().split(",")`, the `fields` variable becomes a list containing each item from your comma-separated line.
+
+The list elements will be organized like this:
+- Position 0: gene id
+- Positions 1-3: expression values for the control samples (3 samples)
+- Positions 4-6: expression values for the treatment samples (3 samples)
+
+For example:
+
+```python
+fields = ["gene_1", "10", "15", "12", "100", "150", "120"]
+```
+
+You can extract these values using list slicing:
+
+```python
+gene_id = fields[0]
+control_values = fields[1:4]
+treatment_values = fields[4:7]
+```
+
+Remember that these values will be strings. You'll need to convert `control_values` and `treatment_values` to floats using your `parse_float` function and either a loop or list comprehension.
+
+#### `parse_expression_data`
+
+This function combines the other steps we've discussed. Here's an outline to get you started:
+
+```python
+def parse_expression_data(text):
+    # Create an empty list to store gene expression data
+
+    # For each line in the text file:
+        # Check if it's a header line
+        # If it's not a header:
+            # Parse the data line
+            gene = parse_data_row(line)
+
+            # Add the gene to your gene expression data list
+
+    # Return the complete gene expression data
+    pass
+```
+
+Fill in the details using what you've learned about checking for headers and parsing data rows.
+
+### Putting It All Together
+
+All together, your code might be organized something like this:
+
+```python
+import math
+
+# define a mean function that can handles lists with both numbers and None
+# values
+
+# define the Gene class:
+    # define the __init__ method
+    # define the mean_control_value method
+    # define the mean_treatment_value method
+    # define the fold_change method
+    # define the log2_fold_change method
+    # define the status method
+    # define the print_expression_info method
+
+# define is_header function
+
+# define parse_float function
+
+# define parse_data_row function
+
+# define parse_expression_data function
+
+# define a variable to hold the expression data text
+expression_data_text = """
+GeneId,C1,C2,C3,T1,T2,T3
+gene_1,37,42,39,24,27,22
+gene_2,39,na,40,18,16,20
+gene_3,42,40,39,55,62,60
+gene_4,38,40,39,96,85,89
+gene_5,39,37,39,38,na,41
+gene_6,39,40,41,38,35,42
+""".strip()
+
+# Parse the gene expression data using your parse_expression_data function
+gene_expression_data = parse_expression_data(expression_data_text)
+
+# Print the header line
+print("GeneId", "Control", "Treatment", "FC", "Status", sep="\t")
+
+# Print the gene expression data for each gene
+for gene in gene_expression_data:
+    gene.print_expression_info()
+```
+
+Your complete solution will likely be between 100-150 lines of code, not including docstrings and comments. This length will vary based on your coding style. For example, using list comprehensions instead of loops might make your code shorter. Adding extra helper functions or using more detailed comments will make it longer.
+
+Don't worry if this seems like a lot of code! This miniproject isn't asking you to do anything extremely complex. The challenge is bringing multiple concepts together to solve a bigger problem -- a common approach in bioinformatics workflows.
+
+If you get stuck, remember to:
+1. Review the example code from tutorials
+2. Look back at previous assignments and miniprojects
+3. Break down each problem into smaller steps
+4. Build your solution one function at a time
+
+If you're still having trouble, we can discuss any issues during class or student hours!

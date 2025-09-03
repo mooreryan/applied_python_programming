@@ -1,0 +1,521 @@
+---
+author: "Ryan M. Moore, PhD"
+date-modified: last-modified
+date: "2025-04-30"
+jupyter: python3
+---
+
+# Miniproject 3: Read Quality Control {.unnumbered}
+
+_Note: To complete the miniproject, you will need the material contained in the [Read QC project files directory](https://github.com/mooreryan/applied_python_programming/blob/main/miniprojects/read_qc/project_files). There, you will find a project scaffold that includes reads, `lib.py`, and quarto documents to help get you started. The page you are currently reading is the same as [miniproject_3_instructions.qmd](https://github.com/mooreryan/applied_python_programming/blob/main/miniprojects/read_qc/project_files/miniproject_3_instructions.qmd) in the previously linked directory._
+
+## Overview
+
+For your final miniproject, you'll perform quality control analysis on next-generation sequencing (NGS) reads. This is a common first step in any (meta)genomics or RNA-seq pipeline. You'll gain experience working with FASTQ files, calculating quality metrics, and filtering reads based on quality thresholds.
+
+The provided sequencing data comes from a hypothetical, multi-hospital RNA-seq study with different batches of samples and experimental conditions. Your task is to analyze this data to identify trends in read quality and to filter low-quality reads.
+
+_Note: This is the final project, so it will be a bit of a jump in complexity! The instruction document has a ton of info to help you out, and the book chapters and assignment 3 will also be helpful. Be sure to refer to them if you get stuck!_
+
+## Learning Objectives
+
+By completing this miniproject, you will:
+
+- Work with sequencing data in FASTQ format
+- Parse and manipulate gzip-compressed files
+- Calculate quality metrics for sequencing reads
+- Visualize quality distributions by different variables
+- Implement a read filtering strategy
+- Practice modular Python programming
+
+## Data Info
+
+### Input Files
+
+- **FASTQ Files**
+    - Located in the `reads/` directory.
+    - These files contain raw sequencing reads with the naming pattern `[LOCATION]_[CONDITION][NUMBER].fq.gz`.
+- **Metadata**
+    - A tab-separated file `metadata.tsv` containing sample information.
+    - Fields
+        - **SampleID**: Unique identifier for each sample, including a prefix indicating the location (e.g., CHR for Christiana Hospital) and a suffix indicating the condition (C for Control, T for Treatment) with a number.
+        - **PatientID**: Alphanumeric identifier for each patient (e.g., 0626, 5542, 26ED).
+        - **Batch**: Batch designation, either A or B, which groups samples processed and sequenced together.
+        - **Location**: Healthcare facility where the sample was collected (Christiana Hospital, Nemours Children's Hospital, Jefferson Hospital, or Bayhealth Medical Center).
+        - **Condition**: Experimental condition of the sample, either "Control" or "Treatment".
+
+### FASTQ Format Reminder
+
+Each read in a FASTQ file consists of four lines:
+
+1. Read identifier (starts with `@`)
+2. Nucleotide sequence
+3. `+` (sometimes followed by the identifier again, or other info)
+4. Phred quality scores (encoded as ASCII characters)
+
+_See [parsing FASTQ files](https://pythonforlifescientists.com/io_files_contexts/#fastq) and the [processing FASTQ files](https://pythonforlifescientists.com/io_files_contexts/#example-processing-fastq-files) example from Ch. 9 for more info._
+
+### Project Structure
+
+You have been provided a zipped directory with the following structure:
+
+```
+miniproject_3/
+├── lib.py
+├── metadata.tsv
+├── miniproject_3_instructions.qmd
+├── miniproject_3_solution.qmd
+└── reads
+    ├── BAY_C1.fq.gz
+    ├── BAY_C2.fq.gz
+    ├── ... (more read files)
+```
+
+For this project, you'll be working with multiple files:
+
+- `miniproject_3_solution.qmd`: The main Quarto document where you'll perform your analysis and write up your results
+- `lib.py`: A Python module containing helper functions that you will write.
+    - The functions and other stuff you need to include in this file will be described in below.
+    - All of these functions should have docstrings in the format we described in [Ch. 4](https://pythonforlifescientists.com/understanding_functions/#sec-function-docs).
+
+## Your Tasks
+
+This miniproject consists of three parts: two required, one optional.
+
+### Set Up
+
+You will need the following set up code near the top of your Quarto document.
+
+```python
+import gzip
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import statsmodels.api as sm
+from Bio import SeqIO
+from statsmodels.formula.api import ols
+
+# This is our module defined in lib.py
+import lib
+
+pd.set_option("display.max_rows", 6)
+```
+
+Additionally, when you need to edit your `lib.py` file, you will have to manually reload the module. (Or restart the Quarto interactive prompt.)  Here is how you can do that:
+
+```python
+import importlib
+importlib.reload(lib)
+```
+
+_Note: I have already included the above code blocks in the solution file for you!_
+
+### Part 1: Basic Read Quality Analysis __(Required)__
+
+In this section, you'll parse the FASTQ files, calculate quality metrics for all samples, and analyze how these metrics vary across different experimental factors.
+
+#### Part 1A: Parse FASTQ Files
+
+Here are the steps you will need to take. I've written it in a sort of pseudocode (`:=` means assign to a variable, and `#` are comments) that you can use to help you structure your own code:
+
+```
+# Find all the FASTQ files in the reads directory that match our pattern
+# This uses Path.glob() to get files with names ending in _T1.fq.gz, _T2.fq.gz, etc.
+paths := get the FASTQ file paths
+
+# Create an empty list to store our processed read information
+# Each element will be a ReadInfo object with metadata about a sequence read
+reads := empty list
+
+# Process each FASTQ file
+for each path in paths
+    # Extract the sample name from the filename
+    # This helps us track which experiment/condition each read came from
+    sample_id := get the sample ID from the path
+
+    # Open and read the compressed FASTQ file
+    # Note: gzipped files require special handling with gzip.open()
+    # We need to open in text mode ("rt") for Bio.SeqIO to parse correctly
+    open the gzipped file for text-reading:
+        # Parse each sequence record in the FASTQ file
+        # SeqIO.parse creates an iterator of SeqRecord objects
+        for each record in the parsed FASTQ file:
+            # Create a structured ReadInfo object with metrics we care about
+            # We calculate quality score and GC content for each read
+            read_info := create a ReadInfo object from the sample and record
+
+            # Add this processed Read to our collection
+            append read_info to reads list
+
+# Convert our list of ReadInfo objects to a pandas DataFrame for analysis
+# Sort the data by sample ID for easier comparison between samples
+# Reset the index to have clean, sequential row numbers
+read_data := create a pandas data frame from the reads list,
+             sort values by SampleID,
+             reset the index
+```
+
+##### Details & Hints
+
+This subsection has quite a few parts! Here are some hints to help you get started.
+
+###### Get All FASTQ File Paths
+
+Try the [pathlib.Path](https://docs.python.org/3/library/pathlib.html) class to get all the FASTQ file paths:
+
+```python
+# Get all FASTQ files in the "reads" directory matching a pattern
+paths = Path("reads").glob("*_[TC][123].fq.gz")
+
+# Now you can loop over all the matching paths:
+for path in paths:
+    # Parsh the gzipped FASTQ file
+    pass
+```
+
+###### Get Sample Name from Path
+
+When looping over the paths, you will need to get the sample name from the path.
+
+To do that, you will need to remove the directory name, and the `.fq.gz` extension. You can use the [pathlib.Path](https://docs.python.org/3/library/pathlib.html) class again. Check out those docs and see if you can figure it out.  Here is a hint:
+
+```python
+# Extract parts of a path
+path.stem  # filename without extension
+path.suffix  # file extension
+```
+
+_Note: If you have multiple extensions, like we do in these files (`BAY_C1.fq.gz`), you will need to remove them _both_: `path.stem` will only remove the `.gz` from the example file._
+
+In the `lib.py` file, create a function called `sample_id()` that takes a `Path` and returns the name of the sample. E.g., if you had a path like this `Path("reads/BAY_C1.fq.gz")`, this function would return `BAY_C1`.
+
+###### Parsing gzipped FASTQ Files
+
+For working with [gzip](https://www.gzip.org/) compressed FASTQ files, you'll need to use Python's [gzip](https://docs.python.org/3/library/gzip.html) module. Something like this:
+
+```python
+# "rt" mode for text reading
+with gzip.open(path, "rt") as file:
+    for record in SeqIO.parse(file, "fastq"):
+        # process each record
+```
+
+###### Converting `SeqRecord` to `ReadInfo`
+
+For each `SeqRecord` that you get with [`SeqIO.parse()`](https://biopython.org/wiki/SeqIO), you need to convert it into a `ReadInfo` [named tuple](https://pythonforlifescientists.com/collections/#named-tuples).
+
+- In the `lib.py` file, create a named tuple called `ReadInfo` with the following fields:
+    - `SampleID`: The unique identifier for the sample from which the read originated
+    - `QualityScore`: The mean quality score of the read
+    - `GC`: The GC percent of the read
+- Next, in the `lib.py` file create a function called `make_read_info` that takes a sample name and a `SeqRecord` and returns a `ReadInfo`
+    - This will require you to write some additional helper functions:
+        - `def quality_score(seq_record)`: Get the quality scores from a `SeqRecord`
+        - `def mean_quality_score(seq_record)`: Calculate the mean quality score for a `SeqRecord`
+        - `def gc_percent(seq_record)`: Calculate the GC percent for a `SeqRecord`
+    - I know you could write this function without those helpers, but this is my assignment, and I say you have to write the helpers! (*^‿^*)
+
+#### Part 1B: Parse Metadata and Merge with Read Data
+
+- Parse the `metadata.tsv` file and merge the metadata with the read quality information.
+- You can use [pandas.read_csv()](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html) for this, but you will have to check out the docs to figure out how to change the delimiter.
+
+#### Part 1C: Quality Distributions by Variable
+
+- Generate KDE distribution plots using [seaborn.displot()](https://seaborn.pydata.org/generated/seaborn.displot.html) for all combinations of read property (Quality Score and GC%) and sample variable (Batch, Location, Condition).  The arguments should be like this:
+    - x-axis: Read property (Quality Score and GC%)
+    - y-axis: Sample variable (Batch, Location, Condition)
+    - fill: true
+    - height: 2
+    - aspect: 2
+- Then, use the plots to answer the following questions:
+    - Which variable is most closely identified with differences in Quality Score?
+    - Which variable is most closely identified with differences in GC Content?
+
+##### Details & Hints
+
+To create multiple plots with different variables, you can either write each combination out by hand, or you can use a for loop like this:
+
+```python
+# Example of creating plots in a loop
+for read_property in ["QualityScore", "GC"]:
+    for variable in ["Batch", "Location", "Condition"]:
+        # Your plot code here...
+```
+
+#### Part 1D: Quality Scores and GC Content for Individual Samples
+
+- Generate box plots with [seaborn.catplot()](https://seaborn.pydata.org/generated/seaborn.catplot.html) for Quality Score and GC Content. Use these arguments:
+    - x-axis: Read property (quality score, GC)
+    - y-axis: SampleID
+    - fill: true
+- Set the `hue` for each plot to the variable that best explains the differences in each read property. (You identified the variables in Part 1C.)
+- Which sample has the lowest average quality scores?
+
+#### Part 1E: Read Counts
+
+- Create a data frame with the number of reads for each sample (hint: you could use [value_counts()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.value_counts.html) for this)
+- Merge the metadata data frame and the read counts data frame
+- Generate read count bar plots for each sample with [seaborn.catplot()](https://seaborn.pydata.org/generated/seaborn.catplot.html). Use these arguments:
+    - x-axis: Read Count
+    - y-axis: SampleID
+    - fill: true
+- Examine the plot to determine which variable is most closely associated with differences in read count across samples
+- Redo the the previous bar plot, but this time set the `hue` to the variable you identified in the previous step
+- Determine if there is a significant difference in read lengths for that variable using ANOVA (use the one from [statsmodels](https://www.statsmodels.org/stable/anova.html) this time)
+- If there is a significant difference run Tukey's HSD and plot the test results results (use the one from [statsmodels](https://www.statsmodels.org/stable/generated/statsmodels.stats.multicomp.pairwise_tukeyhsd.html#statsmodels.stats.multicomp.pairwise_tukeyhsd))
+
+##### Details & Hints
+
+For analyzing read count differences:
+
+```python
+# ANOVA
+formula = ...
+model = ols(formula, data=...).fit()
+anova_result = sm.stats.anova_lm(model, typ=2)
+
+# Tukey's HSD
+result = sm.stats.multicomp.pairwise_tukeyhsd(
+    ...,
+    groups=...,
+)
+_ = result.plot_simultaneous()
+```
+
+### Part 2: Per-Base Quality Analysis __(Optional)__
+
+_Note: This part is completly optional! You will not be penalized for not attempting it. I suggest you do give it a try though, since we will be making a similar plot to the ones you will have seen in the output of the [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) in your Systems Biology class._
+
+In this part, you'll examine quality score distributions at each nucleotide position.  Here are the steps:
+
+1. Select a subset of samples representing different conditions (use these `["CHR_C1.fq.gz", "NEM_C2.fq.gz", "JEF_C1.fq.gz", "BAY_C3.fq.gz"]`)
+2. For each sample, extract quality scores at each base position for each read
+3. Create box plots to visualize how quality varies along the length of reads
+
+This might seem a bit tricky, so let's go over the details. Check out this pseudocode:
+
+```
+paths := join the "reads" directory with the four FASTQ files
+
+# Process each FASTQ file
+for each path in paths:
+    sample_id := get the sample ID from the path
+
+    # Create a list to hold quality scores from all reads in this file
+    quality_scores := empty list
+
+    #  Open and read the compressed FASTQ file
+    open the gzipped file for text-reading:
+        # Extract quality scores from each read
+        for each read in the file:
+            read_qualities := get per-base quality scores from read
+
+            append read_qualities to quality_scores
+
+    # Convert list of quality score lists to numpy matrix
+    quality_matrix := convert quality_scores to numpy matrix
+
+    # Convert numpy matrix to pandas data frame
+    quality_df := convert quality_matrix to pandas data frame
+
+    # Generate box plot
+    create box plot using quality_df showing quality distribution by position
+```
+
+To join paths, you can use pathlib's [joinpath()](https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.joinpath):
+
+
+```python
+paths = [
+    Path("...whatever directory name...").joinpath(path) for path in [..., ..., ...]
+]
+```
+
+Here is some code to help you get started that converts the list of lists to a numpy matrix, then converts that to the pandas data frame:
+
+```python
+# Convert list of lists to matrix
+quality_data = np.matrix(quality_scores)
+
+# Column names should run from 1 to the length of the reads.
+# You could use `np.arange()` for this.
+column_names = ...
+
+# Convert to DataFrame and reshape
+per_base_quality_scores = (
+    pd.DataFrame(quality_data, columns=...)
+    .melt(
+        var_name=...,
+        value_name=...,
+    )
+    .assign(SampleID=sample)
+)
+```
+
+Here is some code to help you generate the plot:
+
+```python
+# Then make a per-base quality score plot. It has a box plot of score
+# distributions for each base in the set of reads.
+sns.catplot(
+    per_base_quality_scores,
+    kind=...,
+    x=...,
+    y=...,
+    showfliers=False,
+    aspect=2,
+).set(
+    ylim=(0, None),
+    title=...,
+    ylabel=...,
+    xticks=range(4, 100, 5),
+)
+```
+
+Make sure that the title includes the sample ID (e.g., "XYZ_T1 Per-Base Quality Score" or something similar).
+
+### Part 3: Quality Filtering __(Required)__
+
+In this section, you'll implement a read filtering strategy.  For each FASTQ file, you will have to:
+
+- Get the sample name
+- Get the name of the output file
+- Track the total number of reads
+- Track the number of "good" reads
+- Check for primer sequences at the start of the reads
+    - If a read starts with one of the two primer sequences, remove that primer sequence from the start of the read
+    - `PRIMER_1 = "GGTTGTTTCCGCCCAGAGCT"`
+    - `PRIMER_2 = "CTTTCTAATGGGCTT"`
+- Check if a read is of good or bad quality
+    - If it is good, it will be written to the output file
+    - If it is bad, it won't be written to the output file
+- Report the number and percentage of reads that passed filtering for each sample
+
+Here is some more pseudocode to get you started:
+
+```
+paths := xyz
+
+PRIMER_1 := GGTTGTTTCCGCCCAGAGCT
+PRIMER_2 := CTTTCTAATGGGCTT
+
+for each path in paths:
+    sample := get the name of the sample from the path
+    outfile_name := get the name of the outfile from the path
+
+    total_reads := 0
+    printed_reads := 0
+
+    open the gzipped file for text-reading, and the outfile for writing:
+        for each record in the parsed FASTQ file:
+            total_reads := total_reads + 1
+            record := record with any primers removed
+
+            if the read is good quality:
+                printed_reads := printed_reads + 1
+                write the FASTQ formated record to the outfile
+
+    print the sample_id, total_reads, printed_reads, and percent_printed
+```
+
+
+#### Details & Hints
+
+_Note: There is a similar example in the biopython cookbook called [Simple quality filtering for FASTQ files](https://biopython.org/docs/latest/Tutorial/chapter_cookbook.html#sec-fastq-filtering-example) that you may want to check out as well!_
+
+##### FASTQ Paths
+
+Use the `path.glob` like in part 1 to get all the Paths.
+
+##### Filtered Outfile Name
+
+This is a bit fiddly, so here is some starter code:
+
+```python
+def filtered_outfile_name(path):
+    directory = path.resolve().parent
+
+    # Strip off the .fq.gz
+    sample_name = ...
+
+    outfile_name = f"{sample_name}.filtered.fq"
+
+    return directory.joinpath(outfile_name)
+```
+
+You will find this function already in `lib.py`. You will need to complete it before using it.
+
+##### Opening Multiple Files
+
+Use multiple context managers in one `with` statement when you need to open both input and output files simultaneously:
+
+```python
+with gzip.open(input_path, "rt") as infile, open(output_path, "w") as outfile:
+    # Process files
+```
+
+##### Removing Primer Sequences
+
+Yoyu will implement a simple function to remove primer sequences. There are two possible primer sequences in the reads:
+
+```
+PRIMER_1 = "GGTTGTTTCCGCCCAGAGCT"
+PRIMER_2 = "CTTTCTAATGGGCTT"
+```
+
+- Not all reads will have primer sequences
+- If a read has a primer sequence, it will only ever be at the _start_ of the read
+- A read will have either 0 or 1 primer sequences (in other words: both primers will never be found in the same read)
+
+Write a function called `maybe_strip_primer` in `lib.py` that takes a `SeqRecord` and a list of primer sequences.  This function should return a `SeqRecord` with any primer sequences removed, and if no primer sequence is present, the original `SeqRecord` should be returned.
+
+_Note: You can remove reads and quality scores from the beginning of a `SeqRecord` using the normal string slicing notation. See the biopython [cookbook](https://biopython.org/docs/latest/Tutorial/chapter_seq_annot.html#sec-seqrecord-slicing) for details._
+
+_Note: If you remember learning about Illumina sequencing in your other classes, you might think this "primer trimming" is a bit weird. Just roll with it!_
+
+##### Checking Read Quality
+
+For this project, a read is considered low quality if it has 25 or more bases whose Phred quality score is strictly less than 25.
+
+In the `lib.py` file, write a function called `is_quality_good` that takes a `SeqRecord` and returns a boolean indicating whether the sequence is good quality or not. (Use the `quality_scores` function you defined in Part 1 to help you out.)
+
+## Requirements
+
+Your completed miniproject should include:
+
+1. A Quarto notebook (`miniproject_3_solution.qmd`) with:
+    a. Code for all three parts of the analysis
+    b. Visualizations, interpretations, and discussions of your findings
+    c. Comments explaining your approach
+2. A Python module (`lib.py`) containing helper functions
+
+Follow all the guidelines mentioned above when writing those files!
+
+The directory structure you should have at the end of the project should look something like this:
+
+```
+miniproject_3_ryan_moore/
+├── lib.py
+├── metadata.tsv
+├── miniproject_3_instructions.qmd
+├── miniproject_3_solution.qmd
+└── reads
+    ├── BAY_C1.filtered.fq
+    ├── BAY_C1.fq.gz
+    ├── BAY_C2.filtered.fq
+    ├── BAY_C2.fq.gz
+    ├── ... (more read files)
+```
+
+You will need to zip (or tar) that directory and upload the resulting zipped (or tar) file. (You can use `zip` or `tar`, whichever you're most comfortable with.)
+
+Please don't make additional changes to this structure! You will need to leave the structure as is for me to be able to run your code. If you do not keep the structure as is, and if you do not adjust the top level directory with your name, I will return your project to you without additional comments until you correct it.
+
+Also, remember that this is a miniproject, so you should be engaging meaningfully with the material and trying to discuss the results you find. Simply writing code with no exposition will not satisfy the requirements for the miniproject!
+
+Good luck with your final miniproject!
+
+_Note: please let me know if you find any errors in this document!_

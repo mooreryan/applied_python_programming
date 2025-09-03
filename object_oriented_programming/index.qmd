@@ -5,7 +5,7 @@ date: "2025-03-04"
 jupyter: python3
 ---
 
-# Introduction to Object-Oriented Programming
+# Introduction to Object-Oriented Programming {#sec-oop}
 
 Think about the natural world around you for a moment. You can imagine birds, trees, cells, and countless other entities. Each of these things has specific characteristics and behaviors that help you recognize them. One way to turn these entities into code is by using Classes and Objects.
 

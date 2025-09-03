@@ -1,0 +1,213 @@
+---
+author: "Ryan M. Moore, PhD"
+date-modified: last-modified
+date: "2025-02-16"
+jupyter: python3
+---
+
+# Miniproject 1: Modeling Amoeba Population Growth {.unnumbered}
+
+_Note: To complete the miniproject, download the [quarto document](https://github.com/mooreryan/applied_python_programming/blob/main/miniprojects/amoebas/index.qmd) and complete any required sections._
+
+## Overview
+
+Let's build a fun simulation that models how populations of amoebas grow and change over time! We'll create a simplified version of their life cycle where these single-celled organisms can:
+
+- Grow or shrink randomly
+- Split into two when they get too big
+- Die if they become too small
+
+While this is a simplified model compared to real amoeba biology, it lets us explore some interesting population dynamics while practicing core programming concepts.
+
+### What You'll Need
+
+In addition to Python 3 and Quarto, which you should have set up in Module 0, you will need to install [seaborn](https://seaborn.pydata.org/index.html), a package for statistical data visualization. Follow the instructions in this [installation guide](https://seaborn.pydata.org/installing.html) to get it set up.
+
+### Learning Goals
+
+By completing this project, you will:
+
+- Practice breaking complex problems into smaller, manageable pieces
+- Get hands-on experience with loops and if/else logic
+- Learn to track data across multiple iterations
+- Create your first data visualization
+- Practice explaining your code and thought process
+
+## The Basic Rules
+
+Your amoeba population should follow these rules.
+
+### Starting conditions
+
+- Begin with 10 amoebas
+- Each amoeba starts at size 10
+
+### Each turn
+
+- Every amoeba randomly grows or shrinks between -2 and +2 units
+- If an amoeba gets smaller than 5 units, it dies
+- If an amoeba grows larger than 15 units, it splits into two amoebas, each half the size
+- Keep track of:
+  - The total number of living amoebas (`population_history`)
+  - How many amoebas died (`death_history`)
+  - How many times amoebas split into two (`split_history`)
+
+We'll store these measurements in three lists: `population_history`, `death_history`, and `split_history`. This will let us see how our population changes over time and create some interesting visualizations later.
+
+_Note: Using these exact variable names will ensure the plotting code works smoothly at the end of the project._
+
+### Ending the Simulation
+
+The simulation runs until either:
+
+- 999 turns have passed, or
+- All amoebas have died
+
+## What to Include in Your Write-up
+
+Your project should include:
+
+- The simulation code itself
+- Well-commented code
+  - Help your future self (and others) understand your thinking
+  - Explain the "why" behind key decisions
+- A brief discussion of your implementation choices
+  - What approaches did you consider?
+  - Why did you choose your final solution?
+- Analysis of results
+  - What patterns did you observe in the population over time?
+  - Try changing some parameters (growth range, split/death thresholds, etc.)
+  - How do different settings affect population survival?
+
+### Experiment!
+
+Once you have a working simulation, try these variations:
+
+- Adjust the growth/shrink range
+- Change the split and death thresholds
+- Find settings that keep the population alive longer
+- What other parameters could you modify?
+
+Add a short paragraph to your write-up discussing the results of your experiments.
+
+**Remember**: The goal is to learn and explore. There's no single "right" answer!
+
+## Helpful Code Examples
+
+Here are some building blocks to help you get started.
+
+### Keeping Track of Changes Over Time
+
+In the amoeba simulation, you will need to monitor how total population, number of deaths, and number of splits change across turns. Here's a simple pattern that shows how to track these changes:
+
+```{python}
+# This list will store our values at each step
+sum_history = []
+
+# This tracks our current total
+running_sum = 0
+
+for number in range(5):
+    # Update our running total by adding the new value
+    running_sum += number
+
+    # Save this step's total to our history
+    sum_history.append(running_sum)
+```
+
+You could think of `sum_history` like taking snapshots of your data at each moment in time. Each time through the loop, we update our current value (`running_sum`) and then save that snapshot to our history list. This pattern is useful when you need to look back at how your values changed throughout your simulation.
+
+### Generating Numbers in a Range
+
+In this simulation, you will need to generate numbers within a range. Python makes this easy with the [`randint`](https://docs.python.org/3/library/random.html#random.randint) function from its `random` module. Think of it as setting up the minimum and maximum values you want, and letting Python pick random numbers within that range.
+
+Here's a simple example:
+
+```{python}
+import random
+
+for _ in range(5):
+    number = random.randint(-10, 10)
+    print(number)
+```
+
+This code creates a list of 5 random whole numbers, where each number can be anywhere from -10 to 10 (including both -10 and 10), and then prints out the number. Every time you run this code, you'll get a different set of numbers. Try running the code block a few times to check.
+
+_Note: The value range in `radom.randint(a, b)` is inclusive, meaning both the lower bound (`a`) and upper bound (`b`) can appear in your results._
+
+### Managing Your Amoeba Population
+
+A key piece of this simulation is handling the changing population of amoebas over time. It's a good idea to store our amoebas in a Python list, which works like a container that can hold multiple items. Each turn, we need to check each amoeba against our rules to determine if it:
+
+- Survives to the next turn
+- Dies and gets removed from the population
+- Splits into multiple amoebas
+
+Here's a straightforward way to handle these population changes. Instead of trying to modify our original population list directly (which can get messy), we'll create a new list for the survivors each turn.
+
+Here's a simple example to illustrate this concept:
+
+```{python}
+amoebas = [1, 2, 3, 4, 5, 6]
+print("Starting population:", amoebas)
+
+# Create an empty list to hold the survivors
+survivors = []
+
+# Check each amoeba against our survival rules
+for amoeba in amoebas:
+    # In this example, amoebas with even-numbered sizes survive
+    if amoeba % 2 == 0:
+        survivors.append(amoeba)
+    # Amoebas with odd-numbered sizes "die" by not being added to survivors
+
+# Update our population with the survivors
+amoebas = survivors
+print("Population after 1 turn:", amoebas)
+```
+
+This approach is particularly useful when embedded in a larger loop that tracks multiple turns. Each turn, you start fresh with a new survivors list, apply your rules, and then update the population accordingly.
+
+While Python offers several ways to accomplish this task, this method is particularly clear and reliable. It gives you complete control over which amoebas make it to the next generation and makes it easy to add more complex survival rules later.
+
+## Simulation
+
+### Simulation Code
+
+```{python}
+# Write your simulation code here!
+```
+
+### Visualizing Your Simulation Results
+
+Let's create a graph to see how your amoeba population changed over time! We'll use a Python library called seaborn to make a clear, professional-looking line plot that shows the total population, deaths, and splits at each turn of the simulation.
+
+Here's the code to create the visualization:
+
+```python
+import seaborn as sns
+
+# Set up the default seaborn style
+sns.set_theme()
+
+# Create a line plot showing all three metrics
+plot = sns.relplot(
+    data={
+        "Population": population_history,
+        "Deaths": death_history,
+        "Splits": split_history,
+    },
+    kind="line",
+)
+
+# Label the axes
+plot.set_axis_labels("Turn", "Amoeba Count")
+```
+
+If you used different variable names to track your data (instead of `population_history`, `death_history`, or `split_history`), simply replace those names in the code above with your variable names.
+
+This visualization will help you spot patterns in your simulation, like population booms and crashes, or how deaths and splits relate to each other. Don't worry if some of the plotting code looks unfamiliar -- we'll dive deeper into data visualization with seaborn in future lessons!
+
+## Analysis
+
+Write your analysis text here!

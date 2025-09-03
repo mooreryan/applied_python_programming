@@ -1,0 +1,25 @@
+SampleID	PatientID	Batch	Location	Condition
+CHR_C1	0626	A	Christiana Hospital	Control
+CHR_C2	5542	A	Christiana Hospital	Control
+CHR_C3	26ED	A	Christiana Hospital	Control
+CHR_T1	8936	A	Christiana Hospital	Treatment
+CHR_T2	0ED2	A	Christiana Hospital	Treatment
+CHR_T3	870D	A	Christiana Hospital	Treatment
+NEM_C1	E226	A	Nemours Children's Hospital	Control
+NEM_C2	AF46	A	Nemours Children's Hospital	Control
+NEM_C3	5DD6	A	Nemours Children's Hospital	Control
+NEM_T1	A68B	A	Nemours Children's Hospital	Treatment
+NEM_T2	1646	A	Nemours Children's Hospital	Treatment
+NEM_T3	0036	A	Nemours Children's Hospital	Treatment
+JEF_C1	7033	B	Jefferson Hospital	Control
+JEF_C2	26B0	B	Jefferson Hospital	Control
+JEF_C3	5E49	B	Jefferson Hospital	Control
+JEF_T1	52A4	B	Jefferson Hospital	Treatment
+JEF_T2	9E47	B	Jefferson Hospital	Treatment
+JEF_T3	9283	B	Jefferson Hospital	Treatment
+BAY_C1	7FEB	B	Bayhealth Medical Center	Control
+BAY_C2	8581	B	Bayhealth Medical Center	Control
+BAY_C3	29DB	B	Bayhealth Medical Center	Control
+BAY_T1	BF68	B	Bayhealth Medical Center	Treatment
+BAY_T2	6404	B	Bayhealth Medical Center	Treatment
+BAY_T3	C2FE	B	Bayhealth Medical Center	Treatment

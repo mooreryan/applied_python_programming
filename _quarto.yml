@@ -19,19 +19,26 @@ book:
 
   # Content
   chapters:
-    - index.qmd
-    - basics/index.qmd
-    - collections/index.qmd
-    - algorithmic_thinking/index.qmd
-    - understanding_functions/index.qmd
-    - text: "Object-Oriented Programming"
-      href: object_oriented_programming/index.qmd
-    - errors_exceptions/index.qmd
-    - text: "Exploratory Data Analysis"
-      href: exploratory_data_analysis/index.qmd
-    - text: "Statistics & Modeling"
-      href: stats_models/index.qmd
-    - io_files_contexts/index.qmd
+    - part: Chapters
+      chapters:
+        - index.qmd
+        - basics/index.qmd
+        - collections/index.qmd
+        - algorithmic_thinking/index.qmd
+        - understanding_functions/index.qmd
+        - text: "Object-Oriented Programming"
+          href: object_oriented_programming/index.qmd
+        - errors_exceptions/index.qmd
+        - text: "Exploratory Data Analysis"
+          href: exploratory_data_analysis/index.qmd
+        - text: "Statistics & Modeling"
+          href: stats_models/index.qmd
+        - io_files_contexts/index.qmd
+    - part: Miniprojects
+      chapters:
+        - miniprojects/amoebas/index.qmd
+        - miniprojects/gene_expression/index.qmd
+        - miniprojects/read_qc/index.qmd
   appendices:
     - part: Basics
       chapters:
