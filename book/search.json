@@ -4,7 +4,27 @@
     "href": "index.html",
     "title": "Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery",
     "section": "",
-    "text": "Introduction\nWelcome to Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery! This book is designed for biology and life science students with little to no prior coding experience. Rather than aiming to make you Python experts, the goal is to help you develop fundamental programming concepts and data analysis skills using Python as a practical tool.\nThe content progresses from basic syntax through algorithms, functions, classes, error handling, data science applications, and testing methodologies. Each concept is presented with life science examples to show how programming principles can enhance your research capabilities.\nThis resource serves as an introduction to computational and algorithmic thinking in biological contexts, providing a solid foundation to approach scientific questions from a programming perspective and to effectively incorporate data analysis using Python into your research workflow.\n\nApplied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery by Ryan M. Moore is licensed under CC BY 4.0",
+    "text": "Introduction\nWelcome to Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery! This book is designed for biology and life science students with little to no prior coding experience. Rather than aiming to make you Python experts, the goal is to help you develop fundamental programming concepts and data analysis skills using Python as a practical tool.\nThe content progresses from basic syntax through algorithms, functions, classes, error handling, data science applications, and testing methodologies. Each concept is presented with life science examples to show how programming principles can enhance your research capabilities.\nThis resource serves as an introduction to computational and algorithmic thinking in biological contexts, providing a solid foundation to approach scientific questions from a programming perspective and to effectively incorporate data analysis using Python into your research workflow.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#book-structure",
+    "href": "index.html#book-structure",
+    "title": "Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery",
+    "section": "Book Structure",
+    "text": "Book Structure\nThe material in this online textbook has been used to teach a one semester introduction Python programming to life scientists. The nine numbered chapters (Basics through I/O, Files, & Contexts) made up the majority of the course material. You will also see various appendices. These include practice problems and solutions, and answers to “Stop & Think” questions posed throughout the textbook. Additionally, appendices include some short treatments of useful topics like regular expressions (Appendix M — Regular Expressions).",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery",
+    "section": "License",
+    "text": "License\n\nApplied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery by Ryan M. Moore is licensed under CC BY 4.0",
     "crumbs": [
       "Introduction"
     ]
