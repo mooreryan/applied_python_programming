@@ -1,0 +1,153 @@
+---
+author: "Ryan M. Moore, PhD"
+date-modified: last-modified
+date: "2025-04-13"
+jupyter: python3
+---
+
+# Assignment 3: Using Python for Data Science {.unnumbered}
+
+_Note: To complete the assignment, you will need the material contained in the [data directory](https://github.com/mooreryan/applied_python_programming/blob/main/assignments/data_science/data). There, you will find the CSV files for the assignment. These files are slightly different than the ones from Chs. 7 & 8._
+
+## Overview
+
+In this assignment, you will work with common Python data science packages to analyze cancer death rates and their relationship to demographic and social factors across different states. You'll use packages such as pandas, NumPy, SciPy, Seaborn, and statsmodels to manipulate data, perform statistical analysis, and create visualizations.
+
+## Learning Objectives
+
+- Import and use common Python data science libraries
+- Clean and prepare datasets for analysis
+- Merge multiple datasets using pandas
+- Normalize data to account for population differences
+- Perform statistical tests (ANOVA, Tukey's HSD)
+- Create data visualizations for correlation analysis
+- Conduct Principal Component Analysis (PCA)
+
+## Data Files
+
+You will work with several datasets:
+
+- `cancer_deaths.csv`: Cancer death rates by state
+- `state_demographics.csv`: Demographic information by state
+- `bls_regions.csv`: Bureau of Labor Statistics regions for each state
+- `social_determinants.csv`: Social determinants of health by state
+
+## Instructions
+
+### Part 0: Install Needed Packages
+
+Ensure that you have the following packages installed:
+
+- numpy
+- pandas
+- scipy
+- seaborn
+- statsmodels
+
+Once you have them installed, you can put the following codeblock near the top of your Quarto document.
+
+```{python}
+import numpy as np
+import pandas as pd
+import scipy.stats as stats
+import seaborn as sns
+
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+from statsmodels.multivariate.pca import PCA
+
+pd.set_option("display.max_rows", 6)
+```
+
+### Part 1: Data Preparation
+
+1. Load the cancer death rates dataset
+2. Load and prepare the state demographics dataset:
+  - Extract state populations into a separate table
+  - Convert raw demographic counts to rates per 1000 people
+3. Load the BLS regions dataset
+4. Load and prepare the social determinants dataset:
+  - Merge with state population data
+  - Convert raw counts to rates per 1000 people
+  - Pivot the data frame to have variables as columns and states as rows
+
+Notes:
+  - Use pandas
+  - See Ch. 7 for an example
+
+### Part 2: Data Exploration
+
+#### Examine Predictors By Themselves
+
+1. Merge state demographics, state regions, and social determinants data into a single data frame called `predictors`.  You will need to chain together multiple `merge()` calls.  Use a `left` join to ensure that all states remain in the resulting data frame.
+2. Create a correlation heatmap (`clustermap()`) to explore relationships between predictors
+
+Notes:
+  - Use seaborn's `clustermap()` for the heatmap
+  - See Ch. 7 for an example of this
+
+#### Examine Cancer Death Rates & Predictors
+
+1. Join the cancer deaths data frame to the predictors data frame (use a `left` join again) called `cancer`
+2. Generate a correlation matrix from the `cancer` data frame
+  - This will give you a square matrix, which you need to filter as follows:
+    - Keep `Cancer Death Rate.Total`, `Cancer Death Rate.Breast`, `Cancer Death Rate.Colorectal`, `Cancer Death Rate.Lung` as columns
+    - Remove those same four variables from the rows
+    - Run the correlation heatmap on the resulting non-square correlation matrix
+
+Notes:
+  - Use seaborn's `clustermap()` for the heatmap
+  - See Ch. 7 for an example of this (there is an almost identical example for the filtering in that chapter)
+
+### Part 3: Statistical Testing
+
+1. Analyze cancer death rates by region
+  - Perform an ANOVA test to determine if there are significant differences between regions
+  - If there is a significant difference, conduct Tukey's HSD post-hoc test to identify which specific regions differ
+
+Notes:
+  - Use SciPy for the ANOVA
+  - Use statsmodels for the Tukey's HSD
+  - See Ch. 8 for example code
+
+### Part 4: Principal Components Analysis (PCA)
+
+1. Perform Principal Component Analysis (PCA):
+  - Prepare the data by dropping non-numeric columns
+  - Run PCA with standardization
+  - Create a scatter plot of the first two principal components, colored by region
+
+Notes:
+  - Use statsmodels for the PCA
+  - Use seaborn for the plot
+  - See Ch. 8 for example code for both the PCA and the plot function
+
+### Part 5: Interpretation
+
+This is an assignment, not a miniproject, so you only have to write a single sentence for these three items.  E.g., "the p-value for the ANOVA was 0.12 so we do not reject the null hypothesis", or, "strong trends in the PCA plot were seen: states grouped by BLS region", that sort of thing.
+
+1. Comment on the correlation patterns you observe in the heatmap
+2. Interpret the results of the ANOVA and Tukey's HSD tests
+3. Analyze the PCA results and discuss any patterns observed
+
+## Requirements
+
+- Create your solution in a Quarto notebook
+- Use the requested libraries
+- Your code should be well-commented and organized
+  - Each logical section of code should be in its own code block (like how I wrote previous chapters and assignments)
+  - Above code blocks, write a sentence of two describing what the following code block is about to do
+- Include the requested plots
+- Provide concise interpretations of your statistical findings (just one sentence is necessary)
+
+## Submission
+
+- Turn in a Quarto notebook with your name in the title, e.g., `assignment_3__ryan_moore.qmd`
+- This notebook should contain your code, visualizations, and interpretations.
+
+## Hints
+
+- Pay attention to how data is normalized to account for different state populations (see Ch. 7 for an example)
+- When merging datasets, be careful with the join type (left, right, inner, outer)
+- Pretty much everything you need to do has a very similar example in either Ch. 7 or Ch. 8, but you may need to go back to the documentation for the given packages for more info on the required functions and parameters.
+
+This assignment will help you gain practical experience with data manipulation, statistical analysis, and visualization using Python's data science ecosystem.  This will be a bit of a jump in difficulty, since you will need to put together example code from the chapters/tutorials rather than me giving it to you in this document.  Good luck!

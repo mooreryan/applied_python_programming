@@ -1,0 +1,595 @@
+---
+author: "Ryan M. Moore, PhD"
+date-modified: last-modified
+date: "2025-03-02"
+jupyter: python3
+---
+
+# Assignment 2: Functions & Problem Solving {.unnumbered}
+
+Welcome to your second Python programming assignment! Building on the fundamentals we covered in Assignment 1, we'll now explore more advanced concepts like dictionaries, functions, and algorithmic thinking. These tools will help you tackle more complex bioinformatics challenges.
+
+As with the previous assignment, each section follows a "learn by example" approach. I'll walk you through examples that demonstrate key concepts, and then you'll apply similar techniques to solve bioinformatics problems.
+
+## Requirements
+
+For each problem you will need to write a function. Ensure that the function has a docstring comment that follows Google's Style Guide (as discussed in Tutorial 4).
+
+Additionally, each problem has some "checks" that should run without error.
+
+Finally, you must demonstrate a good-faith effort by:
+
+- Showing clear understanding of the problems
+- Making genuine attempts to complete all tasks
+- Providing mostly correct solutions
+
+## Part 1: Amino Acid Counting
+
+In part 1, I will give you examples that are very similar to the problem you will need to solve. This will help you to build confidence and practice adapting existing solutions to your specific needs.
+
+_Note: Typing out your own solutions instead of copy-pasting my example code and tweaking variable names is a much better way to learn. You'll gain a deeper understanding by writing the code yourself!_
+
+### Part 1: Examples
+
+For the examples, we will practice by counting words in a sentence. We'll use a dictionary where each word is a key and the count is the value.
+
+#### Example 1.1: Counting words
+
+Create a function called `count_words` that takes a sentence (string) as input and returns a dictionary where each key is a word from the sentence and each value is the number of times that word appears. (To keep things simple, let's assume that sentences won't have any punctuation and that "words" are chunks of text separated by whitespace.)
+
+```{python}
+def count_words(text):
+    """
+    Count occurrences of each word in a text.
+
+    Args:
+        text (str): The input text to analyze.
+
+    Returns:
+        dict: A dictionary where keys are words and values are their counts.
+    """
+
+    # A dictionary to store the counts of all the words
+    word_counts = {}
+
+    # Convert the text to all lowercase, then split it on whitespace.
+    words = text.lower().split()
+
+    # Loop through each of the words
+    for word in words:
+        # Check if we have already seen this word
+        if word in word_counts:
+            # If we have seen the word, increment the count
+            word_counts[word] += 1
+        else:
+            # If we haven't seen the word, start the count at 1
+            word_counts[word] = 1
+
+    # Return the dictionary of counts
+    return word_counts
+
+
+count_words("i like to eat apple pie and to eat apple cake")
+```
+
+
+#### Example 1.2: Printing word counts
+
+Create a function called `print_word_counts` that takes a dictionary of word counts as input and prints each word alongside its count in a readable format (e.g., "word => count").
+
+```{python}
+def print_word_counts(word_counts):
+    """Print words that appear in the text and their counts."""
+
+    # Loop through every key-value pair in the dictionary
+    for word, count in word_counts.items():
+        # Print the data in a nice way
+        print(word, count, sep=" => ")
+```
+
+#### Example 1.3: Printing all word counts
+
+Create a function called `print_all_word_counts` that takes two parameters: a dictionary of word counts and a list of words. This function should print the count for each word in the provided list, displaying 0 for any words that don't appear in the dictionary.
+
+```{python}
+def print_all_word_counts(word_counts, all_possible_words):
+    """Print all possible words and their counts, even those with zero count."""
+
+    # Loop through every word given list of all words
+    for word in all_possible_words:
+        # Try and get the count of the word. Recall that `dict.get(x, default)`
+        # will return the `default` value if `x` is not found in the `dict`.
+        count = word_counts.get(word, 0)
+
+        # Print the data in a nice way
+        print(word, count, sep=" => ")
+```
+
+#### Using the Previous Functions
+
+And here are some examples of using all three of these functions:
+
+```{python}
+sentence = "the cat ate my homework and ate my laptop"
+all_words = [
+    "a",
+    "and",
+    "the",
+    "cat",
+    "dog",
+    "ate",
+    "shredded",
+    "my",
+    "you",
+    "project",
+    "assignment",
+    "laptop",
+]
+
+counts = count_words(sentence)
+print("Words in the text:")
+print_word_counts(counts)
+
+print("\nAll possible words:")
+print_all_word_counts(counts, all_words)
+```
+
+#### Example 1.4: Combining Functions Into a Pipeline
+
+Create a function called `count_and_print_words` that uses the above functions to take a sentence, count the words in the sentence, then print out the counts of the words in that sentence.
+
+```{python}
+def count_and_print_words(sentence):
+    """
+    Counts words in a sentence and prints their occurrences.
+
+    Args:
+        sentence (str): The input text to analyze for word frequencies.
+    """
+    word_counts = count_words(sentence)
+    print_word_counts(word_counts)
+
+
+count_and_print_words("the cat ate my homework and ate my laptop")
+```
+
+### Problem 1.1: Count Amino Acids
+
+Now that you have seen some examples, let's get to the first problem.
+
+Create a function called `count_amino_acids` that accepts a protein sequence string and returns a dictionary with the count of each amino acid present in that sequence.
+
+#### Requirements
+
+- Do not use the built-in `Counter` or `defaultdict` collections
+- Do not use the `str.count()` method
+- Use a regular dictionary and iteration similar to the example problem
+
+#### Problem 1.1: Solution
+
+```{python}
+# Write your code here!
+```
+
+After you fill in the code above, you should run this code to check your work!
+
+_Note: You will need to put brackets around `python` in the next line to be able to run the code._
+
+```python
+# Example usage
+protein = "MNQNLLVTKRDGSTERINLDKIHRVLDWAAEG"
+amino_acid_counts = count_amino_acids(protein)
+
+expected_output = {
+    "M": 1,
+    "N": 3,
+    "Q": 1,
+    "L": 4,
+    "V": 2,
+    "T": 2,
+    "K": 2,
+    "R": 3,
+    "D": 3,
+    "G": 2,
+    "S": 1,
+    "E": 2,
+    "I": 2,
+    "H": 1,
+    "W": 1,
+    "A": 2,
+}
+
+assert amino_acid_counts == expected_output
+```
+
+### Problem 1.2: Print Amino Acid Counts
+
+Create a function called `print_amino_acid_counts` that takes a dictionary of amino acids counts and prints each amino acid and its count in a nice way.
+
+#### Problem 1.2: Solution
+
+```{python}
+# Write your code here!
+```
+
+After you fill in the code above, you should run this code to check your work!
+
+
+_Note: You will need to put brackets around `python` in the next line to be able to run the code._
+
+```python
+# Example usage
+protein = "MNQNLLVTKRDGSTERINLDKIHRVLDWAAEG"
+amino_acid_counts = {"R": 3, "D": 3, "G": 2, "S": 1, "E": 2}
+print_amino_acid_counts(amino_acid_counts)
+```
+
+### Problem 1.3: Print All Amino Acid Counts
+
+Create a second version of the printing function called `print_all_amino_acid_counts` that prints counts for all 20 common amino acids, even those with zero counts. Here are all the single-letter codes for the amino acids as a Python list: `all_amino_acids = ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y"]`.
+
+#### Problem 1.3: Solution
+
+```{python}
+# Write your code here!
+```
+
+After you fill in the code above, you should run this code to check your work!
+
+_Note: You will need to put brackets around `python` in the next line to be able to run the code._
+
+```python
+# Example usage
+amino_acid_counts = {"R": 3, "D": 3, "G": 2, "S": 1, "E": 2}
+print_all_amino_acid_counts(amino_acid_counts)
+```
+
+### Problem 1.4: Combining Functions
+
+Using the functions you created earlier, create a single function called `count_and_print_amino_acids` that takes a protein sequence as input, counts the occurrences of each amino acid in the sequence, and then prints out the counts of only those amino acids that are present in the sequence.
+
+#### Problem 1.4: Solution
+
+```{python}
+# Write your code here!
+```
+
+After you fill in the code above, you should run this code to check your work!
+
+_Note: You will need to put brackets around `python` in the next line to be able to run the code._
+
+```python
+protein = "MNQNLLVTKRDGSTERINLDKIHRVLDWAAEG"
+count_and_print_amino_acids(protein)
+```
+
+## Part 2: DNA Sequence Comparison
+
+In part 2, rather than providing you with full example solutions, I will give you code samples to help you solve each problem. You will need to use techniques from part 1 in combination with ideas from the code samples to solve the problems.
+
+### Problem 2.1: Count DNA Matches
+
+Write a function called `count_matches` that compares two nucleotide sequences of equal length and returns the number of positions where they match. You can assume that the two sequences are of equal length.
+
+#### Problem 2.1: Code Samples
+
+Here are some code samples to help you get started.
+
+##### Using zip to loop multiple collections at once
+
+We can use `zip` to loop through the characters of multiple strings and other collections at the same time. [Zip](https://docs.python.org/3.3/library/functions.html#zip) is a handy function that we haven't really talked about, so, let's see some examples.
+
+```{python}
+# Looping over two strings
+for lowercase_letter, uppercase_letter in zip("apple", "APPLE"):
+    print(lowercase_letter, uppercase_letter)
+
+# Looping over two lists
+for a, b in zip([1, 2, 3], [10, 20, 30]):
+    print(a, b)
+
+# Creating a dictionary from two lists
+names = ["Pikachu", "Charmander", "Eevee"]
+types = ["Electric", "Fire", "Normal"]
+print(dict(zip(names, types)))
+
+# Zipping 3 lists
+rarities = ["Rare", "Common", "Rare"]
+# I use type_ here since 'type' is a reserved word in Python
+for name, type_, rarity in zip(names, types, rarities):
+    print(f"name: {name}, type: {type_}, rarity: {rarity}")
+```
+
+If one of the items is shorter than the other, zip will only use up elements until the shorter one is exhausted:
+
+```{python}
+text_1 = "apple"
+text_2 = "pie"
+for letter_1, letter_2 in zip(text_1, text_2):
+    print(letter_1, letter_2)
+```
+
+##### Tracking Values Across Loops
+
+Since the problem involves comparing nucleotides in a DNA sequence to nucleotides in another DNA sequence, and tracking the number of matches, you will need a way to track a variable across each iteration of a loop. Here is an example that tracks a running sum:
+
+```{python}
+# This tracks our current total
+running_sum = 0
+
+for number in range(5):
+    # Update our running total by adding the new value
+    running_sum += number
+
+print(running_sum)
+```
+
+Note that this is similar to the technique that you used in Miniproject 1.
+
+If you want to get fancy, you could get the sum using a comprehension:
+
+```{python}
+print(sum(x for x in range(5)))
+```
+
+What if you are given numbers from 0 to 9 and want to count how many numbers are less than 5? With a comprehension, you can limit the amount of items you include in the sum.
+
+```{python}
+print(sum(x < 5 for x in range(10)))
+```
+
+We can also use this comprehension + `sum` technique to count the number of letters in the first string that are "less than" their corresponding letter in the second string.
+
+```{python}
+print(sum(x < y for x, y in zip("abcde", "bcdcb")))
+```
+
+This example is a little obscure and requires some deeper Python knowledge: `True` and `False` have meaning in a numeric context -- `True` is like `1`, and `False` is like `0`. Check out this cool bit of code:
+
+```{python}
+print(True + True + False + True)
+print((True + True + True) / (True + True))
+```
+
+Okay, so why bother telling you this? There is a cool Python one-liner that you can do using a comprehension and the `sum` function to count the number of matching letters in two strings, which would solve Problem 2.1. You don't have to do it that way (you can use the basic `for` loop), but it is pretty neat if you can figure it out!
+
+#### Problem 2.1: Solution
+
+```{python}
+# Write your code here!
+```
+
+After you fill in the code above, you should run this code to check your work!
+
+_Note: You will need to put brackets around `python` in the next line to be able to run the code._
+
+```python
+# Example usage
+seq_1 = "ATCCTGCGTCTGAC"
+seq_2 = "AGCCTCCGTTTGAG"
+
+assert count_matches(seq_1, seq_2) == 10
+```
+
+### Problem 2.2: Score DNA Alignment
+
+Create a function called `score_alignment` that calculates a similarity score between two nucleotide sequences using a scoring matrix represented as a dictionary.
+
+In this problem, you should:
+
+- Create a scoring function that uses a custom scoring matrix to evaluate the similarity between two strings.
+- The function takes three arguments:
+  - `text_1`: The first string to compare
+  - `text_2`: The second string to compare
+  - `scoring_matrix`: A dictionary where keys are tuples of character pairs `(char_1, char_2)`, and values are numeric scores representing how similar those characters are
+- The function should:
+  - Assume both strings are the same length
+  - For each position, look up the score for the character pair in the scoring matrix
+  - Sum these scores to produce a total similarity score
+  - Return this total score
+
+This represents an improvement over simpler matching methods (like exact matches only) because it can account for characters that are similar but not identical. For example, in DNA sequences, transitions and transversions could have different scores.
+
+For problem 2.2, you should create a dictionary to represent the following scoring matrix:
+
+```
+# Matches
+A, A => 2
+C, C => 2
+G, G => 2
+T, T => 2
+
+# Transitions
+A, G => -1
+G, A => -1
+C, T => -1
+T, C => -1
+
+# Transversions
+A, C => -2
+C, A => -2
+G, T => -2
+T, G => -2
+A, T => -2
+T, A => -2
+C, G => -2
+G, C => -2
+```
+
+In this scoring scheme, matches are rewarded, and mismatches are always penalized, though [transitions are less penalized than transversions](https://www.mun.ca/biology/scarr/Transitions_vs_Transversions.html).
+
+#### Problem 2.2: Code Samples
+
+This problem is a bit trickier! Let's put down some code samples that will help you solve this problem.
+
+We can represent a scoring matrix as a dictionary that has tuples of letters for keys. In this case, our "alphabet" contains only three letters a, b, and c. Their similarity scores are:
+
+```
+a, a =>  3
+a, b =>  1
+a, c => -1
+b, a =>  1.5
+b, b =>  5
+b, c =>  1
+c, a => -2
+c, b =>  0.5
+c, c =>  4
+```
+
+Here is how you could represent this as a dictionary:
+
+```{python}
+scoring_matrix = {
+    ("a", "a"): 3,
+    ("a", "b"): 1,
+    ("a", "c"): -1,
+    ("b", "a"): 1.5,
+    ("b", "b"): 5,
+    ("b", "c"): 1,
+    ("c", "a"): -2,
+    ("c", "b"): 0.5,
+    ("c", "c"): 4,
+}
+```
+
+If you want to look up the score for two letters, it might look something like this:
+
+```{python}
+letter_1 = "c"
+letter_2 = "a"
+
+# Try to find the pair of ("c", "a") in the dictionary.
+# If it is not found, return 0.
+scoring_matrix.get((letter_1, letter_2), 0)
+```
+
+We return `0` as our default value so that the function doesn't give an error if some letter not in our alphabet is present in the string.
+
+Combine code similar to the above example with your solution to Problem 2.1, and you will be able to solve Problem 2.2.
+
+#### Problem 2.2: Solution
+
+```{python}
+scoring_matrix = ...  # put the scoring matrix code here
+
+# Put the alignment score function here!
+```
+
+After you fill in the code above, you should run this code to check your work!
+
+_Note: You will need to put brackets around `python` in the next line to be able to run the code._
+
+```python
+# Example usage
+dna_1 = "ATGCTAGCTA"
+dna_2 = "ACGCTATCTA"
+
+assert alignment_score(dna_1, dna_2, scoring_matrix) == 13
+```
+
+## Part 3: Codon Processing
+
+In molecular biology, codons (groups of three nucleotides) are the basic units of the genetic code. Processing DNA at the codon level is a common bioinformatics task.
+
+Let's create a function that processes text in 3-character chunks:
+
+### Problem 3.1: Codon Printing
+
+Create a function called `print_codons` that prints text in chunks of 3 characters.
+
+#### Problem 3.1: Code Samples
+
+Whenever you see something like, "process text in chunks", you should be thinking about string slicing:
+
+```{python}
+sentence = "the_cat_eats"
+
+print(sentence[0:3])
+print(sentence[4:7])
+print(sentence[8:12])
+```
+
+For codons, we want chunks of 3 characters. In this case, the length of the input string `"the_cat_eats"` is divisible by 3 so we don't have to worry about an incomplete chunk at the end. To keep things simple, we will use this assumption for the rest of the assignment as well. Let's use string slicing again to print the chunks:
+
+```{python}
+print(sentence[0:3])
+print(sentence[3:6])
+print(sentence[6:9])
+print(sentence[9:12])
+```
+
+Do you see how we start at index of 0, then get a chunk of 3 characters, and then move the index to the start of the next chunk of 3 characters? Let's show that by using an index `i` rather than putting the numbers in manually.
+
+```{python}
+i = 0
+print(sentence[i:i+3])
+
+i += 3
+print(sentence[i:i+3])
+
+i += 3
+print(sentence[i:i+3])
+
+i += 3
+print(sentence[i:i+3])
+```
+
+Simple enough...but what about the stop condition? We are assuming that the strings are always divisible by three, so that simplifies things, but we still need to figure out when to stop.
+
+We need to stop when `i` is less than the remaining chunk size from the end. In this case, if `i` is `10`, `11`, `12`, or higher, we should stop.
+
+To do this you could either use a while loop, manually increment the counter, and manage the stop condition with a boolean expression, or use a for loop with the range function. Remember that you can set a `step` value for the range function. Check it out:
+
+```{python}
+for x in range(0, 12, 3):
+    print(x)
+```
+
+Now, you just need to generalize the code by avoiding hard-coded numbers, and you'll have everything you need to solve the problem.
+
+#### Problem 3.1: Solution
+
+```{python}
+# Write your code here!
+```
+
+After you fill in the code above, you should run this code to check your work!
+
+_Note: You will need to put brackets around `python` in the next line to be able to run the code._
+
+```python
+# Example usage
+print_codons("ACTGACTATCATATAGTA")
+```
+
+### Problem 3.2: Codon Counting
+
+Create a function `count_codons` that counts occurrences of each 3-character chunk, and returns the counts as a dictionary.
+
+_Note: You're not allowed to use the `Counter` or `defaultdict` classes. Do the counting using a regular dictionary and looping._
+
+You don’t need additional examples for this problem. You already have all the necessary components from the previous code samples and your solutions to earlier problems. Specifically, you need to combine the loop from Problem 3.1 that iterates through each codon with the counting logic from Problem 1.
+
+#### Problem 3.2: Solution
+
+```{python}
+# Write your code here!
+```
+
+After you fill in the code above, you should run this code to check your work!
+
+_Note: You will need to put brackets around `python` in the next line to be able to run the code._
+
+```python
+print(count_codons("ACTGACTATCATATAGTA"))
+```
+
+## Summary
+
+In this assignment, you've built functions for basic DNA and protein sequence analysis. You’ve learned to:
+
+- Use dictionaries to count and store information about biological sequences
+- Create functions to compare sequences and calculate similarity scores
+- Process DNA at the codon level
+
+These skills are fundamental to bioinformatics programming and will help you tackle more complex problems. By breaking tasks into smaller functions and using the right data structures, you're building a strong foundation in computational thinking for data analysis.

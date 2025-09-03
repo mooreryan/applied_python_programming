@@ -36,18 +36,18 @@ Assignments and Miniprojects are there to test your learning. In general, they w
 This is roughly the progression we followed in the course:
 
 - [Chapter @sec-basics]
-- Assignment 1: Getting Started with Python (coming soon)
+- [Assignment 1: Getting Started with Python](assignments/getting_started/)
 - [Chapter @sec-collections]
 - [Miniproject 1: Modeling Amoeba Population Growth](miniprojects/amoebas/)
 - [Chapter @sec-algorithmic-thinking]
 - [Chapter @sec-functions]
-- Assignment 2: Functions, Algorithms, & Objects (coming soon)
+- [Assignment 2: Functions & Problem Solving](assignments/understanding_functions/)
 - [Chapter @sec-oop]
 - [Chapter @sec-errors-exceptions]
 - [Miniproject 2: Gene Expression Analysis](miniprojects/gene_expression/)
 - [Chapter @sec-eda]
 - [Chapter @sec-stats-models]
-- Assignment 3: Data Science (coming soon)
+- [Assignment 3: Using Python for Data Science](assignments/data_science/)
 - [Chapter @sec-io-files-contexts]
 - [Miniproject 3: Read Quality Control](miniprojects/read_qc/)
 

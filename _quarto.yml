@@ -34,6 +34,11 @@ book:
         - text: "Statistics & Modeling"
           href: stats_models/index.qmd
         - io_files_contexts/index.qmd
+    - part: Assignments
+      chapters:
+        - assignments/getting_started/index.qmd
+        - assignments/understanding_functions/index.qmd
+        - assignments/data_science/index.qmd
     - part: Miniprojects
       chapters:
         - miniprojects/amoebas/index.qmd
