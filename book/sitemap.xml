@@ -2,94 +2,106 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://appliedpythonprogramming.com/</loc>
-    <lastmod>2025-09-03T16:00:07.816Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.808Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/basics/</loc>
-    <lastmod>2025-09-03T16:00:07.813Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.805Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/collections/</loc>
-    <lastmod>2025-09-03T16:00:07.813Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.806Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/algorithmic_thinking/</loc>
-    <lastmod>2025-09-03T16:00:07.813Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.805Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/understanding_functions/</loc>
-    <lastmod>2025-09-03T16:00:07.818Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.814Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/object_oriented_programming/</loc>
-    <lastmod>2025-09-03T16:00:07.817Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.813Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/errors_exceptions/</loc>
-    <lastmod>2025-09-03T16:00:07.814Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.806Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/exploratory_data_analysis/</loc>
-    <lastmod>2025-09-03T16:00:07.814Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.807Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/stats_models/</loc>
-    <lastmod>2025-09-03T16:00:07.817Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.814Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/io_files_contexts/</loc>
-    <lastmod>2025-09-03T16:00:07.816Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.809Z</lastmod>
+  </url>
+  <url>
+    <loc>https://appliedpythonprogramming.com/miniprojects/amoebas/</loc>
+    <lastmod>2025-09-03T17:59:34.809Z</lastmod>
+  </url>
+  <url>
+    <loc>https://appliedpythonprogramming.com/miniprojects/gene_expression/</loc>
+    <lastmod>2025-09-03T17:59:34.809Z</lastmod>
+  </url>
+  <url>
+    <loc>https://appliedpythonprogramming.com/miniprojects/read_qc/</loc>
+    <lastmod>2025-09-03T17:59:34.810Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/basics/practice_problems/</loc>
-    <lastmod>2025-09-03T16:00:07.813Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.805Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/basics/practice_solutions/</loc>
-    <lastmod>2025-09-03T16:00:07.813Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.805Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/collections/practice_problems/</loc>
-    <lastmod>2025-09-03T16:00:07.814Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.806Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/collections/practice_solutions/</loc>
-    <lastmod>2025-09-03T16:00:07.814Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.806Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/errors_exceptions/think_answers/</loc>
-    <lastmod>2025-09-03T16:00:07.814Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.806Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/errors_exceptions/practice_solutions/</loc>
-    <lastmod>2025-09-03T16:00:07.814Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.806Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/exploratory_data_analysis/think_answers/</loc>
-    <lastmod>2025-09-03T16:00:07.815Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.807Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/exploratory_data_analysis/practice_solutions/</loc>
-    <lastmod>2025-09-03T16:00:07.815Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.807Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/stats_models/think_answers/</loc>
-    <lastmod>2025-09-03T16:00:07.818Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.814Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/stats_models/practice_solutions/</loc>
-    <lastmod>2025-09-03T16:00:07.817Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.814Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/io_files_contexts/think_answers/</loc>
-    <lastmod>2025-09-03T16:00:07.817Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.809Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/io_files_contexts/practice_solutions/</loc>
-    <lastmod>2025-09-03T16:00:07.817Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.809Z</lastmod>
   </url>
   <url>
     <loc>https://appliedpythonprogramming.com/regex/</loc>
-    <lastmod>2025-09-03T16:00:07.817Z</lastmod>
+    <lastmod>2025-09-03T17:59:34.813Z</lastmod>
   </url>
 </urlset>

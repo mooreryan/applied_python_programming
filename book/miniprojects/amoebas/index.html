@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryan M. Moore, PhD">
-<meta name="dcterms.date" content="2025-04-24">
+<meta name="dcterms.date" content="2025-02-16">
 <meta name="description" content="A beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research.">
 
-<title>Appendix K — Stop &amp; Think Answers — sec-io-files-contexts – Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery</title>
+<title>Miniproject 1: Modeling Amoeba Population Growth – Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -33,8 +68,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../io_files_contexts/practice_solutions/index.html" rel="next">
-<link href="../../stats_models/practice_solutions/index.html" rel="prev">
+<link href="../../miniprojects/gene_expression/index.html" rel="next">
+<link href="../../io_files_contexts/index.html" rel="prev">
 <link href="../../images/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -77,10 +112,10 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="Appendix K — Stop &amp; Think Answers — sec-io-files-contexts – Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery">
+<meta property="og:title" content="Miniproject 1: Modeling Amoeba Population Growth – Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery">
 <meta property="og:description" content="A beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research.">
 <meta property="og:site_name" content="Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery">
-<link rel="canonical" href="https://appliedpythonprogramming.com/io_files_contexts/think_answers/">
+<link rel="canonical" href="https://appliedpythonprogramming.com/miniprojects/amoebas/">
 </head>
 
 <body class="nav-sidebar docked quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
@@ -252,7 +287,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Appendices</li><li class="breadcrumb-item"><a href="../../io_files_contexts/think_answers/index.html">I/O, Files, &amp; Contexts</a></li><li class="breadcrumb-item"><a href="../../io_files_contexts/think_answers/index.html"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../miniprojects/amoebas/index.html">Miniprojects</a></li><li class="breadcrumb-item"><a href="../../miniprojects/amoebas/index.html">Miniproject 1: Modeling Amoeba Population Growth</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -366,7 +401,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../miniprojects/amoebas/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../miniprojects/amoebas/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Miniproject 1: Modeling Amoeba Population Growth</span></a>
   </div>
 </li>
@@ -510,16 +545,16 @@ ul.task-list li input[type="checkbox"] {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
  <span class="menu-text">I/O, Files, &amp; Contexts</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../io_files_contexts/think_answers/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../io_files_contexts/think_answers/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
   </div>
 </li>
@@ -544,16 +579,48 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul>
+  <li><a href="#what-youll-need" id="toc-what-youll-need" class="nav-link" data-scroll-target="#what-youll-need">What You’ll Need</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
+  </ul></li>
+  <li><a href="#the-basic-rules" id="toc-the-basic-rules" class="nav-link" data-scroll-target="#the-basic-rules">The Basic Rules</a>
+  <ul>
+  <li><a href="#starting-conditions" id="toc-starting-conditions" class="nav-link" data-scroll-target="#starting-conditions">Starting conditions</a></li>
+  <li><a href="#each-turn" id="toc-each-turn" class="nav-link" data-scroll-target="#each-turn">Each turn</a></li>
+  <li><a href="#ending-the-simulation" id="toc-ending-the-simulation" class="nav-link" data-scroll-target="#ending-the-simulation">Ending the Simulation</a></li>
+  </ul></li>
+  <li><a href="#what-to-include-in-your-write-up" id="toc-what-to-include-in-your-write-up" class="nav-link" data-scroll-target="#what-to-include-in-your-write-up">What to Include in Your Write-up</a>
+  <ul>
+  <li><a href="#experiment" id="toc-experiment" class="nav-link" data-scroll-target="#experiment">Experiment!</a></li>
+  </ul></li>
+  <li><a href="#helpful-code-examples" id="toc-helpful-code-examples" class="nav-link" data-scroll-target="#helpful-code-examples">Helpful Code Examples</a>
+  <ul>
+  <li><a href="#keeping-track-of-changes-over-time" id="toc-keeping-track-of-changes-over-time" class="nav-link" data-scroll-target="#keeping-track-of-changes-over-time">Keeping Track of Changes Over Time</a></li>
+  <li><a href="#generating-numbers-in-a-range" id="toc-generating-numbers-in-a-range" class="nav-link" data-scroll-target="#generating-numbers-in-a-range">Generating Numbers in a Range</a></li>
+  <li><a href="#managing-your-amoeba-population" id="toc-managing-your-amoeba-population" class="nav-link" data-scroll-target="#managing-your-amoeba-population">Managing Your Amoeba Population</a></li>
+  </ul></li>
+  <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation">Simulation</a>
+  <ul>
+  <li><a href="#simulation-code" id="toc-simulation-code" class="nav-link" data-scroll-target="#simulation-code">Simulation Code</a></li>
+  <li><a href="#visualizing-your-simulation-results" id="toc-visualizing-your-simulation-results" class="nav-link" data-scroll-target="#visualizing-your-simulation-results">Visualizing Your Simulation Results</a></li>
+  </ul></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/mooreryan/practical_python/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/mooreryan/practical_python/blob/main/miniprojects/amoebas/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Appendices</li><li class="breadcrumb-item"><a href="../../io_files_contexts/think_answers/index.html">I/O, Files, &amp; Contexts</a></li><li class="breadcrumb-item"><a href="../../io_files_contexts/think_answers/index.html"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../miniprojects/amoebas/index.html">Miniprojects</a></li><li class="breadcrumb-item"><a href="../../miniprojects/amoebas/index.html">Miniproject 1: Modeling Amoeba Population Growth</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Appendix K — Stop &amp; Think Answers — <a href="../index.html" class="quarto-xref"><span>Chapter 9</span></a></h1>
+<h1 class="title">Miniproject 1: Modeling Amoeba Population Growth</h1>
 </div>
 
 
@@ -570,7 +637,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 24, 2025</p>
+      <p class="date">February 16, 2025</p>
     </div>
   </div>
   
@@ -588,12 +655,220 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="../index.html#tip-09-missing-data" class="quarto-xref">Tip&nbsp;<span>9.1</span></a>: This file no longer included <code>Hello, this is my first file!</code> because the write mode (<code>"w"</code>) will overwrite the contents of existing files by default.</p>
-<p><a href="../index.html#tip-09-improving-error-messages" class="quarto-xref">Tip&nbsp;<span>9.2</span></a>: You could include the name of the file that caused the error.</p>
-<p><a href="../index.html#tip-09-parse-fasta-fastq" class="quarto-xref">Tip&nbsp;<span>9.3</span></a>: It won’t work correctly! At the time of writing this chapter, biopython gives a warning about the file format.</p>
-<p><a href="../index.html#tip-09-csv-no-header" class="quarto-xref">Tip&nbsp;<span>9.4</span></a>: If the <code>fieldnames</code> argument is omitted, the values in the first row of the file will be used as the field names and will be omitted from the results.</p>
+<p><em>Note: To complete the miniproject, download the <a href="https://github.com/mooreryan/applied_python_programming/blob/main/miniprojects/amoebas/index.qmd">quarto document</a> and complete any required sections.</em></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Let’s build a fun simulation that models how populations of amoebas grow and change over time! We’ll create a simplified version of their life cycle where these single-celled organisms can:</p>
+<ul>
+<li>Grow or shrink randomly</li>
+<li>Split into two when they get too big</li>
+<li>Die if they become too small</li>
+</ul>
+<p>While this is a simplified model compared to real amoeba biology, it lets us explore some interesting population dynamics while practicing core programming concepts.</p>
+<section id="what-youll-need" class="level3">
+<h3 class="anchored" data-anchor-id="what-youll-need">What You’ll Need</h3>
+<p>In addition to Python 3 and Quarto, which you should have set up in Module 0, you will need to install <a href="https://seaborn.pydata.org/index.html">seaborn</a>, a package for statistical data visualization. Follow the instructions in this <a href="https://seaborn.pydata.org/installing.html">installation guide</a> to get it set up.</p>
+</section>
+<section id="learning-goals" class="level3">
+<h3 class="anchored" data-anchor-id="learning-goals">Learning Goals</h3>
+<p>By completing this project, you will:</p>
+<ul>
+<li>Practice breaking complex problems into smaller, manageable pieces</li>
+<li>Get hands-on experience with loops and if/else logic</li>
+<li>Learn to track data across multiple iterations</li>
+<li>Create your first data visualization</li>
+<li>Practice explaining your code and thought process</li>
+</ul>
+</section>
+</section>
+<section id="the-basic-rules" class="level2">
+<h2 class="anchored" data-anchor-id="the-basic-rules">The Basic Rules</h2>
+<p>Your amoeba population should follow these rules.</p>
+<section id="starting-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="starting-conditions">Starting conditions</h3>
+<ul>
+<li>Begin with 10 amoebas</li>
+<li>Each amoeba starts at size 10</li>
+</ul>
+</section>
+<section id="each-turn" class="level3">
+<h3 class="anchored" data-anchor-id="each-turn">Each turn</h3>
+<ul>
+<li>Every amoeba randomly grows or shrinks between -2 and +2 units</li>
+<li>If an amoeba gets smaller than 5 units, it dies</li>
+<li>If an amoeba grows larger than 15 units, it splits into two amoebas, each half the size</li>
+<li>Keep track of:
+<ul>
+<li>The total number of living amoebas (<code>population_history</code>)</li>
+<li>How many amoebas died (<code>death_history</code>)</li>
+<li>How many times amoebas split into two (<code>split_history</code>)</li>
+</ul></li>
+</ul>
+<p>We’ll store these measurements in three lists: <code>population_history</code>, <code>death_history</code>, and <code>split_history</code>. This will let us see how our population changes over time and create some interesting visualizations later.</p>
+<p><em>Note: Using these exact variable names will ensure the plotting code works smoothly at the end of the project.</em></p>
+</section>
+<section id="ending-the-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="ending-the-simulation">Ending the Simulation</h3>
+<p>The simulation runs until either:</p>
+<ul>
+<li>999 turns have passed, or</li>
+<li>All amoebas have died</li>
+</ul>
+</section>
+</section>
+<section id="what-to-include-in-your-write-up" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-include-in-your-write-up">What to Include in Your Write-up</h2>
+<p>Your project should include:</p>
+<ul>
+<li>The simulation code itself</li>
+<li>Well-commented code
+<ul>
+<li>Help your future self (and others) understand your thinking</li>
+<li>Explain the “why” behind key decisions</li>
+</ul></li>
+<li>A brief discussion of your implementation choices
+<ul>
+<li>What approaches did you consider?</li>
+<li>Why did you choose your final solution?</li>
+</ul></li>
+<li>Analysis of results
+<ul>
+<li>What patterns did you observe in the population over time?</li>
+<li>Try changing some parameters (growth range, split/death thresholds, etc.)</li>
+<li>How do different settings affect population survival?</li>
+</ul></li>
+</ul>
+<section id="experiment" class="level3">
+<h3 class="anchored" data-anchor-id="experiment">Experiment!</h3>
+<p>Once you have a working simulation, try these variations:</p>
+<ul>
+<li>Adjust the growth/shrink range</li>
+<li>Change the split and death thresholds</li>
+<li>Find settings that keep the population alive longer</li>
+<li>What other parameters could you modify?</li>
+</ul>
+<p>Add a short paragraph to your write-up discussing the results of your experiments.</p>
+<p><strong>Remember</strong>: The goal is to learn and explore. There’s no single “right” answer!</p>
+</section>
+</section>
+<section id="helpful-code-examples" class="level2">
+<h2 class="anchored" data-anchor-id="helpful-code-examples">Helpful Code Examples</h2>
+<p>Here are some building blocks to help you get started.</p>
+<section id="keeping-track-of-changes-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="keeping-track-of-changes-over-time">Keeping Track of Changes Over Time</h3>
+<p>In the amoeba simulation, you will need to monitor how total population, number of deaths, and number of splits change across turns. Here’s a simple pattern that shows how to track these changes:</p>
+<div id="105926bf" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This list will store our values at each step</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sum_history <span class="op">=</span> []</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This tracks our current total</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>running_sum <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> number <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update our running total by adding the new value</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    running_sum <span class="op">+=</span> number</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save this step's total to our history</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    sum_history.append(running_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You could think of <code>sum_history</code> like taking snapshots of your data at each moment in time. Each time through the loop, we update our current value (<code>running_sum</code>) and then save that snapshot to our history list. This pattern is useful when you need to look back at how your values changed throughout your simulation.</p>
+</section>
+<section id="generating-numbers-in-a-range" class="level3">
+<h3 class="anchored" data-anchor-id="generating-numbers-in-a-range">Generating Numbers in a Range</h3>
+<p>In this simulation, you will need to generate numbers within a range. Python makes this easy with the <a href="https://docs.python.org/3/library/random.html#random.randint"><code>randint</code></a> function from its <code>random</code> module. Think of it as setting up the minimum and maximum values you want, and letting Python pick random numbers within that range.</p>
+<p>Here’s a simple example:</p>
+<div id="de4ca743" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    number <span class="op">=</span> random.randint(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-4
+9
+8
+-9
+10</code></pre>
+</div>
+</div>
+<p>This code creates a list of 5 random whole numbers, where each number can be anywhere from -10 to 10 (including both -10 and 10), and then prints out the number. Every time you run this code, you’ll get a different set of numbers. Try running the code block a few times to check.</p>
+<p><em>Note: The value range in <code>radom.randint(a, b)</code> is inclusive, meaning both the lower bound (<code>a</code>) and upper bound (<code>b</code>) can appear in your results.</em></p>
+</section>
+<section id="managing-your-amoeba-population" class="level3">
+<h3 class="anchored" data-anchor-id="managing-your-amoeba-population">Managing Your Amoeba Population</h3>
+<p>A key piece of this simulation is handling the changing population of amoebas over time. It’s a good idea to store our amoebas in a Python list, which works like a container that can hold multiple items. Each turn, we need to check each amoeba against our rules to determine if it:</p>
+<ul>
+<li>Survives to the next turn</li>
+<li>Dies and gets removed from the population</li>
+<li>Splits into multiple amoebas</li>
+</ul>
+<p>Here’s a straightforward way to handle these population changes. Instead of trying to modify our original population list directly (which can get messy), we’ll create a new list for the survivors each turn.</p>
+<p>Here’s a simple example to illustrate this concept:</p>
+<div id="4f68b343" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>amoebas <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Starting population:"</span>, amoebas)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list to hold the survivors</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>survivors <span class="op">=</span> []</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check each amoeba against our survival rules</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> amoeba <span class="kw">in</span> amoebas:</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># In this example, amoebas with even-numbered sizes survive</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> amoeba <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        survivors.append(amoeba)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Amoebas with odd-numbered sizes "die" by not being added to survivors</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Update our population with the survivors</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>amoebas <span class="op">=</span> survivors</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Population after 1 turn:"</span>, amoebas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Starting population: [1, 2, 3, 4, 5, 6]
+Population after 1 turn: [2, 4, 6]</code></pre>
+</div>
+</div>
+<p>This approach is particularly useful when embedded in a larger loop that tracks multiple turns. Each turn, you start fresh with a new survivors list, apply your rules, and then update the population accordingly.</p>
+<p>While Python offers several ways to accomplish this task, this method is particularly clear and reliable. It gives you complete control over which amoebas make it to the next generation and makes it easy to add more complex survival rules later.</p>
+</section>
+</section>
+<section id="simulation" class="level2">
+<h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
+<section id="simulation-code" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-code">Simulation Code</h3>
+<div id="4a3b2bee" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Write your simulation code here!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-your-simulation-results" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-your-simulation-results">Visualizing Your Simulation Results</h3>
+<p>Let’s create a graph to see how your amoeba population changed over time! We’ll use a Python library called seaborn to make a clear, professional-looking line plot that shows the total population, deaths, and splits at each turn of the simulation.</p>
+<p>Here’s the code to create the visualization:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the default seaborn style</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line plot showing all three metrics</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plot <span class="op">=</span> sns.relplot(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>{</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Population"</span>: population_history,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Deaths"</span>: death_history,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Splits"</span>: split_history,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">"line"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Label the axes</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plot.set_axis_labels(<span class="st">"Turn"</span>, <span class="st">"Amoeba Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you used different variable names to track your data (instead of <code>population_history</code>, <code>death_history</code>, or <code>split_history</code>), simply replace those names in the code above with your variable names.</p>
+<p>This visualization will help you spot patterns in your simulation, like population booms and crashes, or how deaths and splits relate to each other. Don’t worry if some of the plotting code looks unfamiliar – we’ll dive deeper into data visualization with seaborn in future lessons!</p>
+</section>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<p>Write your analysis text here!</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script>
@@ -1052,13 +1327,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../stats_models/practice_solutions/index.html" class="pagination-link" aria-label="Practice Problem Solutions">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span>
+      <a href="../../io_files_contexts/index.html" class="pagination-link" aria-label="I/O, Files, &amp; Contexts">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">I/O, Files, &amp; Contexts</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../io_files_contexts/practice_solutions/index.html" class="pagination-link" aria-label="Practice Problem Solutions">
-        <span class="nav-page-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../miniprojects/gene_expression/index.html" class="pagination-link" aria-label="Miniproject 2: Gene Expression Analysis">
+        <span class="nav-page-text">Miniproject 2: Gene Expression Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1070,7 +1345,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/mooreryan/practical_python/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/mooreryan/practical_python/blob/main/io_files_contexts/think_answers/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mooreryan/practical_python/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/mooreryan/practical_python/blob/main/miniprojects/amoebas/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

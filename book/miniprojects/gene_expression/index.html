@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.34">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ryan M. Moore, PhD">
+<meta name="dcterms.date" content="2025-03-24">
+<meta name="description" content="A beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research.">
+
+<title>Miniproject 2: Gene Expression Analysis – Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../miniprojects/read_qc/index.html" rel="next">
+<link href="../../miniprojects/amoebas/index.html" rel="prev">
+<link href="../../images/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-befe23ebd2f54d8af2c8a89d1a1611f1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2c408908ec444472cc25521ce0054295.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-701182bf76e8f184f9a54fc9608bd0c0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta property="og:title" content="Miniproject 2: Gene Expression Analysis – Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery">
+<meta property="og:description" content="A beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research.">
+<meta property="og:site_name" content="Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery">
+<link rel="canonical" href="https://appliedpythonprogramming.com/miniprojects/gene_expression/">
+</head>
+
+<body class="nav-sidebar docked quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../miniprojects/amoebas/index.html">Miniprojects</a></li><li class="breadcrumb-item"><a href="../../miniprojects/gene_expression/index.html">Miniproject 2: Gene Expression Analysis</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../images/dna_python_logo.webp" alt="DNA double helix to the left and Python logo to the right" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/mooreryan/practical_python" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Chapters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../basics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../collections/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Collections</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../algorithmic_thinking/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Algorithmic Thinking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../understanding_functions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../object_oriented_programming/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Object-Oriented Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../errors_exceptions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Errors &amp; Exceptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../exploratory_data_analysis/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../stats_models/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Statistics &amp; Modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../io_files_contexts/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">I/O, Files, &amp; Contexts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Miniprojects</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../miniprojects/amoebas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Miniproject 1: Modeling Amoeba Population Growth</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../miniprojects/gene_expression/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Miniproject 2: Gene Expression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../miniprojects/read_qc/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Miniproject 3: Read Quality Control</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Basics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../basics/practice_problems/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practice Problems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../basics/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Collections</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../collections/practice_problems/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Practice Problems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../collections/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Errors &amp; Exceptions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../errors_exceptions/think_answers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../errors_exceptions/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Exploratory Data Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../exploratory_data_analysis/think_answers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../exploratory_data_analysis/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Statistics &amp; Modeling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../stats_models/think_answers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../stats_models/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">I/O, Files, &amp; Contexts</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../io_files_contexts/think_answers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../io_files_contexts/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../regex/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">M</span>&nbsp; <span class="chapter-title">Regular Expressions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
+  <li><a href="#data-info" id="toc-data-info" class="nav-link" data-scroll-target="#data-info">Data Info</a>
+  <ul>
+  <li><a href="#input-data" id="toc-input-data" class="nav-link" data-scroll-target="#input-data">Input Data</a></li>
+  <li><a href="#output-data" id="toc-output-data" class="nav-link" data-scroll-target="#output-data">Output Data</a></li>
+  </ul></li>
+  <li><a href="#your-tasks" id="toc-your-tasks" class="nav-link" data-scroll-target="#your-tasks">Your Tasks</a></li>
+  <li><a href="#suggestions-and-code-samples" id="toc-suggestions-and-code-samples" class="nav-link" data-scroll-target="#suggestions-and-code-samples">Suggestions and Code Samples</a>
+  <ul>
+  <li><a href="#general-tips" id="toc-general-tips" class="nav-link" data-scroll-target="#general-tips">General Tips</a></li>
+  <li><a href="#parsing-numbers" id="toc-parsing-numbers" class="nav-link" data-scroll-target="#parsing-numbers">Parsing Numbers</a></li>
+  <li><a href="#arithmetic-mean-removing-none-values" id="toc-arithmetic-mean-removing-none-values" class="nav-link" data-scroll-target="#arithmetic-mean-removing-none-values">Arithmetic Mean &amp; Removing <code>None</code> Values</a></li>
+  <li><a href="#the-gene-class" id="toc-the-gene-class" class="nav-link" data-scroll-target="#the-gene-class">The <code>Gene</code> Class</a>
+  <ul>
+  <li><a href="#mean-expression" id="toc-mean-expression" class="nav-link" data-scroll-target="#mean-expression">Mean Expression</a></li>
+  <li><a href="#fold-change" id="toc-fold-change" class="nav-link" data-scroll-target="#fold-change">Fold Change</a></li>
+  <li><a href="#gene-status" id="toc-gene-status" class="nav-link" data-scroll-target="#gene-status">Gene Status</a></li>
+  <li><a href="#printing-expression-info" id="toc-printing-expression-info" class="nav-link" data-scroll-target="#printing-expression-info">Printing Expression Info</a></li>
+  </ul></li>
+  <li><a href="#parsing-gene-expression-data" id="toc-parsing-gene-expression-data" class="nav-link" data-scroll-target="#parsing-gene-expression-data">Parsing Gene Expression Data</a>
+  <ul>
+  <li><a href="#is_header" id="toc-is_header" class="nav-link" data-scroll-target="#is_header"><code>is_header</code></a></li>
+  <li><a href="#parse_data_row" id="toc-parse_data_row" class="nav-link" data-scroll-target="#parse_data_row"><code>parse_data_row</code></a></li>
+  <li><a href="#parse_expression_data" id="toc-parse_expression_data" class="nav-link" data-scroll-target="#parse_expression_data"><code>parse_expression_data</code></a></li>
+  </ul></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">Putting It All Together</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/mooreryan/practical_python/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/mooreryan/practical_python/blob/main/miniprojects/gene_expression/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../miniprojects/amoebas/index.html">Miniprojects</a></li><li class="breadcrumb-item"><a href="../../miniprojects/gene_expression/index.html">Miniproject 2: Gene Expression Analysis</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Miniproject 2: Gene Expression Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryan M. Moore, PhD </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 24, 2025</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">September 3, 2025</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>Note: To complete the miniproject, download the <a href="https://github.com/mooreryan/applied_python_programming/blob/main/miniprojects/gene_expression/index.qmd">quarto document</a> and complete any required sections.</em></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In this miniproject, you will analyze gene expression data to find genes that show different activity levels between two conditions (such as treatment vs.&nbsp;control). Gene expression analysis is a technique used in molecular biology that helps scientists understand how cells respond to different conditions by measuring changes in gene activity.</p>
+<p>This project gives you a chance to use your Python skills on a real biological problem while practicing the concepts you’ve learned in the course so far.</p>
+</section>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<p>By completing this miniproject, you will:</p>
+<ul>
+<li>Practice working with functions and classes</li>
+<li>Improve your ability to read example code and use it to build out longer solutions</li>
+<li>Gain hands-on experience working with CSV data</li>
+<li>Apply simple calculations to biological datasets</li>
+<li>Learn to interpret biological results that come from computational analysis</li>
+</ul>
+</section>
+<section id="data-info" class="level2">
+<h2 class="anchored" data-anchor-id="data-info">Data Info</h2>
+<section id="input-data" class="level3">
+<h3 class="anchored" data-anchor-id="input-data">Input Data</h3>
+<p>You will work with a simplified gene expression dataset that shows expression values for six genes across two conditions (control and treatment). Each condition has three samples: C1, C2, C3 for control and T1, T2, T3 for treatment. Here’s what the data looks like in table format:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>GeneId</th>
+<th>C1</th>
+<th>C2</th>
+<th>C3</th>
+<th>T1</th>
+<th>T2</th>
+<th>T3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gene_1</td>
+<td>37</td>
+<td>42</td>
+<td>39</td>
+<td>24</td>
+<td>27</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td>gene_2</td>
+<td>39</td>
+<td>na</td>
+<td>40</td>
+<td>18</td>
+<td>16</td>
+<td>20</td>
+</tr>
+<tr class="odd">
+<td>gene_3</td>
+<td>42</td>
+<td>40</td>
+<td>39</td>
+<td>55</td>
+<td>62</td>
+<td>60</td>
+</tr>
+<tr class="even">
+<td>gene_4</td>
+<td>38</td>
+<td>40</td>
+<td>39</td>
+<td>96</td>
+<td>85</td>
+<td>89</td>
+</tr>
+<tr class="odd">
+<td>gene_5</td>
+<td>39</td>
+<td>37</td>
+<td>39</td>
+<td>38</td>
+<td>na</td>
+<td>41</td>
+</tr>
+<tr class="even">
+<td>gene_6</td>
+<td>39</td>
+<td>40</td>
+<td>41</td>
+<td>38</td>
+<td>35</td>
+<td>42</td>
+</tr>
+</tbody>
+</table>
+<p>Each row represents a single gene. Each column contains the expression value for that gene in a specific sample.</p>
+<p>To make this data easier to work with in Python, we’ll store it as a string in CSV format:</p>
+<div id="a0336129" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>expression_data_text <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">GeneId,C1,C2,C3,T1,T2,T3</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">gene_1,37,42,39,24,27,22</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">gene_2,39,na,40,18,16,20</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">gene_3,42,40,39,55,62,60</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">gene_4,38,40,39,96,85,89</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">gene_5,39,37,39,38,na,41</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">gene_6,39,40,41,38,35,42</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>.strip()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We use <code>.strip()</code> at the end to remove any extra blank lines (whitespace) at the beginning or end of our text.</p>
+</section>
+<section id="output-data" class="level3">
+<h3 class="anchored" data-anchor-id="output-data">Output Data</h3>
+<p>For this problem, for each gene, you need to calculate and print out:</p>
+<ol type="1">
+<li>The mean expression value in control samples</li>
+<li>The mean expression value in treatment samples</li>
+<li>The log2 fold change in expression (calculated as <code>log2(mean_treatment / mean_control)</code>)</li>
+<li>The gene’s expression status</li>
+</ol>
+<p>Your output should be in tab-separated value (TSV) format. When complete, it should look something like this:</p>
+<pre><code>GeneId  Control Treatment   FC  Status
+gene_1  39.3    24.3    -0.69   ⇣
+gene_2  39.5    18.0    -1.13   ⇊
+gene_3  40.3    59.0    0.55    ⇡
+gene_4  39.0    90.0    1.21    ⇈
+gene_5  38.3    39.5    0.04    ⇄
+gene_6  40.0    38.3    -0.06   ⇄</code></pre>
+<p>For easier reading, here is what that data looks like as a table.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>GeneId</th>
+<th>Control</th>
+<th>Treatment</th>
+<th>FC</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gene_1</td>
+<td>39.3</td>
+<td>24.3</td>
+<td>-0.69</td>
+<td>⇣</td>
+</tr>
+<tr class="even">
+<td>gene_2</td>
+<td>39.5</td>
+<td>18.0</td>
+<td>-1.13</td>
+<td>⇊</td>
+</tr>
+<tr class="odd">
+<td>gene_3</td>
+<td>40.3</td>
+<td>59.0</td>
+<td>0.55</td>
+<td>⇡</td>
+</tr>
+<tr class="even">
+<td>gene_4</td>
+<td>39.0</td>
+<td>90.0</td>
+<td>1.21</td>
+<td>⇈</td>
+</tr>
+<tr class="odd">
+<td>gene_5</td>
+<td>38.3</td>
+<td>39.5</td>
+<td>0.04</td>
+<td>⇄</td>
+</tr>
+<tr class="even">
+<td>gene_6</td>
+<td>40.0</td>
+<td>38.3</td>
+<td>-0.06</td>
+<td>⇄</td>
+</tr>
+</tbody>
+</table>
+<p>More detailed instructions are given in the following sections.</p>
+</section>
+</section>
+<section id="your-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="your-tasks">Your Tasks</h2>
+<p>Please submit a Quarto notebook containing:</p>
+<ul>
+<li>Code that transforms the gene expression data into the format described above</li>
+<li>A brief analysis (1-2 paragraphs) interpreting your findings, explaining your implementation choices, and any challenges you faced</li>
+</ul>
+<p>For this miniproject, I’m providing more structured guidelines to help you practice breaking down problems and to give you specific practice with functions and classes. Your solution should include these components:</p>
+<ul>
+<li>A function called <code>mean</code> that calculates the average of a list of numbers, skipping any <code>None</code> values</li>
+<li>A <code>Gene</code> class
+<ul>
+<li>Required instance attributes:
+<ul>
+<li><code>gene_id</code></li>
+<li><code>control_values</code></li>
+<li><code>treatment_values</code></li>
+</ul></li>
+<li>Required instance methods:
+<ul>
+<li><code>__init__</code></li>
+<li><code>mean_control_value</code></li>
+<li><code>mean_treatment_value</code></li>
+<li><code>fold_change</code></li>
+<li><code>log2_fold_change</code></li>
+<li><code>status</code></li>
+<li><code>print_expression_info</code></li>
+</ul></li>
+</ul></li>
+<li>Functions for parsing input data:
+<ul>
+<li><code>is_header</code></li>
+<li><code>parse_float</code></li>
+<li><code>parse_data_row</code></li>
+<li><code>parse_expression_data</code></li>
+</ul></li>
+<li>A variable called <code>expression_data_text</code> to hold the raw data
+<ul>
+<li>Code to run the whole process:
+<ul>
+<li>Parse <code>expression_data_text</code> into <code>gene_expression_data</code></li>
+<li>Print a header line</li>
+<li>Loop through each <code>Gene</code> object and display its expression information</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>This might seem like a lot, but don’t worry! In the next section, we’ll break down each component, explain what they should do, and provide helpful examples to guide your solution.</p>
+</section>
+<section id="suggestions-and-code-samples" class="level2">
+<h2 class="anchored" data-anchor-id="suggestions-and-code-samples">Suggestions and Code Samples</h2>
+<p>In this section, we will go over suggestions on how to structure your code and some code samples that will be helpful when writing your solution. Think of these as building blocks that you can adapt to your solution!</p>
+<p><em>Note: In the following code samples, you will see <code>pass</code> and <code>...</code>. These are Python’s “placeholders” that mark where code needs to be added later. When you see these placeholders in the examples, it’s a signal that you should replace them with your own code. Think of them as temporary markers saying “your code goes here.”</em></p>
+<section id="general-tips" class="level3">
+<h3 class="anchored" data-anchor-id="general-tips">General Tips</h3>
+<ul>
+<li>Use clear variable names and add comments to explain your logic.</li>
+<li>Use docstrings to add context to functions and classes. This helps you remember what each function does.</li>
+<li>Keep your functions short and focused on one task. Use the examples to guide you!</li>
+<li>Don’t forget to handle potential errors in the data, such as missing values or mathematical errors.</li>
+<li>When you’re stuck, review similar examples from class materials. The solutions to many problems use similar techniques to those we’ve already covered.</li>
+</ul>
+</section>
+<section id="parsing-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="parsing-numbers">Parsing Numbers</h3>
+<p>The data for this assignment comes to you as a string. You’ll need to convert some of these strings into numbers (or expression values). Converting strings to numbers (also called “parsing”) can be done using the <code>int</code> and <code>float</code> functions:</p>
+<div id="cd68169f" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">int</span>(<span class="st">"32"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">float</span>(<span class="st">"4.7"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>32
+4.7</code></pre>
+</div>
+</div>
+<p>This works perfectly when the string actually represents a number. But what happens when the string you’re trying to convert isn’t a valid number?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">float</span>(<span class="st">"na"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you run this code, you’ll get an error:</p>
+<pre><code>ValueError                Traceback (most recent call last)
+Cell In[1], line 1
+----&gt; 1 float("na")
+
+ValueError: could not convert string to float: 'na'</code></pre>
+<p>We discussed this exact situation of trying to convert a non-number to a float in <a href="https://mooreryan.github.io/practical_python/chapters/06_errors.html#reading-error-messages">Tutorial 6</a>.</p>
+<p>When facing this problem, we need to decide: should our program crash, or should we handle the error gracefully? For this gene expression miniproject, we need to parse many expression values. If a few are “bad,” we probably don’t want the entire analysis to fail. We could either assign a default value or skip the problematic entries.</p>
+<p>These types of decisions should be based on your biological knowledge of the data and understanding of why these issues might occur.</p>
+<p>Let’s consider the presence of <code>na</code> values (meaning “data not available”). You should ask yourself: “What do these <code>na</code> values actually mean in my dataset?” For example:</p>
+<ul>
+<li>Was there a problem with the sample during sequencing?</li>
+<li>Was there contamination?</li>
+<li>Were there no reads mapping to that gene in that sample?</li>
+<li>Was there a data entry error?</li>
+</ul>
+<p>Your answer guides your strategy. If <code>na</code> indicates unreliable data due to transcription errors (perhaps values copied incorrectly from a lab notebook), we might want to ignore these values by converting them to Python’s <code>None</code> value. Alternatively, if <code>na</code> represents zero reads mapping to a gene, we should convert it to <code>0</code>.</p>
+<p>This is where your biology expertise becomes valuable: understanding what your data actually represents.</p>
+<p>For this project, let’s assume that <code>na</code> indicates an unknown problem, and we should convert these values to <code>None</code>. We can use <code>try/except</code> like this:</p>
+<div id="88ad6231" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="bu">float</span>(<span class="st">"na"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"could not convert 'na' to a float"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>could not convert 'na' to a float</code></pre>
+</div>
+</div>
+<p>This approach works well! Note that catching a <code>ValueError</code> will also handle other issues like <code>float("47b")</code> or <code>float("apple pie")</code> – any invalid number format. For this miniproject, we’ll treat all number conversion problems as errors to be skipped.</p>
+<p>Here’s how we can write this as a reusable function:</p>
+<div id="2e5d720e" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_float(string):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">float</span>(string)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"could not convert '</span><span class="sc">{</span>string<span class="sc">}</span><span class="ss">' to a float"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s test our function:</p>
+<div id="5dd9cfb7" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(parse_float(<span class="st">"3"</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(parse_float(<span class="st">"3.14"</span>))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(parse_float(<span class="st">"4.3e-2"</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(parse_float(<span class="st">"na"</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(parse_float(<span class="st">"apple pie"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3.0
+3.14
+0.043
+could not convert 'na' to a float
+None
+could not convert 'apple pie' to a float
+None</code></pre>
+</div>
+</div>
+<p>It’s best to use this more robust error handling approach to parse floating-point numbers in your miniproject code instead of using the <code>float</code> function directly. This method helps your program handle unexpected inputs gracefully rather than crashing.</p>
+</section>
+<section id="arithmetic-mean-removing-none-values" class="level3">
+<h3 class="anchored" data-anchor-id="arithmetic-mean-removing-none-values">Arithmetic Mean &amp; Removing <code>None</code> Values</h3>
+<p>Let’s remember how to calculate the arithmetic mean (average) of a list of numbers: add all the numbers together, then divide by how many numbers you have.</p>
+<ul>
+<li>To add up all numbers in a list, use the <code>sum</code> function</li>
+<li>To count how many items are in a list, use the <code>len</code> function</li>
+</ul>
+<p>When working with biological data, you might use functions like <code>parse_float</code> that we discussed earlier. These functions can sometimes return <code>None</code> values when they encounter data they can’t convert. Before calculating the mean, you need to remove these <code>None</code> values because:</p>
+<ol type="1">
+<li>You can’t add <code>None</code> to a number (it will cause an error)</li>
+<li><code>None</code> values shouldn’t be counted when determining the list length</li>
+</ol>
+<p>Here are two simple ways to create a new list that contains only the non-<code>None</code> values:</p>
+<div id="a46e3eb4" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="va">None</span>, <span class="dv">2</span>, <span class="va">None</span>, <span class="dv">3</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>filtered_numbers <span class="op">=</span> []</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> number <span class="kw">in</span> numbers:</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> number <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        filtered_numbers.append(number)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(filtered_numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1, 2, 3]</code></pre>
+</div>
+</div>
+<p>Or, using a shorter approach called a list comprehension:</p>
+<div id="1fc04266" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="va">None</span>, <span class="dv">2</span>, <span class="va">None</span>, <span class="dv">3</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>filtered_numbers <span class="op">=</span> [number <span class="cf">for</span> number <span class="kw">in</span> numbers <span class="cf">if</span> number <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(filtered_numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1, 2, 3]</code></pre>
+</div>
+</div>
+<p>You should run filtering code like this <em>before</em> calculating the mean. This ensures your program works correctly and doesn’t crash. Your mean function might look something like this:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean(numbers):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter out all the None values from `numbers`</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    filtered_numbers <span class="op">=</span> ...</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the mean:</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... sum up the numbers ...</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... divide the sum by the total non-None elements in the list ...</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-gene-class" class="level3">
+<h3 class="anchored" data-anchor-id="the-gene-class">The <code>Gene</code> Class</h3>
+<p>One of the requirements is that you need to create a <code>Gene</code> class to organize the expression data for each gene. <a href="https://mooreryan.github.io/practical_python/chapters/05_classes.html#methods">Tutorial 5</a> contains all the information you need about building classes for this miniproject. To help you get started, I’ve provided a skeleton of the class you’ll need to create. Each method includes comments to guide you through the implementation process.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Gene:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="bu">id</span>, control_expression_values, treatment_expression_values):</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... assign your instance attributes here ...</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mean_control_value(<span class="va">self</span>):</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... calculate the mean value of expression in control samples</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mean_treatment_value(<span class="va">self</span>):</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... calculate the mean value of expression in treatment samples</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fold_change(<span class="va">self</span>):</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... calculate the fold change ...</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> log2_fold_change(<span class="va">self</span>):</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        fold_change <span class="op">=</span> <span class="va">self</span>.fold_change()</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ... calculate log2 of the fold change ...</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> status(<span class="va">self</span>):</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>        log2_fold_change <span class="op">=</span> <span class="va">self</span>.log2_fold_change()</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Run the logic to test status of fold change</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> print_expression_info(<span class="va">self</span>):</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get rounded mean control expression value</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get rounded mean treatment expression value</span></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get rounded log2 fold change</span></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get gene status</span></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print gene_id, mean_control_value, mean_treatment_value,</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># log2_fold_change, and status separated by tabs</span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, let’s go over some of the individual methods.</p>
+<section id="mean-expression" class="level4">
+<h4 class="anchored" data-anchor-id="mean-expression">Mean Expression</h4>
+<p>Let’s see an example of how to calculate mean expression. You should use the <code>mean</code> function that you have already written.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a placeholder for the mean function you will have defined.</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean(numbers):</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>gene_1_control_expression_values <span class="op">=</span> [<span class="dv">10</span>, <span class="va">None</span>, <span class="dv">20</span>]</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>gene_1_treatment_expression_values <span class="op">=</span> [<span class="va">None</span>, <span class="dv">40</span>, <span class="dv">30</span>]</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>gene_1_control_expression_mean <span class="op">=</span> mean(gene_1_control_expression_values)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>gene_2_treatment_expression_mean <span class="op">=</span> mean(gene_2_treatment_expression_values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This shows the basic approach if you weren’t using a class structure. For your assignment, you’ll need to adapt this concept to create the instance methods <code>mean_control_value</code> and <code>mean_treatment_value</code>.</p>
+<p>Remember that in a class, expression values are stored as instance attributes. You’ll need to access them using <code>self.my_instance_attribute</code> syntax. This allows each gene object to calculate its own mean expression values based on the data stored within it.</p>
+</section>
+<section id="fold-change" class="level4">
+<h4 class="anchored" data-anchor-id="fold-change">Fold Change</h4>
+<p>We are interested in finding the fold change, which is the ratio between the mean expression in the treatment group and the mean expression in the control group. Simply put:</p>
+<pre><code>gene_1_fold_change = gene_1_treatment_expression_mean / gene_1_control_expression_mean</code></pre>
+<p>Can you think of any potential errors that might occur when running this code? (For example, what happens if the control value is zero? Check <a href="https://mooreryan.github.io/practical_python/chapters/06_errors.html#exception-hierarchies">this section</a> of Tutorial 6 for a hint about handling this type of error.)</p>
+<p>Scientists often use the log base 2 of the fold change instead of the raw fold change. This makes the numbers easier to interpret:</p>
+<ul>
+<li>A gene expressed twice as much in treatment vs control has a log2 fold change of 1</li>
+<li>A gene expressed half as much in treatment vs control has a log2 fold change of -1</li>
+<li>Genes with similar expression in both conditions have values close to 0</li>
+</ul>
+<p>Here’s how to calculate the log2 fold change:</p>
+<div id="c1eda89e" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>mean_treatment_expression <span class="op">=</span> <span class="fl">20.5</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>mean_control_expression <span class="op">=</span> <span class="fl">13.2</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>fold_change <span class="op">=</span> mean_treatment_expression <span class="op">/</span> mean_control_expression</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>log2_fold_change <span class="op">=</span> math.log2(fold_change)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(log2_fold_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.6350859801469928</code></pre>
+</div>
+</div>
+<p>Like the regular fold change calculation, this code might also produce errors depending on your input values. Can you identify potential issues and how to handle them?</p>
+<p>You’ll need to implement this code as part of your <code>Gene</code> class by creating <code>fold_change</code> and <code>log2_fold_change</code> methods. Remember that since these are instance methods, you’ll need to access the data using <code>self</code>.</p>
+</section>
+<section id="gene-status" class="level4">
+<h4 class="anchored" data-anchor-id="gene-status">Gene Status</h4>
+<p>For each gene, you’ll need to assign a “status” based on its log2 fold change value. The status shows whether a gene is upregulated (more active) or downregulated (less active) between experimental conditions. Here’s how to categorize them:</p>
+<ul>
+<li>Less than -1.0 -&gt; strong downregulation (shown as <code>"⇊"</code>)</li>
+<li>Between -1.0 and -0.5 -&gt; slight downregulation (shown as <code>"⇣"</code>)</li>
+<li>Between -0.5 and 0.5 -&gt; neither up- nor downregulated (shown as <code>"⇄"</code>)</li>
+<li>Between 0.5 and 1.0 -&gt; slight upregulation (shown as <code>"⇡"</code>)</li>
+<li>Greater than 1.0 -&gt; strong upregulation (shown as <code>"⇈"</code>)</li>
+</ul>
+<p>You should structure your code using if-elif-else statements like this:</p>
+<pre><code>if ...conditional statement...:
+    # Strong upregulation
+    return "⇈"
+elif ...conditional statement...:
+    # Slight upregulation
+    return "⇡"
+elif ...conditional statement...:
+    # Strong downregulation
+    return "⇊"
+elif ...conditional statement...:
+    # Slight downregulation
+    return "⇣"
+else:
+    # Neither up- or downregulated
+    return "⇄"</code></pre>
+<p>Replace each <code>...conditional statement...</code> with the appropriate condition based on the log2 fold change values.</p>
+<p>This code needs to be integrated into your <code>Gene</code> class. Here’s how you might do it:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Gene:</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... other methods ...</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> status(<span class="va">self</span>):</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        log2_fold_change <span class="op">=</span> <span class="va">self</span>.log2_fold_change()</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ...conditional statement...:</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Strong upregulation</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"⇈"</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> ...conditional statement...:</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Slight upregulation</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"⇡"</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> ...conditional statement...:</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Strong downregulation</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"⇊"</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> ...conditional statement...:</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Slight downregulation</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"⇣"</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Neither up- or downregulated</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"⇄"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="printing-expression-info" class="level4">
+<h4 class="anchored" data-anchor-id="printing-expression-info">Printing Expression Info</h4>
+<p>The <code>print_expression_info</code> method displays the gene’s expression data in an organized format. This method should:</p>
+<ol type="1">
+<li>Gets the mean control expression value (rounded to 1 decimal place)</li>
+<li>Gets the mean treatment expression value (rounded to 1 decimal place)</li>
+<li>Gets the log2 fold change (rounded to 2 decimal places)</li>
+<li>Gets the gene’s expression status (shown as an arrow symbol)</li>
+<li>Prints all these values separated by tabs</li>
+</ol>
+<p>This should be an instance method in your <code>Gene</code> class. To get these values, use the other methods you’ve defined in the class by calling them with the <code>self.my_method</code> syntax. For example, you can get the rounded mean control value with <code>round(self.mean_control_value(), 1)</code>, and the expression status with <code>self.status()</code>.</p>
+<p>That’s it for the <code>Gene</code> class! Let’s move on to parsing the expression data.</p>
+</section>
+</section>
+<section id="parsing-gene-expression-data" class="level3">
+<h3 class="anchored" data-anchor-id="parsing-gene-expression-data">Parsing Gene Expression Data</h3>
+<p>Parsing this data will involve:</p>
+<ul>
+<li>Looping through lines in a text file: <code>for line in text.splitlines()</code></li>
+<li>Splitting a line at commas: <code>line.strip().split(",")</code></li>
+<li>Checking if a line is the header row: <code>line.startswith("... some string ...")</code></li>
+</ul>
+<p>Let’s walk through the three functions you need to complete this task: <code>is_header</code>, <code>parse_data_row</code>, and <code>parse_expression_data</code>.</p>
+<section id="is_header" class="level4">
+<h4 class="anchored" data-anchor-id="is_header"><code>is_header</code></h4>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_header(line):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Do some check to see if line is a header or not</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To identify the header line, use a function that checks if a line begins with a specific string. Look at the first line of your data file and identify what makes it different from the data rows. Use this characteristic to identify the header.</p>
+</section>
+<section id="parse_data_row" class="level4">
+<h4 class="anchored" data-anchor-id="parse_data_row"><code>parse_data_row</code></h4>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Each line represents a "row" or "record" of expression data for a</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># particular gene.</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_data_row(line):</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    fields <span class="op">=</span> line.strip().split(<span class="st">","</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the gene_id</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    gene_id <span class="op">=</span> ...</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Parse the control values</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    control_values <span class="op">=</span> ...</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Parse the treatment values</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    treatment_values <span class="op">=</span> ...</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the Gene object</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    gene <span class="op">=</span> Gene(gene_id, control_values, treatment_values)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gene</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When you use <code>line.strip().split(",")</code>, the <code>fields</code> variable becomes a list containing each item from your comma-separated line.</p>
+<p>The list elements will be organized like this: - Position 0: gene id - Positions 1-3: expression values for the control samples (3 samples) - Positions 4-6: expression values for the treatment samples (3 samples)</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fields <span class="op">=</span> [<span class="st">"gene_1"</span>, <span class="st">"10"</span>, <span class="st">"15"</span>, <span class="st">"12"</span>, <span class="st">"100"</span>, <span class="st">"150"</span>, <span class="st">"120"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can extract these values using list slicing:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gene_id <span class="op">=</span> fields[<span class="dv">0</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>control_values <span class="op">=</span> fields[<span class="dv">1</span>:<span class="dv">4</span>]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>treatment_values <span class="op">=</span> fields[<span class="dv">4</span>:<span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Remember that these values will be strings. You’ll need to convert <code>control_values</code> and <code>treatment_values</code> to floats using your <code>parse_float</code> function and either a loop or list comprehension.</p>
+</section>
+<section id="parse_expression_data" class="level4">
+<h4 class="anchored" data-anchor-id="parse_expression_data"><code>parse_expression_data</code></h4>
+<p>This function combines the other steps we’ve discussed. Here’s an outline to get you started:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_expression_data(text):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an empty list to store gene expression data</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For each line in the text file:</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Check if it's a header line</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If it's not a header:</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Parse the data line</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>            gene <span class="op">=</span> parse_data_row(line)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Add the gene to your gene expression data list</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the complete gene expression data</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Fill in the details using what you’ve learned about checking for headers and parsing data rows.</p>
+</section>
+</section>
+<section id="putting-it-all-together" class="level3">
+<h3 class="anchored" data-anchor-id="putting-it-all-together">Putting It All Together</h3>
+<p>All together, your code might be organized something like this:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># define a mean function that can handles lists with both numbers and None</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># values</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># define the Gene class:</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define the __init__ method</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define the mean_control_value method</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define the mean_treatment_value method</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define the fold_change method</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define the log2_fold_change method</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define the status method</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># define the print_expression_info method</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co"># define is_header function</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="co"># define parse_float function</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="co"># define parse_data_row function</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="co"># define parse_expression_data function</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="co"># define a variable to hold the expression data text</span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>expression_data_text <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="st">GeneId,C1,C2,C3,T1,T2,T3</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a><span class="st">gene_1,37,42,39,24,27,22</span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="st">gene_2,39,na,40,18,16,20</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="st">gene_3,42,40,39,55,62,60</span></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a><span class="st">gene_4,38,40,39,96,85,89</span></span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a><span class="st">gene_5,39,37,39,38,na,41</span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a><span class="st">gene_6,39,40,41,38,35,42</span></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>.strip()</span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse the gene expression data using your parse_expression_data function</span></span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>gene_expression_data <span class="op">=</span> parse_expression_data(expression_data_text)</span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the header line</span></span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"GeneId"</span>, <span class="st">"Control"</span>, <span class="st">"Treatment"</span>, <span class="st">"FC"</span>, <span class="st">"Status"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the gene expression data for each gene</span></span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene <span class="kw">in</span> gene_expression_data:</span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>    gene.print_expression_info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Your complete solution will likely be between 100-150 lines of code, not including docstrings and comments. This length will vary based on your coding style. For example, using list comprehensions instead of loops might make your code shorter. Adding extra helper functions or using more detailed comments will make it longer.</p>
+<p>Don’t worry if this seems like a lot of code! This miniproject isn’t asking you to do anything extremely complex. The challenge is bringing multiple concepts together to solve a bigger problem – a common approach in bioinformatics workflows.</p>
+<p>If you get stuck, remember to: 1. Review the example code from tutorials 2. Look back at previous assignments and miniprojects 3. Break down each problem into smaller steps 4. Build your solution one function at a time</p>
+<p>If you’re still having trouble, we can discuss any issues during class or student hours!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+  function switchImagesForTheme(theme) {
+    document.querySelectorAll("img").forEach((img) => {
+      // Only process SVGs ending with _light.svg or _dark.svg
+      const lightMatch = img.src.match(/_light\.svg$/);
+      const darkMatch = img.src.match(/_dark\.svg$/);
+
+      if (theme === "quarto-dark" && lightMatch) {
+        img.src = img.src.replace("_light.svg", "_dark.svg");
+      } else if (theme === "quarto-light" && darkMatch) {
+        img.src = img.src.replace("_dark.svg", "_light.svg");
+      }
+    });
+  }
+
+  const observer = new MutationObserver(() => {
+    // Get the current theme class, 'quarto-light' or 'quarto-dark'
+    const theme = [...document.body.classList].find(
+      (c) => c === "quarto-light" || c === "quarto-dark"
+    );
+    if (theme) {
+      switchImagesForTheme(theme);
+    }
+  });
+
+  // Make sure the correct images are loaded
+  const initialTheme = [...document.body.classList].find(
+    (c) => c === "quarto-light" || c === "quarto-dark"
+  );
+  if (initialTheme) {
+    switchImagesForTheme(initialTheme);
+  }
+
+  // Start watching for class changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+</script>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/appliedpythonprogramming\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../miniprojects/amoebas/index.html" class="pagination-link" aria-label="Miniproject 1: Modeling Amoeba Population Growth">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Miniproject 1: Modeling Amoeba Population Growth</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../miniprojects/read_qc/index.html" class="pagination-link" aria-label="Miniproject 3: Read Quality Control">
+        <span class="nav-page-text">Miniproject 3: Read Quality Control</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Ryan M. Moore. CC BY 4.0.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mooreryan/practical_python/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/mooreryan/practical_python/blob/main/miniprojects/gene_expression/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://orcid.org/0000-0003-3337-8184">
+      <i class="bi bi-person-lines-fill" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=W08DPpMAAAAJ">
+      <i class="bi bi-journals" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mooreryan">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

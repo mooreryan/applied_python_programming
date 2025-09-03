@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.34">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ryan M. Moore, PhD">
+<meta name="dcterms.date" content="2025-04-30">
+<meta name="description" content="A beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research.">
+
+<title>Miniproject 3: Read Quality Control – Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../basics/practice_problems/index.html" rel="next">
+<link href="../../miniprojects/gene_expression/index.html" rel="prev">
+<link href="../../images/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-befe23ebd2f54d8af2c8a89d1a1611f1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2c408908ec444472cc25521ce0054295.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-701182bf76e8f184f9a54fc9608bd0c0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta property="og:title" content="Miniproject 3: Read Quality Control – Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery">
+<meta property="og:description" content="A beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research.">
+<meta property="og:site_name" content="Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery">
+<link rel="canonical" href="https://appliedpythonprogramming.com/miniprojects/read_qc/">
+</head>
+
+<body class="nav-sidebar docked quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../miniprojects/amoebas/index.html">Miniprojects</a></li><li class="breadcrumb-item"><a href="../../miniprojects/read_qc/index.html">Miniproject 3: Read Quality Control</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../images/dna_python_logo.webp" alt="DNA double helix to the left and Python logo to the right" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/mooreryan/practical_python" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Chapters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../basics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../collections/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Collections</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../algorithmic_thinking/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Algorithmic Thinking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../understanding_functions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../object_oriented_programming/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Object-Oriented Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../errors_exceptions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Errors &amp; Exceptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../exploratory_data_analysis/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../stats_models/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Statistics &amp; Modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../io_files_contexts/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">I/O, Files, &amp; Contexts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Miniprojects</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../miniprojects/amoebas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Miniproject 1: Modeling Amoeba Population Growth</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../miniprojects/gene_expression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Miniproject 2: Gene Expression Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../miniprojects/read_qc/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Miniproject 3: Read Quality Control</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Basics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../basics/practice_problems/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practice Problems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../basics/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Collections</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../collections/practice_problems/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Practice Problems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../collections/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Errors &amp; Exceptions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../errors_exceptions/think_answers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../errors_exceptions/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Exploratory Data Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../exploratory_data_analysis/think_answers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../exploratory_data_analysis/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Statistics &amp; Modeling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../stats_models/think_answers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../stats_models/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">I/O, Files, &amp; Contexts</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../io_files_contexts/think_answers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Stop &amp; Think Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../io_files_contexts/practice_solutions/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Practice Problem Solutions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../regex/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">M</span>&nbsp; <span class="chapter-title">Regular Expressions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
+  <li><a href="#data-info" id="toc-data-info" class="nav-link" data-scroll-target="#data-info">Data Info</a>
+  <ul>
+  <li><a href="#input-files" id="toc-input-files" class="nav-link" data-scroll-target="#input-files">Input Files</a></li>
+  <li><a href="#fastq-format-reminder" id="toc-fastq-format-reminder" class="nav-link" data-scroll-target="#fastq-format-reminder">FASTQ Format Reminder</a></li>
+  <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure">Project Structure</a></li>
+  </ul></li>
+  <li><a href="#your-tasks" id="toc-your-tasks" class="nav-link" data-scroll-target="#your-tasks">Your Tasks</a>
+  <ul>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">Set Up</a></li>
+  <li><a href="#part-1-basic-read-quality-analysis-required" id="toc-part-1-basic-read-quality-analysis-required" class="nav-link" data-scroll-target="#part-1-basic-read-quality-analysis-required">Part 1: Basic Read Quality Analysis <strong>(Required)</strong></a>
+  <ul>
+  <li><a href="#part-1a-parse-fastq-files" id="toc-part-1a-parse-fastq-files" class="nav-link" data-scroll-target="#part-1a-parse-fastq-files">Part 1A: Parse FASTQ Files</a>
+  <ul>
+  <li><a href="#details-hints" id="toc-details-hints" class="nav-link" data-scroll-target="#details-hints">Details &amp; Hints</a>
+  <ul class="collapse">
+  <li><a href="#get-all-fastq-file-paths" id="toc-get-all-fastq-file-paths" class="nav-link" data-scroll-target="#get-all-fastq-file-paths">Get All FASTQ File Paths</a></li>
+  <li><a href="#get-sample-name-from-path" id="toc-get-sample-name-from-path" class="nav-link" data-scroll-target="#get-sample-name-from-path">Get Sample Name from Path</a></li>
+  <li><a href="#parsing-gzipped-fastq-files" id="toc-parsing-gzipped-fastq-files" class="nav-link" data-scroll-target="#parsing-gzipped-fastq-files">Parsing gzipped FASTQ Files</a></li>
+  <li><a href="#converting-seqrecord-to-readinfo" id="toc-converting-seqrecord-to-readinfo" class="nav-link" data-scroll-target="#converting-seqrecord-to-readinfo">Converting <code>SeqRecord</code> to <code>ReadInfo</code></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#part-1b-parse-metadata-and-merge-with-read-data" id="toc-part-1b-parse-metadata-and-merge-with-read-data" class="nav-link" data-scroll-target="#part-1b-parse-metadata-and-merge-with-read-data">Part 1B: Parse Metadata and Merge with Read Data</a></li>
+  <li><a href="#part-1c-quality-distributions-by-variable" id="toc-part-1c-quality-distributions-by-variable" class="nav-link" data-scroll-target="#part-1c-quality-distributions-by-variable">Part 1C: Quality Distributions by Variable</a>
+  <ul>
+  <li><a href="#details-hints-1" id="toc-details-hints-1" class="nav-link" data-scroll-target="#details-hints-1">Details &amp; Hints</a></li>
+  </ul></li>
+  <li><a href="#part-1d-quality-scores-and-gc-content-for-individual-samples" id="toc-part-1d-quality-scores-and-gc-content-for-individual-samples" class="nav-link" data-scroll-target="#part-1d-quality-scores-and-gc-content-for-individual-samples">Part 1D: Quality Scores and GC Content for Individual Samples</a></li>
+  <li><a href="#part-1e-read-counts" id="toc-part-1e-read-counts" class="nav-link" data-scroll-target="#part-1e-read-counts">Part 1E: Read Counts</a>
+  <ul>
+  <li><a href="#details-hints-2" id="toc-details-hints-2" class="nav-link" data-scroll-target="#details-hints-2">Details &amp; Hints</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#part-2-per-base-quality-analysis-optional" id="toc-part-2-per-base-quality-analysis-optional" class="nav-link" data-scroll-target="#part-2-per-base-quality-analysis-optional">Part 2: Per-Base Quality Analysis <strong>(Optional)</strong></a></li>
+  <li><a href="#part-3-quality-filtering-required" id="toc-part-3-quality-filtering-required" class="nav-link" data-scroll-target="#part-3-quality-filtering-required">Part 3: Quality Filtering <strong>(Required)</strong></a>
+  <ul>
+  <li><a href="#details-hints-3" id="toc-details-hints-3" class="nav-link" data-scroll-target="#details-hints-3">Details &amp; Hints</a>
+  <ul>
+  <li><a href="#fastq-paths" id="toc-fastq-paths" class="nav-link" data-scroll-target="#fastq-paths">FASTQ Paths</a></li>
+  <li><a href="#filtered-outfile-name" id="toc-filtered-outfile-name" class="nav-link" data-scroll-target="#filtered-outfile-name">Filtered Outfile Name</a></li>
+  <li><a href="#opening-multiple-files" id="toc-opening-multiple-files" class="nav-link" data-scroll-target="#opening-multiple-files">Opening Multiple Files</a></li>
+  <li><a href="#removing-primer-sequences" id="toc-removing-primer-sequences" class="nav-link" data-scroll-target="#removing-primer-sequences">Removing Primer Sequences</a></li>
+  <li><a href="#checking-read-quality" id="toc-checking-read-quality" class="nav-link" data-scroll-target="#checking-read-quality">Checking Read Quality</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/mooreryan/practical_python/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/mooreryan/practical_python/blob/main/miniprojects/read_qc/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../miniprojects/amoebas/index.html">Miniprojects</a></li><li class="breadcrumb-item"><a href="../../miniprojects/read_qc/index.html">Miniproject 3: Read Quality Control</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Miniproject 3: Read Quality Control</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryan M. Moore, PhD </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 30, 2025</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">September 3, 2025</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>Note: To complete the miniproject, you will need the material contained in the <a href="https://github.com/mooreryan/applied_python_programming/blob/main/miniprojects/read_qc/project_files">Read QC project files directory</a>. There, you will find a project scaffold that includes reads, <code>lib.py</code>, and quarto documents to help get you started. The page you are currently reading is the same as <a href="https://github.com/mooreryan/applied_python_programming/blob/main/miniprojects/read_qc/project_files/miniproject_3_instructions.qmd">miniproject_3_instructions.qmd</a> in the previously linked directory.</em></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>For your final miniproject, you’ll perform quality control analysis on next-generation sequencing (NGS) reads. This is a common first step in any (meta)genomics or RNA-seq pipeline. You’ll gain experience working with FASTQ files, calculating quality metrics, and filtering reads based on quality thresholds.</p>
+<p>The provided sequencing data comes from a hypothetical, multi-hospital RNA-seq study with different batches of samples and experimental conditions. Your task is to analyze this data to identify trends in read quality and to filter low-quality reads.</p>
+<p><em>Note: This is the final project, so it will be a bit of a jump in complexity! The instruction document has a ton of info to help you out, and the book chapters and assignment 3 will also be helpful. Be sure to refer to them if you get stuck!</em></p>
+</section>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<p>By completing this miniproject, you will:</p>
+<ul>
+<li>Work with sequencing data in FASTQ format</li>
+<li>Parse and manipulate gzip-compressed files</li>
+<li>Calculate quality metrics for sequencing reads</li>
+<li>Visualize quality distributions by different variables</li>
+<li>Implement a read filtering strategy</li>
+<li>Practice modular Python programming</li>
+</ul>
+</section>
+<section id="data-info" class="level2">
+<h2 class="anchored" data-anchor-id="data-info">Data Info</h2>
+<section id="input-files" class="level3">
+<h3 class="anchored" data-anchor-id="input-files">Input Files</h3>
+<ul>
+<li><strong>FASTQ Files</strong>
+<ul>
+<li>Located in the <code>reads/</code> directory.</li>
+<li>These files contain raw sequencing reads with the naming pattern <code>[LOCATION]_[CONDITION][NUMBER].fq.gz</code>.</li>
+</ul></li>
+<li><strong>Metadata</strong>
+<ul>
+<li>A tab-separated file <code>metadata.tsv</code> containing sample information.</li>
+<li>Fields
+<ul>
+<li><strong>SampleID</strong>: Unique identifier for each sample, including a prefix indicating the location (e.g., CHR for Christiana Hospital) and a suffix indicating the condition (C for Control, T for Treatment) with a number.</li>
+<li><strong>PatientID</strong>: Alphanumeric identifier for each patient (e.g., 0626, 5542, 26ED).</li>
+<li><strong>Batch</strong>: Batch designation, either A or B, which groups samples processed and sequenced together.</li>
+<li><strong>Location</strong>: Healthcare facility where the sample was collected (Christiana Hospital, Nemours Children’s Hospital, Jefferson Hospital, or Bayhealth Medical Center).</li>
+<li><strong>Condition</strong>: Experimental condition of the sample, either “Control” or “Treatment”.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="fastq-format-reminder" class="level3">
+<h3 class="anchored" data-anchor-id="fastq-format-reminder">FASTQ Format Reminder</h3>
+<p>Each read in a FASTQ file consists of four lines:</p>
+<ol type="1">
+<li>Read identifier (starts with <code>@</code>)</li>
+<li>Nucleotide sequence</li>
+<li><code>+</code> (sometimes followed by the identifier again, or other info)</li>
+<li>Phred quality scores (encoded as ASCII characters)</li>
+</ol>
+<p><em>See <a href="https://pythonforlifescientists.com/io_files_contexts/#fastq">parsing FASTQ files</a> and the <a href="https://pythonforlifescientists.com/io_files_contexts/#example-processing-fastq-files">processing FASTQ files</a> example from Ch. 9 for more info.</em></p>
+</section>
+<section id="project-structure" class="level3">
+<h3 class="anchored" data-anchor-id="project-structure">Project Structure</h3>
+<p>You have been provided a zipped directory with the following structure:</p>
+<pre><code>miniproject_3/
+├── lib.py
+├── metadata.tsv
+├── miniproject_3_instructions.qmd
+├── miniproject_3_solution.qmd
+└── reads
+    ├── BAY_C1.fq.gz
+    ├── BAY_C2.fq.gz
+    ├── ... (more read files)</code></pre>
+<p>For this project, you’ll be working with multiple files:</p>
+<ul>
+<li><code>miniproject_3_solution.qmd</code>: The main Quarto document where you’ll perform your analysis and write up your results</li>
+<li><code>lib.py</code>: A Python module containing helper functions that you will write.
+<ul>
+<li>The functions and other stuff you need to include in this file will be described in below.</li>
+<li>All of these functions should have docstrings in the format we described in <a href="https://pythonforlifescientists.com/understanding_functions/#sec-function-docs">Ch. 4</a>.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="your-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="your-tasks">Your Tasks</h2>
+<p>This miniproject consists of three parts: two required, one optional.</p>
+<section id="set-up" class="level3">
+<h3 class="anchored" data-anchor-id="set-up">Set Up</h3>
+<p>You will need the following set up code near the top of your Quarto document.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Bio <span class="im">import</span> SeqIO</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># This is our module defined in lib.py</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> lib</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.max_rows"</span>, <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Additionally, when you need to edit your <code>lib.py</code> file, you will have to manually reload the module. (Or restart the Quarto interactive prompt.) Here is how you can do that:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(lib)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Note: I have already included the above code blocks in the solution file for you!</em></p>
+</section>
+<section id="part-1-basic-read-quality-analysis-required" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-basic-read-quality-analysis-required">Part 1: Basic Read Quality Analysis <strong>(Required)</strong></h3>
+<p>In this section, you’ll parse the FASTQ files, calculate quality metrics for all samples, and analyze how these metrics vary across different experimental factors.</p>
+<section id="part-1a-parse-fastq-files" class="level4">
+<h4 class="anchored" data-anchor-id="part-1a-parse-fastq-files">Part 1A: Parse FASTQ Files</h4>
+<p>Here are the steps you will need to take. I’ve written it in a sort of pseudocode (<code>:=</code> means assign to a variable, and <code>#</code> are comments) that you can use to help you structure your own code:</p>
+<pre><code># Find all the FASTQ files in the reads directory that match our pattern
+# This uses Path.glob() to get files with names ending in _T1.fq.gz, _T2.fq.gz, etc.
+paths := get the FASTQ file paths
+
+# Create an empty list to store our processed read information
+# Each element will be a ReadInfo object with metadata about a sequence read
+reads := empty list
+
+# Process each FASTQ file
+for each path in paths
+    # Extract the sample name from the filename
+    # This helps us track which experiment/condition each read came from
+    sample_id := get the sample ID from the path
+
+    # Open and read the compressed FASTQ file
+    # Note: gzipped files require special handling with gzip.open()
+    # We need to open in text mode ("rt") for Bio.SeqIO to parse correctly
+    open the gzipped file for text-reading:
+        # Parse each sequence record in the FASTQ file
+        # SeqIO.parse creates an iterator of SeqRecord objects
+        for each record in the parsed FASTQ file:
+            # Create a structured ReadInfo object with metrics we care about
+            # We calculate quality score and GC content for each read
+            read_info := create a ReadInfo object from the sample and record
+
+            # Add this processed Read to our collection
+            append read_info to reads list
+
+# Convert our list of ReadInfo objects to a pandas DataFrame for analysis
+# Sort the data by sample ID for easier comparison between samples
+# Reset the index to have clean, sequential row numbers
+read_data := create a pandas data frame from the reads list,
+             sort values by SampleID,
+             reset the index</code></pre>
+<section id="details-hints" class="level5">
+<h5 class="anchored" data-anchor-id="details-hints">Details &amp; Hints</h5>
+<p>This subsection has quite a few parts! Here are some hints to help you get started.</p>
+<section id="get-all-fastq-file-paths" class="level6">
+<h6 class="anchored" data-anchor-id="get-all-fastq-file-paths">Get All FASTQ File Paths</h6>
+<p>Try the <a href="https://docs.python.org/3/library/pathlib.html">pathlib.Path</a> class to get all the FASTQ file paths:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all FASTQ files in the "reads" directory matching a pattern</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>paths <span class="op">=</span> Path(<span class="st">"reads"</span>).glob(<span class="st">"*_[TC][123].fq.gz"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now you can loop over all the matching paths:</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> path <span class="kw">in</span> paths:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Parsh the gzipped FASTQ file</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="get-sample-name-from-path" class="level6">
+<h6 class="anchored" data-anchor-id="get-sample-name-from-path">Get Sample Name from Path</h6>
+<p>When looping over the paths, you will need to get the sample name from the path.</p>
+<p>To do that, you will need to remove the directory name, and the <code>.fq.gz</code> extension. You can use the <a href="https://docs.python.org/3/library/pathlib.html">pathlib.Path</a> class again. Check out those docs and see if you can figure it out. Here is a hint:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract parts of a path</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>path.stem  <span class="co"># filename without extension</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>path.suffix  <span class="co"># file extension</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Note: If you have multiple extensions, like we do in these files (<code>BAY_C1.fq.gz</code>), you will need to remove them <em>both</em>: <code>path.stem</code> will only remove the <code>.gz</code> from the example file.</em></p>
+<p>In the <code>lib.py</code> file, create a function called <code>sample_id()</code> that takes a <code>Path</code> and returns the name of the sample. E.g., if you had a path like this <code>Path("reads/BAY_C1.fq.gz")</code>, this function would return <code>BAY_C1</code>.</p>
+</section>
+<section id="parsing-gzipped-fastq-files" class="level6">
+<h6 class="anchored" data-anchor-id="parsing-gzipped-fastq-files">Parsing gzipped FASTQ Files</h6>
+<p>For working with <a href="https://www.gzip.org/">gzip</a> compressed FASTQ files, you’ll need to use Python’s <a href="https://docs.python.org/3/library/gzip.html">gzip</a> module. Something like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># "rt" mode for text reading</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> gzip.<span class="bu">open</span>(path, <span class="st">"rt"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> record <span class="kw">in</span> SeqIO.parse(<span class="bu">file</span>, <span class="st">"fastq"</span>):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># process each record</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="converting-seqrecord-to-readinfo" class="level6">
+<h6 class="anchored" data-anchor-id="converting-seqrecord-to-readinfo">Converting <code>SeqRecord</code> to <code>ReadInfo</code></h6>
+<p>For each <code>SeqRecord</code> that you get with <a href="https://biopython.org/wiki/SeqIO"><code>SeqIO.parse()</code></a>, you need to convert it into a <code>ReadInfo</code> <a href="https://pythonforlifescientists.com/collections/#named-tuples">named tuple</a>.</p>
+<ul>
+<li>In the <code>lib.py</code> file, create a named tuple called <code>ReadInfo</code> with the following fields:
+<ul>
+<li><code>SampleID</code>: The unique identifier for the sample from which the read originated</li>
+<li><code>QualityScore</code>: The mean quality score of the read</li>
+<li><code>GC</code>: The GC percent of the read</li>
+</ul></li>
+<li>Next, in the <code>lib.py</code> file create a function called <code>make_read_info</code> that takes a sample name and a <code>SeqRecord</code> and returns a <code>ReadInfo</code>
+<ul>
+<li>This will require you to write some additional helper functions:
+<ul>
+<li><code>def quality_score(seq_record)</code>: Get the quality scores from a <code>SeqRecord</code></li>
+<li><code>def mean_quality_score(seq_record)</code>: Calculate the mean quality score for a <code>SeqRecord</code></li>
+<li><code>def gc_percent(seq_record)</code>: Calculate the GC percent for a <code>SeqRecord</code></li>
+</ul></li>
+<li>I know you could write this function without those helpers, but this is my assignment, and I say you have to write the helpers! (<em><sup>‿</sup></em>)</li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="part-1b-parse-metadata-and-merge-with-read-data" class="level4">
+<h4 class="anchored" data-anchor-id="part-1b-parse-metadata-and-merge-with-read-data">Part 1B: Parse Metadata and Merge with Read Data</h4>
+<ul>
+<li>Parse the <code>metadata.tsv</code> file and merge the metadata with the read quality information.</li>
+<li>You can use <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html">pandas.read_csv()</a> for this, but you will have to check out the docs to figure out how to change the delimiter.</li>
+</ul>
+</section>
+<section id="part-1c-quality-distributions-by-variable" class="level4">
+<h4 class="anchored" data-anchor-id="part-1c-quality-distributions-by-variable">Part 1C: Quality Distributions by Variable</h4>
+<ul>
+<li>Generate KDE distribution plots using <a href="https://seaborn.pydata.org/generated/seaborn.displot.html">seaborn.displot()</a> for all combinations of read property (Quality Score and GC%) and sample variable (Batch, Location, Condition). The arguments should be like this:
+<ul>
+<li>x-axis: Read property (Quality Score and GC%)</li>
+<li>y-axis: Sample variable (Batch, Location, Condition)</li>
+<li>fill: true</li>
+<li>height: 2</li>
+<li>aspect: 2</li>
+</ul></li>
+<li>Then, use the plots to answer the following questions:
+<ul>
+<li>Which variable is most closely identified with differences in Quality Score?</li>
+<li>Which variable is most closely identified with differences in GC Content?</li>
+</ul></li>
+</ul>
+<section id="details-hints-1" class="level5">
+<h5 class="anchored" data-anchor-id="details-hints-1">Details &amp; Hints</h5>
+<p>To create multiple plots with different variables, you can either write each combination out by hand, or you can use a for loop like this:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example of creating plots in a loop</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> read_property <span class="kw">in</span> [<span class="st">"QualityScore"</span>, <span class="st">"GC"</span>]:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> variable <span class="kw">in</span> [<span class="st">"Batch"</span>, <span class="st">"Location"</span>, <span class="st">"Condition"</span>]:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Your plot code here...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="part-1d-quality-scores-and-gc-content-for-individual-samples" class="level4">
+<h4 class="anchored" data-anchor-id="part-1d-quality-scores-and-gc-content-for-individual-samples">Part 1D: Quality Scores and GC Content for Individual Samples</h4>
+<ul>
+<li>Generate box plots with <a href="https://seaborn.pydata.org/generated/seaborn.catplot.html">seaborn.catplot()</a> for Quality Score and GC Content. Use these arguments:
+<ul>
+<li>x-axis: Read property (quality score, GC)</li>
+<li>y-axis: SampleID</li>
+<li>fill: true</li>
+</ul></li>
+<li>Set the <code>hue</code> for each plot to the variable that best explains the differences in each read property. (You identified the variables in Part 1C.)</li>
+<li>Which sample has the lowest average quality scores?</li>
+</ul>
+</section>
+<section id="part-1e-read-counts" class="level4">
+<h4 class="anchored" data-anchor-id="part-1e-read-counts">Part 1E: Read Counts</h4>
+<ul>
+<li>Create a data frame with the number of reads for each sample (hint: you could use <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.value_counts.html">value_counts()</a> for this)</li>
+<li>Merge the metadata data frame and the read counts data frame</li>
+<li>Generate read count bar plots for each sample with <a href="https://seaborn.pydata.org/generated/seaborn.catplot.html">seaborn.catplot()</a>. Use these arguments:
+<ul>
+<li>x-axis: Read Count</li>
+<li>y-axis: SampleID</li>
+<li>fill: true</li>
+</ul></li>
+<li>Examine the plot to determine which variable is most closely associated with differences in read count across samples</li>
+<li>Redo the the previous bar plot, but this time set the <code>hue</code> to the variable you identified in the previous step</li>
+<li>Determine if there is a significant difference in read lengths for that variable using ANOVA (use the one from <a href="https://www.statsmodels.org/stable/anova.html">statsmodels</a> this time)</li>
+<li>If there is a significant difference run Tukey’s HSD and plot the test results results (use the one from <a href="https://www.statsmodels.org/stable/generated/statsmodels.stats.multicomp.pairwise_tukeyhsd.html#statsmodels.stats.multicomp.pairwise_tukeyhsd">statsmodels</a>)</li>
+</ul>
+<section id="details-hints-2" class="level5">
+<h5 class="anchored" data-anchor-id="details-hints-2">Details &amp; Hints</h5>
+<p>For analyzing read count differences:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>formula <span class="op">=</span> ...</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(formula, data<span class="op">=</span>...).fit()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>anova_result <span class="op">=</span> sm.stats.anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tukey's HSD</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> sm.stats.multicomp.pairwise_tukeyhsd(</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ...,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    groups<span class="op">=</span>...,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> result.plot_simultaneous()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="part-2-per-base-quality-analysis-optional" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-per-base-quality-analysis-optional">Part 2: Per-Base Quality Analysis <strong>(Optional)</strong></h3>
+<p><em>Note: This part is completly optional! You will not be penalized for not attempting it. I suggest you do give it a try though, since we will be making a similar plot to the ones you will have seen in the output of the <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> in your Systems Biology class.</em></p>
+<p>In this part, you’ll examine quality score distributions at each nucleotide position. Here are the steps:</p>
+<ol type="1">
+<li>Select a subset of samples representing different conditions (use these <code>["CHR_C1.fq.gz", "NEM_C2.fq.gz", "JEF_C1.fq.gz", "BAY_C3.fq.gz"]</code>)</li>
+<li>For each sample, extract quality scores at each base position for each read</li>
+<li>Create box plots to visualize how quality varies along the length of reads</li>
+</ol>
+<p>This might seem a bit tricky, so let’s go over the details. Check out this pseudocode:</p>
+<pre><code>paths := join the "reads" directory with the four FASTQ files
+
+# Process each FASTQ file
+for each path in paths:
+    sample_id := get the sample ID from the path
+
+    # Create a list to hold quality scores from all reads in this file
+    quality_scores := empty list
+
+    #  Open and read the compressed FASTQ file
+    open the gzipped file for text-reading:
+        # Extract quality scores from each read
+        for each read in the file:
+            read_qualities := get per-base quality scores from read
+
+            append read_qualities to quality_scores
+
+    # Convert list of quality score lists to numpy matrix
+    quality_matrix := convert quality_scores to numpy matrix
+
+    # Convert numpy matrix to pandas data frame
+    quality_df := convert quality_matrix to pandas data frame
+
+    # Generate box plot
+    create box plot using quality_df showing quality distribution by position</code></pre>
+<p>To join paths, you can use pathlib’s <a href="https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.joinpath">joinpath()</a>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>paths <span class="op">=</span> [</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    Path(<span class="st">"...whatever directory name..."</span>).joinpath(path) <span class="cf">for</span> path <span class="kw">in</span> [..., ..., ...]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here is some code to help you get started that converts the list of lists to a numpy matrix, then converts that to the pandas data frame:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert list of lists to matrix</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>quality_data <span class="op">=</span> np.matrix(quality_scores)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Column names should run from 1 to the length of the reads.</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># You could use `np.arange()` for this.</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>column_names <span class="op">=</span> ...</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to DataFrame and reshape</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>per_base_quality_scores <span class="op">=</span> (</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame(quality_data, columns<span class="op">=</span>...)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    .melt(</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        var_name<span class="op">=</span>...,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        value_name<span class="op">=</span>...,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    .assign(SampleID<span class="op">=</span>sample)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here is some code to help you generate the plot:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then make a per-base quality score plot. It has a box plot of score</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># distributions for each base in the set of reads.</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sns.catplot(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    per_base_quality_scores,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span>...,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>...,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>...,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    showfliers<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    aspect<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>).<span class="bu">set</span>(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="va">None</span>),</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>...,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span>...,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    xticks<span class="op">=</span><span class="bu">range</span>(<span class="dv">4</span>, <span class="dv">100</span>, <span class="dv">5</span>),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Make sure that the title includes the sample ID (e.g., “XYZ_T1 Per-Base Quality Score” or something similar).</p>
+</section>
+<section id="part-3-quality-filtering-required" class="level3">
+<h3 class="anchored" data-anchor-id="part-3-quality-filtering-required">Part 3: Quality Filtering <strong>(Required)</strong></h3>
+<p>In this section, you’ll implement a read filtering strategy. For each FASTQ file, you will have to:</p>
+<ul>
+<li>Get the sample name</li>
+<li>Get the name of the output file</li>
+<li>Track the total number of reads</li>
+<li>Track the number of “good” reads</li>
+<li>Check for primer sequences at the start of the reads
+<ul>
+<li>If a read starts with one of the two primer sequences, remove that primer sequence from the start of the read</li>
+<li><code>PRIMER_1 = "GGTTGTTTCCGCCCAGAGCT"</code></li>
+<li><code>PRIMER_2 = "CTTTCTAATGGGCTT"</code></li>
+</ul></li>
+<li>Check if a read is of good or bad quality
+<ul>
+<li>If it is good, it will be written to the output file</li>
+<li>If it is bad, it won’t be written to the output file</li>
+</ul></li>
+<li>Report the number and percentage of reads that passed filtering for each sample</li>
+</ul>
+<p>Here is some more pseudocode to get you started:</p>
+<pre><code>paths := xyz
+
+PRIMER_1 := GGTTGTTTCCGCCCAGAGCT
+PRIMER_2 := CTTTCTAATGGGCTT
+
+for each path in paths:
+    sample := get the name of the sample from the path
+    outfile_name := get the name of the outfile from the path
+
+    total_reads := 0
+    printed_reads := 0
+
+    open the gzipped file for text-reading, and the outfile for writing:
+        for each record in the parsed FASTQ file:
+            total_reads := total_reads + 1
+            record := record with any primers removed
+
+            if the read is good quality:
+                printed_reads := printed_reads + 1
+                write the FASTQ formated record to the outfile
+
+    print the sample_id, total_reads, printed_reads, and percent_printed</code></pre>
+<section id="details-hints-3" class="level4">
+<h4 class="anchored" data-anchor-id="details-hints-3">Details &amp; Hints</h4>
+<p><em>Note: There is a similar example in the biopython cookbook called <a href="https://biopython.org/docs/latest/Tutorial/chapter_cookbook.html#sec-fastq-filtering-example">Simple quality filtering for FASTQ files</a> that you may want to check out as well!</em></p>
+<section id="fastq-paths" class="level5">
+<h5 class="anchored" data-anchor-id="fastq-paths">FASTQ Paths</h5>
+<p>Use the <code>path.glob</code> like in part 1 to get all the Paths.</p>
+</section>
+<section id="filtered-outfile-name" class="level5">
+<h5 class="anchored" data-anchor-id="filtered-outfile-name">Filtered Outfile Name</h5>
+<p>This is a bit fiddly, so here is some starter code:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filtered_outfile_name(path):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    directory <span class="op">=</span> path.resolve().parent</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Strip off the .fq.gz</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    sample_name <span class="op">=</span> ...</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    outfile_name <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>sample_name<span class="sc">}</span><span class="ss">.filtered.fq"</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> directory.joinpath(outfile_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You will find this function already in <code>lib.py</code>. You will need to complete it before using it.</p>
+</section>
+<section id="opening-multiple-files" class="level5">
+<h5 class="anchored" data-anchor-id="opening-multiple-files">Opening Multiple Files</h5>
+<p>Use multiple context managers in one <code>with</code> statement when you need to open both input and output files simultaneously:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> gzip.<span class="bu">open</span>(input_path, <span class="st">"rt"</span>) <span class="im">as</span> infile, <span class="bu">open</span>(output_path, <span class="st">"w"</span>) <span class="im">as</span> outfile:</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Process files</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="removing-primer-sequences" class="level5">
+<h5 class="anchored" data-anchor-id="removing-primer-sequences">Removing Primer Sequences</h5>
+<p>Yoyu will implement a simple function to remove primer sequences. There are two possible primer sequences in the reads:</p>
+<pre><code>PRIMER_1 = "GGTTGTTTCCGCCCAGAGCT"
+PRIMER_2 = "CTTTCTAATGGGCTT"</code></pre>
+<ul>
+<li>Not all reads will have primer sequences</li>
+<li>If a read has a primer sequence, it will only ever be at the <em>start</em> of the read</li>
+<li>A read will have either 0 or 1 primer sequences (in other words: both primers will never be found in the same read)</li>
+</ul>
+<p>Write a function called <code>maybe_strip_primer</code> in <code>lib.py</code> that takes a <code>SeqRecord</code> and a list of primer sequences. This function should return a <code>SeqRecord</code> with any primer sequences removed, and if no primer sequence is present, the original <code>SeqRecord</code> should be returned.</p>
+<p><em>Note: You can remove reads and quality scores from the beginning of a <code>SeqRecord</code> using the normal string slicing notation. See the biopython <a href="https://biopython.org/docs/latest/Tutorial/chapter_seq_annot.html#sec-seqrecord-slicing">cookbook</a> for details.</em></p>
+<p><em>Note: If you remember learning about Illumina sequencing in your other classes, you might think this “primer trimming” is a bit weird. Just roll with it!</em></p>
+</section>
+<section id="checking-read-quality" class="level5">
+<h5 class="anchored" data-anchor-id="checking-read-quality">Checking Read Quality</h5>
+<p>For this project, a read is considered low quality if it has 25 or more bases whose Phred quality score is strictly less than 25.</p>
+<p>In the <code>lib.py</code> file, write a function called <code>is_quality_good</code> that takes a <code>SeqRecord</code> and returns a boolean indicating whether the sequence is good quality or not. (Use the <code>quality_scores</code> function you defined in Part 1 to help you out.)</p>
+</section>
+</section>
+</section>
+</section>
+<section id="requirements" class="level2">
+<h2 class="anchored" data-anchor-id="requirements">Requirements</h2>
+<p>Your completed miniproject should include:</p>
+<ol type="1">
+<li>A Quarto notebook (<code>miniproject_3_solution.qmd</code>) with:
+<ol type="a">
+<li>Code for all three parts of the analysis</li>
+<li>Visualizations, interpretations, and discussions of your findings</li>
+<li>Comments explaining your approach</li>
+</ol></li>
+<li>A Python module (<code>lib.py</code>) containing helper functions</li>
+</ol>
+<p>Follow all the guidelines mentioned above when writing those files!</p>
+<p>The directory structure you should have at the end of the project should look something like this:</p>
+<pre><code>miniproject_3_ryan_moore/
+├── lib.py
+├── metadata.tsv
+├── miniproject_3_instructions.qmd
+├── miniproject_3_solution.qmd
+└── reads
+    ├── BAY_C1.filtered.fq
+    ├── BAY_C1.fq.gz
+    ├── BAY_C2.filtered.fq
+    ├── BAY_C2.fq.gz
+    ├── ... (more read files)</code></pre>
+<p>You will need to zip (or tar) that directory and upload the resulting zipped (or tar) file. (You can use <code>zip</code> or <code>tar</code>, whichever you’re most comfortable with.)</p>
+<p>Please don’t make additional changes to this structure! You will need to leave the structure as is for me to be able to run your code. If you do not keep the structure as is, and if you do not adjust the top level directory with your name, I will return your project to you without additional comments until you correct it.</p>
+<p>Also, remember that this is a miniproject, so you should be engaging meaningfully with the material and trying to discuss the results you find. Simply writing code with no exposition will not satisfy the requirements for the miniproject!</p>
+<p>Good luck with your final miniproject!</p>
+<p><em>Note: please let me know if you find any errors in this document!</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+  function switchImagesForTheme(theme) {
+    document.querySelectorAll("img").forEach((img) => {
+      // Only process SVGs ending with _light.svg or _dark.svg
+      const lightMatch = img.src.match(/_light\.svg$/);
+      const darkMatch = img.src.match(/_dark\.svg$/);
+
+      if (theme === "quarto-dark" && lightMatch) {
+        img.src = img.src.replace("_light.svg", "_dark.svg");
+      } else if (theme === "quarto-light" && darkMatch) {
+        img.src = img.src.replace("_dark.svg", "_light.svg");
+      }
+    });
+  }
+
+  const observer = new MutationObserver(() => {
+    // Get the current theme class, 'quarto-light' or 'quarto-dark'
+    const theme = [...document.body.classList].find(
+      (c) => c === "quarto-light" || c === "quarto-dark"
+    );
+    if (theme) {
+      switchImagesForTheme(theme);
+    }
+  });
+
+  // Make sure the correct images are loaded
+  const initialTheme = [...document.body.classList].find(
+    (c) => c === "quarto-light" || c === "quarto-dark"
+  );
+  if (initialTheme) {
+    switchImagesForTheme(initialTheme);
+  }
+
+  // Start watching for class changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+</script>
+<script async="" src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/appliedpythonprogramming\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../miniprojects/gene_expression/index.html" class="pagination-link" aria-label="Miniproject 2: Gene Expression Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Miniproject 2: Gene Expression Analysis</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../basics/practice_problems/index.html" class="pagination-link" aria-label="Practice Problems">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Practice Problems</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Ryan M. Moore. CC BY 4.0.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mooreryan/practical_python/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/mooreryan/practical_python/blob/main/miniprojects/read_qc/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://orcid.org/0000-0003-3337-8184">
+      <i class="bi bi-person-lines-fill" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=W08DPpMAAAAJ">
+      <i class="bi bi-journals" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mooreryan">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
