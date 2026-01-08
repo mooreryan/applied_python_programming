@@ -8,9 +8,7 @@ This resource serves as an introduction to computational and algorithmic thinkin
 
 ## Book Structure
 
-The material in this online textbook has been lightly adapted from material used to teach a one semester introduction Python programming to life scientists.
-
-The material includes:
+The material in this online textbook has been lightly adapted from material used to teach a one semester introduction Python programming to life scientists.  The material includes:
 
 - Introduction
 - Setup instructions (coming soon)
