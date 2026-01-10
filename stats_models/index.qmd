@@ -62,7 +62,7 @@ There are _many_ more examples to be found in the literature about this topic!
 
 _Note: For this document, we will use a p-value cutoff of 0.05, and talk about significance and rejecting null hypotheses in as basic a way as possible, but you should keep the above criticism in mind._
 
-::: {#tip-08-pvalue-misconceptions .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-pvalue-misconceptions .callout-tip title="Stop & Think" collapse="false" }
 What's one potential problem with relying solely on p-values when interpreting experimental results?
 :::
 
@@ -155,7 +155,7 @@ If your data doesn't follow a normal distribution, you may need a nonparametric 
 
 First, we generate and visualize some data. We will generate some data from a uniform distribution (non-normal), and each of the samples will be small (10 observations each). This is a pretty good use-case for the Mann-Whitney test.
 
-::: {#tip-08-parametric-vs-nonparametric .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-parametric-vs-nonparametric .callout-tip title="Stop & Think" collapse="false" }
 When might you choose a nonparametric test like Mann-Whitney over a parametric test like the t test?
 :::
 
@@ -247,7 +247,7 @@ print(f"Unpaired t test p-value: {result:.1e}")
 
 It is statistically significant! But wait, while our p-value confirms this, we need to consider whether 2 units (whatever those units represent in your experiment) actually matters in your biological system. This is where your expertise as a researcher becomes crucial. It's important not to rely solely on p-values when interpreting results. In our example, we had sufficient sample size to detect a difference, but that difference might still be too small to have any meaningful biological impact.
 
-::: {#tip-08-statistical-vs-biological .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-statistical-vs-biological .callout-tip title="Stop & Think" collapse="false" }
 Why is it important to consider both statistical significance and biological relevance when interpreting results?
 :::
 
@@ -259,7 +259,7 @@ Scientists have a tendency to focus strongly on p-values, but there is another m
 
 For more on effect sizes, see [Using Effect Size--or Why the _P_ Value Is Not Enough](https://doi.org/10.4300/JGME-D-12-00156.1).
 
-::: {#tip-08-effect-size-examples .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-effect-size-examples .callout-tip title="Stop & Think" collapse="false" }
 Can you think of a scenario in the life sciences where a statistically significant result might have a negligible effect size?
 :::
 
@@ -445,7 +445,7 @@ print(f"F stat: {result.statistic:.1f}, p-value: {result.pvalue:.1e}")
 
 Pretty neat!
 
-::: {#tip-08-which-anova .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-which-anova .callout-tip title="Stop & Think" collapse="false" }
 Which version of the code do you like better? Which do you think is more readable?
 :::
 
@@ -576,7 +576,7 @@ figure = result.plot_simultaneous()
 
 That's pretty cool! Now, instead of looking at all those pairs, we can look at confidence intervals for each region. If they do not overlap with another region, then those two regions have significantly different deaths per 100k people. Not only did we get a plot that more effectively shows the results, we also got to chop out a ton of code!
 
-::: {#tip-08-post-hoc-interpretation .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-post-hoc-interpretation .callout-tip title="Stop & Think" collapse="false" }
 Looking at the Tukey's HSD plot, how would you explain which regions have significantly different cancer death rates?
 :::
 
@@ -684,7 +684,7 @@ sns.lmplot(df, x="X", y="Y")
 
 This time, we have pretty much the opposite result. The fitted coefficient is around zero, the line on the plot is basically horizontal, and the R-squared value is very low. So it is very likely that there is no relationship that we can measure between these two variables. And of course, we expected this result, as that is how we set up the data!
 
-::: {#tip-08-regression-interpretation .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-regression-interpretation .callout-tip title="Stop & Think" collapse="false" }
 What does an R-squared value close to zero tell you about a linear regression model?
 :::
 
@@ -750,7 +750,7 @@ It's a good idea to check these assumptions before interpreting your results. Th
 
 _Note: There is a really cool site that talks about how most [common statistical models are basically linear models](https://lindeloev.github.io/tests-as-linear/) (or at least, very close to them). It's a pretty neat way to think of statistical modeling that I encourage you to check out!_
 
-::: {#tip-08-feature-selection .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-feature-selection .callout-tip title="Stop & Think" collapse="false" }
 In our multiple regression example, how could you determine which predictors are most important for the model?
 :::
 
@@ -825,7 +825,7 @@ sns.relplot(plot_data, x="PC 1", y="PC 2", hue="Species")
 
 As you can see, the three species are fairly well separated along the x-axis, which represents the first principal component.
 
-::: {#tip-08-pca-interpretation .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-pca-interpretation .callout-tip title="Stop & Think" collapse="false" }
 What biological interpretation might you give to the first principal component in this iris dataset analysis?
 :::
 
@@ -890,7 +890,7 @@ iris.assign(Cluster=labels).groupby("Species").agg({"Cluster": proportions})
 
 That's pretty good! The k-means clustering pretty well describes the _setosa_ and _versicolor_ species, but the _virginica_ species gets mislabelled about 25% of the time.
 
-::: {#tip-08-clustering-challenges .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-08-clustering-challenges .callout-tip title="Stop & Think" collapse="false" }
 What might explain why k-means clustering performed well for _setosa_ and _versicolor_ but less well for _virginica_?
 :::
 

@@ -137,7 +137,7 @@ with open(output_file_name, "w") as file:
 print_file_contents(output_file_name)
 ```
 
-::: {#tip-09-missing-data .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-09-missing-data .callout-tip title="Stop & Think" collapse="false" }
 In the last two examples, we wrote to the same file both times. After the second example, the file no longer included the text `Hello, this is my first file!`. Why is that?
 :::
 
@@ -571,7 +571,7 @@ except Exception as e:
     print(f"An unexpected error occurred: {e}")
 ```
 
-::: {#tip-09-improving-error-messages .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-09-improving-error-messages .callout-tip title="Stop & Think" collapse="false" }
 How could you improve the error messages in the previous code block?
 :::
 
@@ -688,7 +688,7 @@ for record in SeqIO.parse("../_data/example.fastq", "fastq"):
 
 One thing that's really nice about biopython is that you can use the same interface for multiple different types of files!
 
-::: {#tip-09-parse-fasta-fastq .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-09-parse-fasta-fastq .callout-tip title="Stop & Think" collapse="false" }
 What do you think would happen if you tried to parse a FASTA file, but passed `"fastq"` as the second argument to `SeqIO.parse()`?
 :::
 
@@ -757,7 +757,7 @@ with open("../_data/example_with_header.csv", newline="") as csv_file:
         print()
 ```
 
-::: {#tip-09-csv-no-header .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-09-csv-no-header .callout-tip title="Stop & Think" collapse="false" }
 What do you think would happen if you did not specify the field names in a CSV file that did not have a header line?
 :::
 

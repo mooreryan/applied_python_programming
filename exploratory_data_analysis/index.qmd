@@ -163,7 +163,7 @@ state_demographics.head()
 
 As you see, it's the same data frame we started with. All the functions we have used so far have returned new data frames. You will see this pattern a lot--many Pandas functions return new data rather modifying existing data.
 
-::: {#tip-07-why-summarize-data .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-07-why-summarize-data .callout-tip title="Stop & Think" collapse="false" }
 Why is it a good idea to look at a summary of data that you imported?
 :::
 
@@ -203,7 +203,7 @@ state_demographics.set_index("State").filter(regex=r"^Income").describe()
 
 This is another way that we can start to get a feel for our data.
 
-::: {#tip-07-why-filter-columns .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-07-why-filter-columns .callout-tip title="Stop & Think" collapse="false" }
 Why might filtering columns by category prefixes (like "Population" or "Income") be useful during exploratory data analysis?
 :::
 
@@ -386,7 +386,7 @@ Any of them could work depending on your situation, but let's keep it simple and
 )
 ```
 
-::: {#tip-07-why-nice-plots .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-07-why-nice-plots .callout-tip title="Stop & Think" collapse="false" }
 Why might it be important to have clean, professional looking data visualizations, even during the exploratory data analysis phase of your project?
 :::
 
@@ -469,7 +469,7 @@ state_demographics.plot(
 
 Nope, nothing there.
 
-::: {#tip-07-log-scale-purpose .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-07-log-scale-purpose .callout-tip title="Stop & Think" collapse="false" }
 When might you use a logarithmic scale on either axis of a plot, and what insights can this reveal that a linear scale might not?
 :::
 
@@ -483,7 +483,7 @@ correlation_matrix = state_demographics.corr(
 )
 ```
 
-::: {#tip-07-what-correlation-tells-us .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-07-what-correlation-tells-us .callout-tip title="Stop & Think" collapse="false" }
 What can correlation values tell us during exploratory data analysis, and what are their limitations?
 :::
 
@@ -673,7 +673,7 @@ Cool! There are a couple things to note about this:
 - For fine-tuning your colorbar, check out the `cbar_kws` parameter, which passes arguments directly to matplotlib's [colorbar()](https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.colorbar.html) method. This pattern of documentation referral is something you'll encounter frequently in the Python ecosystem. Libraries will often direct you to another component's documentation for parameter details, especially when they're simply passing those arguments through to underlying functions.
 - Don't forget about customizing your clustering approach! The linkage type and distance metric can impact your hierarchical clustering results. The [SciPy documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html#scipy.cluster.hierarchy.linkage) provides comprehensive details on these options, allowing you to select methods that best represent the relationships in your data.
 
-::: {#tip-07-good-color-palette .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-07-good-color-palette .callout-tip title="Stop & Think" collapse="false" }
 Why is it important to ensure that your color palettes represent the correct data? For example,
 
 - How would it change your interpretation if the center of the palette (the black part) was on 0.2 rather than zero?
@@ -759,7 +759,7 @@ clustermap_plot = sns.clustermap(
 
 After "normalizing out" the effect of population on a bunch of the variables, we can see some trends that were a bit masked before. For example, we can now see some correlation between education, wealth, and income, as well as some potentially interesting trends around ethnicity and age.
 
-::: {#tip-07-why-correlation-heatmap .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-07-why-correlation-heatmap .callout-tip title="Stop & Think" collapse="false" }
 What insights can a correlation heatmap with clustering provide that a simple correlation table cannot?
 :::
 
@@ -1887,7 +1887,7 @@ The right join keeps all the rows in the right data frame, even if they are not 
 jobs_subset.merge(ages_subset, how="right")
 ```
 
-::: {#tip-07-merge-considerations .callout-tip title="Stop & Think" collapse="false"}
+::: { #tip-07-merge-considerations .callout-tip title="Stop & Think" collapse="false" }
 When merging datasets, what factors should you consider when choosing between inner, outer, left, and right joins?
 :::
 
