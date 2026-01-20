@@ -1,6 +1,6 @@
 # Introduction {.unnumbered}
 
-Welcome to *Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery*! This book is designed for biology and life science students with little to no prior coding experience. Rather than aiming to make you Python experts, the goal is to help you develop fundamental programming concepts and data analysis skills using Python as a practical tool.
+Welcome to _Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery_! This book is designed for biology and life science students with little to no prior coding experience. Rather than aiming to make you Python experts, the goal is to help you develop fundamental programming concepts and data analysis skills using Python as a practical tool.
 
 The content progresses from basic syntax through algorithms, functions, classes, error handling, data science applications, and testing methodologies. Each concept is presented with life science examples to show how programming principles can enhance your research capabilities.
 
@@ -8,7 +8,7 @@ This resource serves as an introduction to computational and algorithmic thinkin
 
 ## Book Structure
 
-The material in this online textbook has been lightly adapted from material used to teach a one semester introduction Python programming to life scientists.  The material includes:
+The material in this online textbook has been lightly adapted from material used to teach a one semester introduction Python programming to life scientists. The material includes:
 
 - Introduction
 - Setup instructions (coming soon)
@@ -21,11 +21,13 @@ The material in this online textbook has been lightly adapted from material used
   - "Stop & Think" Solutions
   - Short coverage of useful topics like regular expressions
 
+This book is a work in progress, and will hopefully continue to improve over time!
+
 ### How to Approach the Material
 
-For each chapter, you should download the Quarto notebook, and code along. That is, whenever you see code samples, play around with them, try to extend them or break them in various ways, observe the error messages you get, etc.  Quarto docs provide a nice playground for exploring the code, so be sure to use them.
+For each chapter, you should download the Quarto notebook, and code along. That is, whenever you see code samples, play around with them, try to extend them or break them in various ways, observe the error messages you get, etc. Quarto docs provide a nice playground for exploring the code, so be sure to use them.
 
-Some chapters have additional practice problems or "Stop & Think" sections. You should always attempt to answer the "Stop & Think" questions before continuing on with the chapter.  For chapters with practice problems, I suggest you do at least some of them until you feel comfortable.  Make sure you come back to previous chapter's practice problems from time to time while you're learning for review.
+Some chapters have additional practice problems or "Stop & Think" sections. You should always attempt to answer the "Stop & Think" questions before continuing on with the chapter. For chapters with practice problems, I suggest you do at least some of them until you feel comfortable. Make sure you come back to previous chapter's practice problems from time to time while you're learning for review.
 
 Assignments and Miniprojects are there to test your learning. In general, they will have lots of helpful tips and tricks to get you started. If you're more advanced, you may think there is too much hand-holding in these documents. Remember that this material is geared towards life scientists with no prior programming experience. If that doesn't describe you, give the assignments and miniprojects a try without looking at the hints.
 
@@ -49,16 +51,19 @@ This is roughly the progression we followed in the course:
 - [Chapter @sec-io-files-contexts]
 - [Miniproject 3: Read Quality Control](miniprojects/read_qc/)
 
-## Notes
+### Getting Help
 
-- Not all chapters have additional practice problems or "Stop & Think" sections
-- While the assignments are written, they haven't yet been uploaded to the site
+If you are taking my class, be sure to get in contact with either myself or the TA. We are here to help you!
+
+There is also a [companion app](https://suhotro.appliedpythonprogramming.com/) that enables you to search through this material using questions written out in everyday language. Check it out if you are stuck!
+
+Finally, though AI tools and assistants can be a great help on your learning journey, I encourage you to reach out to other people as well! If you're taking my class, I hope you will work with your classmates and help each other out. (Explaining a tricky concept to someone else is a great way to learn!) I would also encourage you to check out online spaces where Python is discused, including forums, discord servers, etc. If you can work up the courage to post, you will often find plenty of people who are happy to help you out!
 
 ## A Note on Authorship and AI
 
-My name is on this textbook, and I did write the material. That being said, I also used AI tools while working on it, mostly for editing text and phrasing, and brainstorming explanations and outlines.  I also used it to generate practice problems at the ends of chapters, which I revised to make sure the problems actually teach and help you practice what I was trying to get across.
+My name is on this textbook, and I did write the material. That being said, I also used AI tools while working on it, mostly for editing text and phrasing, and brainstorming explanations and outlines. I also used it to generate practice problems at the ends of chapters, which I revised to make sure the problems actually teach and help you practice what I was trying to get across.
 
-Hopefully my own voice still comes through in the writing, but when I was on the fence about some quirky phrasing, I tended to go with the more edited version. Whether that was the right choice for readability, I'm not 100% sure! I'm a researcher and instructor, not a professional writer.  If AI can help me communicate more clearly so you can focus on the material rather than on my writing, I think that's probably okay.  That said, I take full responsibility for the content of this work.  If something is confusing or incorrect, that’s on me, not Claude or ChatGPT!
+Hopefully my own voice still comes through in the writing, but when I was on the fence about some quirky phrasing, I tended to go with the more edited version. Whether that was the right choice for readability, I'm not 100% sure! I'm a researcher and instructor, not a professional writer. If AI can help me communicate more clearly so you can focus on the material rather than on my writing, I think that's probably okay. That said, I take full responsibility for the content of this work. If something is confusing or incorrect, that’s on me, not Claude or ChatGPT!
 
 As an aside, I think we’re all still learning how best to use AI and large language models in ethical and productive ways. I experimented with a few different workflows while writing this book. Some worked well, but others didn’t. This book reflects the result of that process, and I hope that it delivers a pleasant reading experience that helps you on your learning journey!
 
