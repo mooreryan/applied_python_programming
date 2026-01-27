@@ -7,7 +7,7 @@ jupyter: python3
 
 # Basics {#sec-basics}
 
-Welcome to the first chapter of Practical Python Programming for Life Scientists! In this lesson, we'll explore the fundamental building blocks of Python programming, including:
+Welcome to the first chapter of _Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery_! In this chapter, we'll explore the fundamental building blocks of Python programming, including:
 
 - Variables and how to use them
 - Basic data types (numbers, text, and true/false values)
@@ -15,13 +15,15 @@ Welcome to the first chapter of Practical Python Programming for Life Scientists
 - Essential built-in functions
 - How to control program flow with conditional statements
 
-This is a comprehensive chapter that covers a lot of ground. Don't feel pressured to master everything at once -- we'll be practicing these concepts throughout the course. Think of this as your first exposure to these ideas, and we'll build on them step by step in the coming weeks.
+This is a comprehensive chapter that covers a lot of ground, but don't feel pressured to master everything at once. We'll be practicing these concepts throughout the course. This is your first exposure to thinking and programming in Python, and you will build up your skills throughout the course.
 
 ## Introduction to Python
 
+Let's start with some high-level information about Python.
+
 ### What is Python?
 
-Python is a high-level, interpreted programming language known for its simplicity and readability. Created by Guido van Rossum in 1991, it has become one of the most popular languages in scientific computing and bioinformatics.
+Python is a high-level, interpreted programming language known for its approachability and readability. Created by Guido van Rossum in 1991, it has become an incredibly popular languages for data science, scientific computing, and bioinformatics.
 
 #### High level
 
@@ -29,7 +31,7 @@ Python is a high-level programming language, meaning it handles many complex com
 
 #### Interpreted
 
-Python is an interpreted language, which means you can write code and run it immediately without an extra compilation step. This makes it ideal for bioinformatics work where you often need to:
+Python is an interpreted language, which means you can write code and run it immediately without an extra compilation step. This makes it a great choice for bioinformatics and exploratory data analysis work where you often need to:
 
 - Test different approaches to data analysis
 - Quickly prototype analysis pipelines
@@ -77,6 +79,19 @@ Python has become a widely used tool in bioinformatics for several key reasons:
 - **Reproducibility**: Excellent tools for creating reproducible research workflows
 
 Whether you're analyzing sequencing data, building analysis pipelines, or developing new computational methods, Python provides the tools and community support needed for modern biological research.
+
+### Good Entry to Other Languages
+
+Python is a flexible language, that supports different programming styles and paradigms.  The skills you master while learning Python are highly transferable to other languages. While Python has many specifics and quirks, the high-level concepts will take you a long way regardless of the language.
+
+### Summary
+
+To summarize why we are using Python for this course:
+
+- It's approachable
+- It has widespread usage across academia and industry
+- Highly used in data science and life science research
+- Skills gained from learning Python are transferable to other programming languages
 
 ## Variables
 
