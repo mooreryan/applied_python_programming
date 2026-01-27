@@ -1,0 +1,10 @@
+---
+author: "Ryan M. Moore, PhD"
+date-modified: last-modified
+date: "2026-01-31"
+jupyter: python3
+---
+
+# Stop & Think Answers — @sec-basics
+
+@tip-01-nested-conditionals response: The answer to this one is pretty subjective I think, but in my opinion, I think the un-nested version is more clear.  It feels like there is a less to keep in mind while reading the code, i.e., you don't have to jump your eyes up to the condition under which you are currently nested.  While this example is pretty simple, you could imagine it getting more complex to track in more complicated code.
