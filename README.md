@@ -1,7 +1,9 @@
 # Applied Python Programming for Life Scientists
 
-[*Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery*](https://appliedpythonprogramming.com/) is a beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research.
+[_Applied Python Programming for Life Scientists: From Fundamentals to Algorithmic Thinking and Data-Driven Discovery_](https://appliedpythonprogramming.com/) is a beginner-friendly Python textbook for life scientists and biologists. Learn Python programming, build problem-solving skills, develop algorithmic thinking, and apply data-driven methods to research.
 
-## License
+## Copyright & License Info
+
+Copyright (c) 2025-2026 Ryan M. Moore
 
 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/mooreryan">Applied Python Programming for Life Scientists</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://orcid.org/0000-0003-3337-8184">Ryan M. Moore</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""></a></p>
