@@ -360,7 +360,7 @@ SequenceCount = 1000
 
 Other languages may have different conventions, or sometimes a particular project might have its own conventions.  In these cases, it's probably best to go with the flow of the project you're working on.
 
-#### Guidelines for Good Names
+#### Guidelines for Good Names {#sec-good-variable-names}
 
 Here are some best practices for naming variables in your code:
 
@@ -764,7 +764,7 @@ Many life scientists are familiar with the [R programming language](https://www.
 Be aware that R uses one-based indexing, whereas Python uses zero-based indexing.  That is, the first character in a string in Python is 0, but in R it is 1.
 :::
 
-##### String slicing
+##### String slicing {#sec-string-slicing}
 
 Slicing lets you extract parts of a string using the format `[start:end]`. The `end` index is exclusive:
 

@@ -318,11 +318,11 @@ In Python, strings are immutable sequences of characters (including letters, num
 
 ## Lists
 
-Lists are going to be one of your best friends in Python -- they're flexible, easy to modify, and good for handling biological sequences and experimental data.
+Lists are going to be one of your best friends in Python. They're flexible, easy to modify, and good for handling a lot of stuff that comes up frequently in your work.
 
 ### Creating Lists
 
-You can create lists using square brackets `[]` and assign them to variables. As always, keep in mind best practices for naming variables!
+You can create lists using square brackets `[]` and assign them to variables. As always, keep in mind best practices for naming variables, which you can find in @sec-good-variable-names.
 
 ```{python}
 # A DNA sequence
@@ -334,18 +334,19 @@ pathway_genes = ["TP53", "MDM2", "CDKN1A", "BAX"]
 # Expression values
 expression_levels = [0.0, 1.2, 3.4, 2.1, 0.8]
 
-# Mixed data types (though it may be best to avoid mixing types like this)
+# Mixed data types (Though, it can get confusing
+# to mix data types like this....)
 sample_info = ["SAMPLE001", 37.5, "positive", True]
 
 # Empty list to fill later
 results = []
 ```
 
-Creating an empty list might seem a bit weird, but is actually common practice in Python. You will often create an empty list and then use a loop to store multiple things in it. There will be plenty of examples of this later in the chapter.
+Creating an empty list might seem a bit weird, but it is actually pretty common! You will often create an empty list and then use a loop to store multiple things in it. There will be plenty of examples of this later in the chapter.
 
 ### List Indexing and Slicing
 
-Remember that a list is like a row of boxes, each with something inside. The boxes are in a particular order and each has a number that you can use to access the data inside (the index).
+Remember that a list is sort of like a row of boxes, each with something inside. The boxes are in a particular order and each has a number that you can use to access the data inside.  We call that number the "index".
 
 You could imagine a list looking something like this:
 
@@ -356,6 +357,7 @@ You could imagine a list looking something like this:
    0     1     2     3     4     (indices of the values)
 ```
 
+
 Which corresponds to the following Python code:
 
 ```{python}
@@ -365,11 +367,13 @@ nucleotides = ["A", "T", "G", "A", "C"]
 
 Don't forget that Python starts counting with 0 rather than with 1.
 
-_Note: For now, don't worry too much right now about **how** Python stores items in a list. Later in the chapter (@sec-what-python-stores-in-list), we will adjust our mental model for collections._
+::: { .callout-tip collapse="false" }
+For now, don't worry too much right now about **how** Python stores items in a list. Later, in @sec-what-python-stores-in-list, we will adjust our mental model for collections.
+:::
 
 #### Indexing
 
-Similar to strings, you can get specific things out of a list with `list_name[]` syntax, which is sometimes called "indexing" the list. The most basic option is to grab items one at time:
+Similar to strings, you can get specific things out of a list with the `list_name[]` syntax, which is sometimes called "indexing" into the list. A basic operation is grabbing items one at time:
 
 ```{python}
 # Get single elements
@@ -424,11 +428,15 @@ every_other_second = dna[1::2]
 print(every_other_second)
 ```
 
-There are quite a few [rules](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations) about slicing, which can get a bit complicated. For this reason, it's generally best to keep your slicing operations as simple as possible.
+There are quite a few [rules](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations) about slicing, which can get a bit complicated. For this reason, it's generally best to keep your slicing operations as simple as possible. (Sometimes you may need fancy stuff, but don't be fancy just for the sake of it!)
+
+::: { .callout-tip collapse="false" }
+Go back to the the section on string slicing (@sec-string-slicing) and think about how it compares with list slicing!
+:::
 
 ### List Methods
 
-Similar to strings, lists come with some methods that let you modify them or get information about them. Some of the most common are:
+Similar to strings, lists come with some methods that let you modify them, get information about them, and lots other stuff too. Some of the most common are:
 
 - `append`
 - `insert`
@@ -453,7 +461,7 @@ genes.insert(0, "MDM2")
 genes.extend(["ATM", "PTEN"])
 ```
 
-Based on the information in the comments, what does our list look like now? Try to figure that out before running the next code block.
+Based on the information in the comments, what does our list look like now? Try to figure that out before running the next code block. (Or looking at it if you're reading online!)
 
 ```{python}
 print(genes)
@@ -510,7 +518,7 @@ all_primers = forward_primers + reverse_primers
 print(all_primers)
 ```
 
-Take a small list a "multiply" its components to make a bigger list using `*`:
+Take a small list and "multiply" its components to make a bigger list using `*`:
 
 ```{python}
 # Creates a poly-A sequence
@@ -531,6 +539,10 @@ if "POLA" in genes:
     print("POLA is not found!")
 ```
 
+::: { .callout-note collapse="false" }
+We will see the `in` operator pop up in many different situations throughout the text!
+:::
+
 And get the length of a list using `len`:
 
 ```{python}
@@ -541,7 +553,9 @@ print(total_samples)
 
 ### Nested Lists
 
-Lists can contain other lists, useful for representing things like matrices, graph connections, and simple hierarchical data.
+Lists can contain other lists, which can be useful for representing things like matrices, graph connections, and simple hierarchical data.
+
+A simple matrix:
 
 ```{python}
 # Matrix
@@ -551,7 +565,11 @@ sequences = [
     ["T", "A", "G", "C"]
 ]
 print(sequences)
+```
 
+A set of coordinates:
+
+```{python}
 # Coordinates
 coordinates =[
     [1, 2],
@@ -559,7 +577,11 @@ coordinates =[
     [5, 6]
 ]
 print(coordinates)
+```
 
+Hierarchical data:
+
+```{python}
 # Simple hierarchical data: Experimental data with replicates
 expression_data = [
     ["Gene1", [1.1, 1.2, 1.0]],  # Gene name and replicate values
@@ -569,7 +591,7 @@ expression_data = [
 print(expression_data)
 ```
 
-Many times, there will be a better solution to your problem than nesting lists in this way, but it's something that you should be aware of should the need arise.
+Many times, there will be a better solution to your problem than nesting lists in this way, but sometimes you just want a quick and simple solution. It's something to be aware of should the need arise.
 
 Nested lists can be accessed just like regular lists, but there will be more "layers" to get through depending on what you want out of them.
 
@@ -587,7 +609,7 @@ Lists are very flexible in Python, and so can be complicated. However, it will b
 
 #### What Does Python Actually Store in the List? {#sec-what-python-stores-in-list}
 
-When working with lists and other collections in Python, there's a crucial detail about how Python manages data that might seem counterintuitive at first. Let's explore this through a simple example using 2D points.
+When working with lists and other collections in Python, there's an important detail about how Python manages data that might seem counterintuitive at first. Let's explore this through a simple example using 2D points.
 
 First, let's create some points and store them in a list:
 
@@ -629,9 +651,9 @@ print(points)
 print(point_a)
 ```
 
-Did the last result surprise you? When we modified `point_b`, the change was reflected in our `points` list too! This happens because Python doesn't actually store the values directly in the list – instead, it stores references (think of them as pointers) to the data. It's like having a directory of addresses rather than copies of the actual data.
+Did the last result surprise you? When we modified `point_b`, the change was reflected in our `points` list too! This happens because Python doesn't actually store the values directly in the list.  Instead, it stores references (think of them as pointers) to the data. It's like having a directory of addresses rather than copies of the actual data.
 
-Understanding this behavior is important because it means changes to your data in one place can unexpectedly affect the same data being used elsewhere in your code.
+Understanding this behavior is important because it means changes to your data in one place can unexpectedly affect the same data being used elsewhere.
 
 With this in mind, we can now update our mental model and make it a bit more accurate. This time, the items in the lists are references that "point" to the actual items we care about.
 
@@ -659,7 +681,7 @@ The diagram for the points example might look something like this:
 └─────────────┴─────────────┘
 ```
 
-For now, don't get _too_ hung up on the lower-level details -- just be aware of the practical implications mentioned above.
+For now, don't get _too_ hung up on the lower-level details. Just be aware of the practical implications mentioned above.
 
 ## Loops
 
